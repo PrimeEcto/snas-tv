@@ -75,7 +75,7 @@ if (!dryRun && !existsSync(PACKAGE_PATH)) {
 }
 
 // Hash the package so the device can verify what it downloaded.
-let manifest = { version, tag, platform, package: 'snas_x86_64.vpkg', size: 0, sha256: '' };
+let manifest = { version, tag, platform: PLATFORM, package: 'snas_x86_64.vpkg', size: 0, sha256: '' };
 if (!dryRun) {
   const bytes = readFileSync(PACKAGE_PATH);
   manifest = {
