@@ -1,0 +1,16 @@
+# Supabase project configuration for the SNAS backend.
+#
+#   supabase secrets set --env-file .env
+#   supabase functions deploy
+#
+# Both functions are edge endpoints the Fire TV app calls directly, so neither can require a
+# Supabase JWT: `tmdb` is an allow-listed read-only catalogue proxy, and `movy-relay` is an
+# allow-listed relay guarded by its own shared secret (RELAY_SECRET).
+
+project_id = "cwfflqvzzkzytxuaxahy"
+
+[functions.tmdb]
+verify_jwt = false
+
+[functions.movy-relay]
+verify_jwt = false

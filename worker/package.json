@@ -1,0 +1,22 @@
+{
+  "name": "@amazon-devices/snas-worker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SNAS backend: movy.sx source + subtitle API for the Fire TV app, running on Cloudflare Workers.",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.test.json --noEmit",
+    "test": "node --import tsx --test test/*.test.ts",
+    "verify:live": "node --import tsx scripts/live-verify.ts",
+    "smoke": "node --import tsx scripts/smoke.ts"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261013.1",
+    "@types/node": "^22.20.5",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.150.0"
+  }
+}

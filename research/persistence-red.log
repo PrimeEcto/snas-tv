@@ -1,0 +1,51 @@
+npm notice run @amazon-devices/snas@0.0.1 test
+npm notice run node --import tsx --test tests/*.test.ts
+✔ missing credentials produce a populated, searchable, paginated demo catalog (1.590875ms)
+✔ invalid credentials and network failures never silently become demo results (1.15964ms)
+✔ live search omits people and malformed records and preserves missing metadata (1.148171ms)
+✔ cache deduplicates requests while page and query remain independent (0.563214ms)
+✔ discover sends kind, genre, sort and clamped pagination through documented query parameters (0.227014ms)
+✔ live details and season endpoints retain actual episode identity and credits (0.342174ms)
+✔ paused playback freezes time and resumed ticks honor playback speed (0.783836ms)
+✔ seeks clamp at both ends and completion stops playback (0.132394ms)
+✔ nonfinite timing and unsupported speeds cannot poison playback (0.218045ms)
+✔ episodes use their runtime and movie, show, and episode keys never collide (0.121948ms)
+✔ settings and controls can change independently of play position (0.119559ms)
+✔ time formatting handles hours, negative, and nonfinite values (0.104013ms)
+✔ watchlist toggles immutably and distinguishes movie and television ids (0.548181ms)
+✔ progress saves episodes separately and removes a title at the 95 percent boundary (0.223092ms)
+✔ continue watching sorts newest first and displays only the latest episode per title (0.289404ms)
+✔ library parsing rejects broken schemas without crashing and roundtrips valid progress (0.419732ms)
+✔ library parsing drops corrupt entries and validates preferences and canonical keys (0.175769ms)
+✖ real catalog string years and missing artwork survive library persistence (1.700568ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 17
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 150.784294
+
+✖ failing tests:
+
+test at tests/playback.test.ts:2:9209
+✖ real catalog string years and missing artwork survive library persistence (1.700568ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (/data/SNAS/tests/playback.test.ts:137:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

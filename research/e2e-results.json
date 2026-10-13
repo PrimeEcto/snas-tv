@@ -1,0 +1,55 @@
+[
+  {
+    "name": "Player pause freezes the displayed timeline",
+    "result": "PASS"
+  },
+  {
+    "name": "Seeking updates elapsed time",
+    "result": "PASS"
+  },
+  {
+    "name": "Audio, subtitles and speed menus open, select and close",
+    "result": "PASS"
+  },
+  {
+    "name": "Home and remote Details navigation",
+    "result": "PASS"
+  },
+  {
+    "name": "Watchlist add/remove is reflected in My List",
+    "result": "PASS"
+  },
+  {
+    "name": "Watchlist and actual movie progress appear in My List",
+    "result": "PASS"
+  },
+  {
+    "name": "Watchlist and actual movie progress appear in My List",
+    "result": "PASS"
+  },
+  {
+    "name": "Movies remote genre selection and page loading",
+    "result": "PASS"
+  },
+  {
+    "name": "Search, preserved query after details, and no results",
+    "result": "FAIL",
+    "error": "The expression evaluated to a falsy value:\n\n  assert.ok((await source()).includes('results for “DUNE”'))\n"
+  },
+  {
+    "name": "Series seasons, episode selection, next episode, episode menu",
+    "result": "PASS"
+  },
+  {
+    "name": "Actual episode progress appears in Continue Watching",
+    "result": "PASS"
+  },
+  {
+    "name": "Search results, preserved query on Back, and no-results state",
+    "result": "PASS"
+  },
+  {
+    "name": "App terminate/relaunch preserves watchlist and movie/episode progress",
+    "result": "PASS"
+  }
+]

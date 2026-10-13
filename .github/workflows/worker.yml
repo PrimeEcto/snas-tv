@@ -1,0 +1,71 @@
+name: worker
+
+# The Fire TV app is built locally (the Vega SDK and its systemd-scoped builder are not
+# available on hosted runners), so CI covers the backend: verify every change, and deploy
+# the Worker when main moves.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'worker/**'
+      - 'supabase/**'
+      - '.github/workflows/worker.yml'
+  pull_request:
+    paths:
+      - 'worker/**'
+      - 'supabase/**'
+      - '.github/workflows/worker.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: typecheck and test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: worker
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      - run: npm ci
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Unit tests
+        # Includes the captured-payload crypto fixture, so a drift in decryption fails here.
+        run: npm test
+
+  deploy:
+    name: deploy to Cloudflare
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: worker
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      - run: npm ci
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: worker
+          command: deploy
+      - name: Smoke test the deployment
+        # Fails the job only on genuine errors; an upstream-egress block is reported
+        # separately so a rate limit is never mistaken for a broken deploy.
+        run: npm run smoke

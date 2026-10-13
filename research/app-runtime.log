@@ -1,0 +1,13 @@
+application                             type      pid     id      state       lifespan       timeout container                               launch args                   
+com.amazon.keplerlauncherapp.main       I         2421    1       VISIBLE     PERMANENT      n/a     framework.slice/essential/2421          <none>                        
+com.amazon.otad.main                    S         2688    3       READY       PERMANENT      n/a     framework.slice/service/2688            <none>                        
+com.amazon.dev.shell.service            S         2690    4       READY       PERMANENT      n/a     framework.slice/service/2690            <none>                        
+com.amazon.aplext.alert.10.service.main S         2692    5       READY       PERMANENT      n/a     framework.slice/service/2692            <none>                        
+com.amazon.kcp.component.service        S         2727    6       READY       PERMANENT      n/a     framework.slice/service/2727            <none>                        
+com.amazon.kepler.keyvault.service.main S         2713    7       READY       PERMANENT      n/a     framework.slice/service/2713            <none>                        
+com.amazon.map.async.service.main       S         2880    9       READY       PERMANENT      n/a     framework.slice/service/2880            <none>                        
+error: unexpected argument '-n' found
+
+Usage: loggingctl log [OPTIONS]
+
+For more information, try '--help'.

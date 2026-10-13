@@ -1,0 +1,66 @@
+# Genuine demo catalog provenance
+
+Captured public TMDB title and season records on 2026-10-13 for this noncommercial local concept. The app uses the documented authenticated API in live mode. No private key or access restriction was used. Poster/backdrop paths and titles are from these pages; ratings deliberately omitted because public charts round vote averages. Missing metadata remains absent. Demo episode IDs are deterministic local identifiers; episode names, descriptions and durations are genuine. Demo is a curated snapshot, not current popularity.
+
+- https://www.themoviedb.org/movie/157336
+- https://www.themoviedb.org/movie/693134
+- https://www.themoviedb.org/movie/438631
+- https://www.themoviedb.org/movie/27205
+- https://www.themoviedb.org/movie/335984
+- https://www.themoviedb.org/movie/155
+- https://www.themoviedb.org/movie/680
+- https://www.themoviedb.org/movie/550
+- https://www.themoviedb.org/movie/278
+- https://www.themoviedb.org/movie/13
+- https://www.themoviedb.org/movie/120
+- https://www.themoviedb.org/movie/121
+- https://www.themoviedb.org/movie/122
+- https://www.themoviedb.org/movie/603
+- https://www.themoviedb.org/movie/424
+- https://www.themoviedb.org/movie/497
+- https://www.themoviedb.org/movie/129
+- https://www.themoviedb.org/movie/19995
+- https://www.themoviedb.org/movie/105
+- https://www.themoviedb.org/movie/11
+- https://www.themoviedb.org/movie/299534
+- https://www.themoviedb.org/movie/299536
+- https://www.themoviedb.org/movie/324857
+- https://www.themoviedb.org/movie/569094
+- https://www.themoviedb.org/movie/76341
+- https://www.themoviedb.org/movie/872585
+- https://www.themoviedb.org/movie/346698
+- https://www.themoviedb.org/movie/545611
+- https://www.themoviedb.org/movie/496243
+- https://www.themoviedb.org/movie/1124
+- https://www.themoviedb.org/movie/862
+- https://www.themoviedb.org/movie/354912
+- https://www.themoviedb.org/movie/508943
+- https://www.themoviedb.org/movie/2062
+- https://www.themoviedb.org/movie/539
+- https://www.themoviedb.org/movie/194
+- https://www.themoviedb.org/movie/264660
+- https://www.themoviedb.org/movie/2649
+- https://www.themoviedb.org/movie/76203
+- https://www.themoviedb.org/movie/359940
+- https://www.themoviedb.org/tv/66732
+- https://www.themoviedb.org/tv/1396
+- https://www.themoviedb.org/tv/1399
+- https://www.themoviedb.org/tv/100088
+- https://www.themoviedb.org/tv/94997
+- https://www.themoviedb.org/tv/100095
+- https://www.themoviedb.org/tv/84773
+- https://www.themoviedb.org/tv/42009
+- https://www.themoviedb.org/tv/2316
+- https://www.themoviedb.org/tv/82856
+- https://www.themoviedb.org/tv/60625
+- https://www.themoviedb.org/tv/87108
+- https://www.themoviedb.org/tv/66732/season/1
+- https://www.themoviedb.org/tv/66732/season/2
+- https://www.themoviedb.org/tv/1396/season/1
+- https://www.themoviedb.org/tv/1396/season/2
+- https://www.themoviedb.org/tv/100088/season/1
+- https://www.themoviedb.org/tv/100088/season/2
+- https://www.themoviedb.org/tv/82856/season/1
+- https://www.themoviedb.org/tv/82856/season/2
+
+TMDB terms: https://www.themoviedb.org/api-terms-of-use ; attribution: https://developer.themoviedb.org/docs/faq

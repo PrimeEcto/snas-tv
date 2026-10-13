@@ -1,0 +1,19 @@
+PASS Player pause freezes the displayed timeline
+PASS Seeking updates elapsed time
+Saved native screenshot: audio-menu
+PASS Audio, subtitles and speed menus open, select and close
+Saved native screenshot: player
+Saved native screenshot: home
+Saved native screenshot: details
+PASS Home and remote Details navigation
+Saved native screenshot: my-list
+PASS Watchlist add/remove is reflected in My List
+Saved native screenshot: movies
+FAIL Movies filters and pagination The expression evaluated to a falsy value:
+
+  assert.ok((await source()).includes('browse-movie-862'))
+
+Stopped at failed scenario: The expression evaluated to a falsy value:
+
+  assert.ok((await source()).includes('browse-movie-862'))
+

@@ -1,0 +1,29 @@
+npm notice run @amazon-devices/snas@0.0.1 test
+npm notice run node --import tsx --test tests/*.test.ts
+✔ missing credentials produce a populated, searchable, paginated demo catalog (1.707927ms)
+✔ invalid credentials and network failures never silently become demo results (1.787438ms)
+✔ live search omits people and malformed records and preserves missing metadata (0.787511ms)
+✔ cache deduplicates requests while page and query remain independent (0.516486ms)
+✔ discover sends kind, genre, sort and clamped pagination through documented query parameters (0.264505ms)
+✔ live details and season endpoints retain actual episode identity and credits (0.429091ms)
+✔ paused playback freezes time and resumed ticks honor playback speed (1.256855ms)
+✔ seeks clamp at both ends and completion stops playback (0.229362ms)
+✔ nonfinite timing and unsupported speeds cannot poison playback (0.329312ms)
+✔ episodes use their runtime and movie, show, and episode keys never collide (0.195709ms)
+✔ settings and controls can change independently of play position (0.185335ms)
+✔ time formatting handles hours, negative, and nonfinite values (0.170209ms)
+✔ watchlist toggles immutably and distinguishes movie and television ids (0.868089ms)
+✔ progress saves episodes separately and removes a title at the 95 percent boundary (0.385292ms)
+✔ continue watching sorts newest first and displays only the latest episode per title (0.421473ms)
+✔ library parsing rejects broken schemas without crashing and roundtrips valid progress (0.653425ms)
+✔ library parsing drops corrupt entries and validates preferences and canonical keys (0.269124ms)
+✔ real catalog string years and missing artwork survive library persistence (0.190195ms)
+✔ episode progress with no thumbnail survives a restart (0.182343ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 102.140285

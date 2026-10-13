@@ -1,0 +1,107 @@
+Running as unit: run-rd4dc855258764ea386db61724a0b560a.scope; invocation ID: 43cf753ba33a45c183745fe8162c5d7c
+npm notice run @amazon-devices/snas@0.0.1 npx
+npm notice run 'react-native' build-vega --build-type Release --target x86_64
+- Awaiting resources 
+info Building bundle artifacts for index.js
+[SYSTEM_BUNDLE] Creating app bundle config with globalPrefix: (none)
+info Building split bundle for index.js
+
+                        ▒▒▓▓▓▓▒▒
+                     ▒▓▓▓▒▒░░▒▒▓▓▓▒
+                  ▒▓▓▓▓░░░▒▒▒▒░░░▓▓▓▓▒
+                 ▓▓▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▓▓
+                 ▓▓░░░░░▒▓▓▓▓▓▓▒░░░░░▓▓
+                 ▓▓░░▓▓▒░░░▒▒░░░▒▓▒░░▓▓
+                 ▓▓░░▓▓▓▓▓▒▒▒▒▓▓▓▓▒░░▓▓
+                 ▓▓░░▓▓▓▓▓▓▓▓▓▓▓▓▓▒░░▓▓
+                 ▓▓▒░░▒▒▓▓▓▓▓▓▓▓▒░░░▒▓▓
+                  ▒▓▓▓▒░░░▒▓▓▒░░░▒▓▓▓▒
+                     ▒▓▓▓▒░░░░▒▓▓▓▒
+                        ▒▒▓▓▓▓▒▒
+
+
+                Welcome to Metro v0.83.8
+              Fast - Scalable - Integrated
+
+
+transform[stderr]: (node:25899) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+transform[stderr]: (Use `node --trace-warnings ...` to show where the warning was created)
+Getting Dependencies from System Modules: /data/SNAS/node_modules/@amazon-devices/react-native-kepler/SystemModules/amzn__react-native-kepler-4.modules.txt
+LOG:Writing bundle output to: /data/SNAS/build/lib/rn-bundles/Release/index.bundle
+LOG:Writing sourcemap output to: /data/SNAS/build/debugging/Release/srcmap/index.bundle.map
+LOG:Done writing bundle output
+LOG:Done writing sourcemap output
+info Completed building JS bundle and sourcemap for index.js
+info Completed processing debugging files for index.js
+info Completed building Hermes bundle for index.js
+info Initiating native artifacts build for Vega platform
+validating '/data/SNAS/manifest.toml' ...
+analyzing manifest.toml ...
+manifest.toml is valid
+manifest validation found 0 errors
+manifest.toml:3:1 info: [package.icon] Icon is not defined in the manifest. System default will be used.
+  help: Define icon to help users recognize your application
+
+done.
+
+🔍 Build Configuration
+───────────────────────────────────────
+OS configuration resolved from package.json: ["vega"]
+Targets resolved from command line: ["x86_64"]
+[VegaTargetSelector] Searching 23 paths
+[VegaTargetSelector] Config not found in any search path
+🔧 Resolved OS-version compatibility for 1 managed dependency
+
+🔨 Build Plan (1 target)
+───────────────────────────────────────
+  Release: x86_64
+
+🔍 Build Parallelization
+───────────────────────────────────────
+Parallelizing 1 total requests:
+  - Known targets and buildTypes: x86_64 for Release
+Running at most 8 threads in parallel
+
+[native-build] Could not compare package-lock.json, continuing to autolink
+[native-build] Perform autolinking on 2 qualified npm packages
+[native-build] cp: no such file or directory: /data/SNAS/build/lib/rn-bundles/Release/assets/*
+[native-build] 2026-10-13T14:11:20.309585Z  INFO amzn_kepler_manifest_module_remapper: Checking manifest at: /data/SNAS/build/private/vega/x86_64/Release/manifest.toml
+[native-build] 2026-10-13T14:11:20.309784Z  INFO amzn_kepler_manifest_module_remapper::modify: Found dependencies to add to the manifest: 
+[native-build] 	wants: []
+[native-build] 	needs: ["/com.amazon.kepler.async_storage__async_storage_2@IAsyncStorage__AsyncStorage_1", "/com.amazon.kepler.keplerscript_4@IKeplerScript_0", "/com.amazon.kepler.linear_gradient_2@ILinearGradient_0", "/com.amazon.kepler.runtime.react_native_kepler_4@IReactNativeKepler_0", "/com.amazon.kepler.svg_3@ISVG_0"]
+[native-build] 2026-10-13T14:11:20.309797Z  INFO amzn_kepler_manifest_module_remapper: Writing new manifest to: /data/SNAS/build/private/vega/x86_64/Release/manifest.toml
+[native-build] 2026-10-13T14:11:20.309910Z  INFO amzn_kepler_manifest_module_remapper: Manifest remapping complete
+[native-build] Calling vpt with args pack /data/SNAS/build/private/vega/x86_64/Release -n @amazon-devices/snas_x86_64 -d /data/SNAS/build/private/kepler/@amazon-devices/snas/undefined/vega/x86_64/Release --validate
+[native-build] creating vpkg ...
+[native-build] WARNING: build_number is 0. Provide via --build-number CLI option or in manifest.toml [package] section.
+[native-build] analyzing manifest.toml ...
+[native-build] manifest.toml is valid
+[native-build] manifest validation found 0 errors
+[native-build] manifest.toml:3:1 info: [package.icon] Icon is not defined in the manifest. System default will be used.
+[native-build]   help: Define icon to help users recognize your application
+[native-build] 
+[native-build] staging package artifacts ...
+[native-build] generating meta-info ...
+[native-build] archiving ...
+[native-build] created: /data/SNAS/build/private/kepler/@amazon-devices/snas/undefined/vega/x86_64/Release/@amazon-devices/snas_x86_64.vpkg
+[native-build] done.
+[native-build] {
+[native-build]   "title": "SNAS",
+[native-build]   "id": "com.snas.tv",
+[native-build]   "version": "0.1.0",
+[native-build]   "build_number": 0,
+[native-build]   "size": 509195,
+[native-build]   "os_version_registry": {
+[native-build]     "contract_package_version": "1.0.323.0",
+[native-build]     "os_versions": [
+[native-build]       "1.2"
+[native-build]     ]
+[native-build]   }
+[native-build] }
+[native-build] vega vtbuild exited with code 0
+
+🔍 Build Configuration
+───────────────────────────────────────
+OS configuration resolved from package.json: ["vega"]
+Targets resolved from command line: ["x86_64"]
+info build-vega completed

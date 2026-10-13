@@ -1,0 +1,245 @@
+2026-10-13 09:34:43 info  [KeplerVersionManagerInstaller]: === Vega CLI Installer Log Started ===
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: HOME=/home/primeecto
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: HOME_DIR=/home/primeecto
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: VEGA_DIR=/home/primeecto/vega
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: VVM_INSTALL_DIR=/home/primeecto/vega/bin
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: KPM_BASE_URL=https://k-artifactory-external.labcollab.net/artifactory/api/kpm/
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: KPM_REPO=kpm-default-prod-local
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: CURL=/usr/bin/curl
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: TAR=/usr/bin/tar
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: JQ=/usr/bin/jq
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: PACKAGE_NAME=KeplerVersionManagerInstaller
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: PLATFORM=linux-x86_64
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: VERBOSE=false
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: LOG_ENABLED=true
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: LOG_FILE=/data/SNAS/research/installer.log
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: NONINTERACTIVE=true
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: SKIP_SDK_INSTALL=false
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: VEGA_SDK_VERSION=
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: _001_check_prereqs completed successfully
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: _002_check_running_script completed successfully
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: _010_welcome_to_vvm completed successfully
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: _020_metrics_notice completed successfully
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: Metadata request: https://k-artifactory-external.labcollab.net/artifactory/api/kpm//kpm-default-prod-local/metadata/KeplerVersionManager?platform=linux-x86_64
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: Registered temp file: /data/pinokio/cache/TMPDIR/tmp.VGcQg3UJf6
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: Registered temp file: /data/pinokio/cache/TMPDIR/tmp.XzOoHwdek1
+2026-10-13 09:34:43 debug [KeplerVersionManagerInstaller]: /usr/bin/curl --http1.1 --location --max-time 30 --retry 3 --retry-delay 1 --output /data/pinokio/cache/TMPDIR/tmp.XzOoHwdek1 --write-out %\{onerror\}curl\ error:\ \(%\{exitcode\}\)\ %\{errormsg\} --silent --show-error https://k-artifactory-external.labcollab.net/artifactory/api/kpm//kpm-default-prod-local/metadata/KeplerVersionManager\?platform=linux-x86_64 
+2026-10-13 09:34:44 debug [KeplerVersionManagerInstaller]: Metadata: {"versions":[{"repo":"kpm-default-prod-local","package_name":"KeplerVersionManager","platform":"linux-x86_64","version":"1.4.4","decompressed_size_bytes":0,"file_size_bytes":10934430,"created_at":1791422258,"sha_checksum":"df2dad1b2263cf813404f6c31112935a13570ae8b79a7344e9f110250ea26fbf","custom_metadata":{"event-id":6528936897,"version-set":"KeplerVersionManager/candidate"}},{"repo":"kpm-default-prod-local","package_name":"KeplerVersionManager","platform":"linux-x86_64","version":"1.4.3","decompressed_size_bytes":0,"file_size_bytes":10933574,"created_at":1791419723,"sha_checksum":"7649dc99b509eb3bbaa3dd71e562722580f8ba0d432b2a9e4800914f6d79a2ba","custom_metadata":{"event-id":6528932102,"version-set":"KeplerVersionManager/candidate"}},{"repo":"kpm-default-prod-local","package_name":"KeplerVersionManager","platform":"linux-x86_64","version":"1.4.2","decompressed_size_bytes":0,"file_size_bytes":10932670,"created_at":1790121977,"sha_checksum":"2789ad833bff8395c796d203d805309ea2d27cf26a3d6c1141a5dc6a403aba8a","custom_metadata":{"event-id":6520209484,"version-set":"KeplerVersionManager/candidate"}},{"repo":"kpm-default-prod-local","package_name":"KeplerVersionManager","platform":"linux-x86_64","version":"1.4.1","decompressed_size_bytes":0,"file_size_bytes":10899211,"created_at":1790119240,"sha_checksum":"ad3b4852a087fa6dca95c5663afb05cf6a76f911b6ba4675b878f9aab73cc91a","custom_metadata":{"event-id":6511525166,"version-set":"KeplerVersionManager/candidate"}},{"repo":"kpm-default-prod-local","package_name":"KeplerVersionManager","platform":"linux-x86_64","version":"1.3.4","decompressed_size_bytes":0,"file_size_bytes":10896535,"created_at":1786062157,"sha_checksum":"d6ebba6eaf7b04ba41cfc62672edf03e772c4f42fbb073dc97baa574cb49b148","custom_metadata":{"event-id":6496829539,"version-set":"KeplerVersionManager/candidate"}},{"repo":"kpm-default-prod-local","package_name":"KeplerVersionManager","platform":"linux-x86_64","version":"1.3.2","decompressed_size_bytes":0,"file_size_bytes":10894113,"created_at":1781631626,"sha_checksum":"2fa7c110b21e71254dba2b5b8da6e5c2fcc8637bc20ccbc14f6175fa2c6f7285","custom_metadata":{"event-id":6471236950,"version-set":"KeplerVersionManager/candidate"}},{"repo":"kpm-default-prod-local","package_name":"KeplerVersionManager","platform":"linux-x86_64","version":"1.2.22","decompressed_size_bytes":0,"file_size_bytes":10500252,"created_at":1776121815,"sha_checksum":"789d450f41a16133900c3737f89d07d5fe421d8001cf0094a1faf64b611514c2","custom_metadata":{"event-id":6443617870,"version-set":"KeplerVersionManager/candidate"}},{"repo":"kpm-default-prod-local","package_name":"KeplerVersionManager","platform":"linux-x86_64","version":"1.2.18","decompressed_size_bytes":0,"file_size_bytes":10244368,"created_at":1770164124,"sha_checksum":"b2a9c568ee0bb501827600d37a4740df8475caad431c439e55399c8b569b94f2","custom_metadata":{"event-id":6417486746,"version-set":"KeplerVersionManager/candidate"}},{"repo":"kpm-default-prod-local","package_name":"KeplerVersionManager","platform":"linux-x86_64","version":"1.2.16","decompressed_size_bytes":0,"file_size_bytes":10243670,"created_at":1769274818,"sha_checksum":"a85241cc80d5efb56454ae57fc145e57ec48ce0324d8d003ed057abfff4855f6","custom_metadata":{"event-id":6413975931,"version-set":"KeplerVersionManager/candidate"}},{"repo":"kpm-default-prod-local","package_name":"KeplerVersionManager","platform":"linux-x86_64","version":"1.2.13","decompressed_size_bytes":0,"file_size_bytes":10236616,"created_at":1768968429,"sha_checksum":"d90055fabb1ccd70af689228c6b202fb684fcf04992597523db18d0ed0d3e185","custom_metadata":{"event-id":6412578642,"version-set":"KeplerVersionManager/candidate"}}],"next_token":"eyJtYWpvciI6MSwibWlub3IiOjIsInBhdGNoIjoxM30="}
+2026-10-13 09:34:44 debug [KeplerVersionManagerInstaller]: Metadata: {"versions":[{"repo":"kpm-default-prod-local","package_name":"KeplerVersionManager","platform":"linux-x86_64","version":"1.4.4","decompressed_size_bytes":0,"file_size_bytes":10934430,"created_at":1791422258,"sha_checksum":"df2dad1b2263cf813404f6c31112935a13570ae8b79a7344e9f110250ea26fbf","custom_metadata":{"event-id":6528936897,"version-set":"KeplerVersionManager/candidate"}},{"repo":"kpm-default-prod-local","package_name":"KeplerVersionManager","platform":"linux-x86_64","version":"1.4.3","decompressed_size_bytes":0,"file_size_bytes":10933574,"created_at":1791419723,"sha_checksum":"7649dc99b509eb3bbaa3dd71e562722580f8ba0d432b2a9e4800914f6d79a2ba","custom_metadata":{"event-id":6528932102,"version-set":"KeplerVersionManager/candidate"}},{"repo":"kpm-default-prod-local","package_name":"KeplerVersionManager","platform":"linux-x86_64","version":"1.4.2","decompressed_size_bytes":0,"file_size_bytes":10932670,"created_at":1790121977,"sha_checksum":"2789ad833bff8395c796d203d805309ea2d27cf26a3d6c1141a5dc6a403aba8a","custom_metadata":{"event-id":6520209484,"version-set":"KeplerVersionManager/candidate"}},{"repo":"kpm-default-prod-local","package_name":"KeplerVersionManager","platform":"linux-x86_64","version":"1.4.1","decompressed_size_bytes":0,"file_size_bytes":10899211,"created_at":1790119240,"sha_checksum":"ad3b4852a087fa6dca95c5663afb05cf6a76f911b6ba4675b878f9aab73cc91a","custom_metadata":{"event-id":6511525166,"version-set":"KeplerVersionManager/candidate"}},{"repo":"kpm-default-prod-local","package_name":"KeplerVersionManager","platform":"linux-x86_64","version":"1.3.4","decompressed_size_bytes":0,"file_size_bytes":10896535,"created_at":1786062157,"sha_checksum":"d6ebba6eaf7b04ba41cfc62672edf03e772c4f42fbb073dc97baa574cb49b148","custom_metadata":{"event-id":6496829539,"version-set":"KeplerVersionManager/candidate"}},{"repo":"kpm-default-prod-local","package_name":"KeplerVersionManager","platform":"linux-x86_64","version":"1.3.2","decompressed_size_bytes":0,"file_size_bytes":10894113,"created_at":1781631626,"sha_checksum":"2fa7c110b21e71254dba2b5b8da6e5c2fcc8637bc20ccbc14f6175fa2c6f7285","custom_metadata":{"event-id":6471236950,"version-set":"KeplerVersionManager/candidate"}},{"repo":"kpm-default-prod-local","package_name":"KeplerVersionManager","platform":"linux-x86_64","version":"1.2.22","decompressed_size_bytes":0,"file_size_bytes":10500252,"created_at":1776121815,"sha_checksum":"789d450f41a16133900c3737f89d07d5fe421d8001cf0094a1faf64b611514c2","custom_metadata":{"event-id":6443617870,"version-set":"KeplerVersionManager/candidate"}},{"repo":"kpm-default-prod-local","package_name":"KeplerVersionManager","platform":"linux-x86_64","version":"1.2.18","decompressed_size_bytes":0,"file_size_bytes":10244368,"created_at":1770164124,"sha_checksum":"b2a9c568ee0bb501827600d37a4740df8475caad431c439e55399c8b569b94f2","custom_metadata":{"event-id":6417486746,"version-set":"KeplerVersionManager/candidate"}},{"repo":"kpm-default-prod-local","package_name":"KeplerVersionManager","platform":"linux-x86_64","version":"1.2.16","decompressed_size_bytes":0,"file_size_bytes":10243670,"created_at":1769274818,"sha_checksum":"a85241cc80d5efb56454ae57fc145e57ec48ce0324d8d003ed057abfff4855f6","custom_metadata":{"event-id":6413975931,"version-set":"KeplerVersionManager/candidate"}},{"repo":"kpm-default-prod-local","package_name":"KeplerVersionManager","platform":"linux-x86_64","version":"1.2.13","decompressed_size_bytes":0,"file_size_bytes":10236616,"created_at":1768968429,"sha_checksum":"d90055fabb1ccd70af689228c6b202fb684fcf04992597523db18d0ed0d3e185","custom_metadata":{"event-id":6412578642,"version-set":"KeplerVersionManager/candidate"}}],"next_token":"eyJtYWpvciI6MSwibWlub3IiOjIsInBhdGNoIjoxM30="}
+2026-10-13 09:34:44 debug [KeplerVersionManagerInstaller]: vega command not found at /home/primeecto/vega/bin/vega
+2026-10-13 09:34:44 debug [KeplerVersionManagerInstaller]: No existing vega installation found
+2026-10-13 09:34:44 debug [KeplerVersionManagerInstaller]: /usr/bin/curl -G --http1.1 --location --max-time 30 --retry 3 --retry-delay 1 --write-out %\{onerror\}curl\ error:\ \(%\{exitcode\}\)\ %\{errormsg\} --data-urlencode platform=linux-x86_64 --data-urlencode version=1.4.4 --silent --show-error https://k-artifactory-external.labcollab.net/artifactory/api/kpm//kpm-default-prod-local/KeplerVersionManager 
+2026-10-13 09:34:44 debug [KeplerVersionManagerInstaller]: DOWNLOAD_LINK:  https://kepler-static-artifacts.kepler.labcollab.net/df/df2dad1b2263cf813404f6c31112935a13570ae8b79a7344e9f110250ea26fbf
+2026-10-13 09:34:44 debug [KeplerVersionManagerInstaller]: Registered temp dir: /data/pinokio/cache/TMPDIR/tmp.LOXV3eEkQH
+2026-10-13 09:34:44 debug [KeplerVersionManagerInstaller]: Executing: /usr/bin/curl --http1.1 --location --max-time 30 --retry 3 --retry-delay 1 --output /data/pinokio/cache/TMPDIR/tmp.LOXV3eEkQH/vega.tar.gz --silent --show-error "https://kepler-static-artifacts.kepler.labcollab.net/df/df2dad1b2263cf813404f6c31112935a13570ae8b79a7344e9f110250ea26fbf"
+2026-10-13 09:34:47 debug [KeplerVersionManagerInstaller]: Tar contents: vega
+2026-10-13 09:34:47 debug [KeplerVersionManagerInstaller]: vega command not found at /home/primeecto/vega/bin/vega
+2026-10-13 09:34:47 debug [KeplerVersionManagerInstaller]: Tar extraction completed with exit code: 0
+2026-10-13 09:34:47 debug [KeplerVersionManagerInstaller]: Tar output: vega
+2026-10-13 09:34:47 debug [KeplerVersionManagerInstaller]: Contents of /home/primeecto/vega/bin after extraction: total 20900
+drwxrwxr-x 2 primeecto primeecto     4096 Oct 13 09:34 .
+drwxrwxr-x 3 primeecto primeecto     4096 Oct 13 09:34 ..
+-rwxr-xr-x 1 primeecto primeecto 21393065 Oct  7 04:13 vega
+2026-10-13 09:34:47 debug [KeplerVersionManagerInstaller]: No kepler found in archive, expecting vega directly
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: Verifying installation...
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: Vega binary path: /home/primeecto/vega/bin/vega
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: Vega binary exists: yes
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: Vega binary executable: yes
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: Vega binary file info: -rwxr-xr-x 1 primeecto primeecto 21393065 Oct  7 04:13 /home/primeecto/vega/bin/vega
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: Vega expected version: 1.4.4
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: Vega installed version: 1.4.4
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: _030_download_and_install_vvm completed successfully
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: Executing vega sdk command: /home/primeecto/vega/bin/vega sdk config setup --verbose 
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: Registered temp file: /data/pinokio/cache/TMPDIR/tmp.tZRSAjulPR
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Fetching metadata
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Reading from metadata file
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Retrieving copy of metadata
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Checking components for updates
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Setting up SDK configuration
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Initiating update check for Vega CLI
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Requesting latest version for Vega CLI from remote
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Initiating update check for Telemetry
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Starting SDK configuration setup
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Failed to build the telemetry client: Failed to build the client: Unable to find a valid Telemetry directory for telemetry. We have searched for the telemetry service in: 
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: - Default telemetry directory: /home/primeecto/vega/telemetry 
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: - 2P static Telemetry directory: /tmp/kepler_telemetry_2p/kepler-telemetry 
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: 
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Error getting opt in status from telemetry: telemetry client failed to initialize
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Configuring SDK path
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: SDK configuration updated successfully
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Fetching metadata
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Retrieving copy of metadata
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: timeout waiting on goroutines for update check(s)
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Syncing metadata file /home/primeecto/vega/.metadata.json
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Reading from metadata file
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Skipping write due to cache and file contents being equal
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: Vega sdk command exit code: 0
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: _035_setup_vvm completed successfully
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: Executing vega sdk command: /home/primeecto/vega/bin/vega sdk list-remote --json 
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: Registered temp file: /data/pinokio/cache/TMPDIR/tmp.ofaBeJG2hL
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: Vega sdk command exit code: 0
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: Vega sdk command stdout: {
+  "status": "success",
+  "channel": "main",
+  "versions": [
+    {
+      "version": "0.24.12112",
+      "isLatest": true,
+      "isInstalled": false,
+      "isDefault": false,
+      "releaseDate": "2026-09-21T12:08:58-04:00"
+    },
+    {
+      "version": "0.24.12044",
+      "isLatest": false,
+      "isInstalled": false,
+      "isDefault": false,
+      "releaseDate": "2026-09-18T12:55:49-04:00"
+    },
+    {
+      "version": "0.24.9914",
+      "isLatest": false,
+      "isInstalled": false,
+      "isDefault": false,
+      "releaseDate": "2026-08-10T14:55:17-04:00"
+    },
+    {
+      "version": "0.24.9859",
+      "isLatest": false,
+      "isInstalled": false,
+      "isDefault": false,
+      "releaseDate": "2026-08-07T17:21:35-04:00"
+    },
+    {
+      "version": "0.24.9785",
+      "isLatest": false,
+      "isInstalled": false,
+      "isDefault": false,
+      "releaseDate": "2026-08-06T15:18:24-04:00"
+    },
+    {
+      "version": "0.23.9221",
+      "isLatest": false,
+      "isInstalled": false,
+      "isDefault": false,
+      "releaseDate": "2026-07-17T15:59:16-04:00"
+    },
+    {
+      "version": "0.23.9106",
+      "isLatest": false,
+      "isInstalled": false,
+      "isDefault": false,
+      "releaseDate": "2026-07-14T23:20:57-04:00"
+    },
+    {
+      "version": "0.23.8358",
+      "isLatest": false,
+      "isInstalled": false,
+      "isDefault": false,
+      "releaseDate": "2026-06-23T18:46:22-04:00"
+    },
+    {
+      "version": "0.23.8128",
+      "isLatest": false,
+      "isInstalled": false,
+      "isDefault": false,
+      "releaseDate": "2026-06-17T16:36:31-04:00"
+    },
+    {
+      "version": "0.22.6759",
+      "isLatest": false,
+      "isInstalled": false,
+      "isDefault": false,
+      "releaseDate": "2026-04-10T13:26:13-04:00"
+    }
+  ],
+  "totalCount": 10,
+  "nextToken": "eyJtYWpvciI6MCwibWlub3IiOjIyLCJwYXRjaCI6Njc1OX0="
+}
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: Executing vega sdk command: /home/primeecto/vega/bin/vega sdk list-installed 
+2026-10-13 09:34:48 debug [KeplerVersionManagerInstaller]: Registered temp file: /data/pinokio/cache/TMPDIR/tmp.udX1uR2HUT
+2026-10-13 09:34:49 debug [KeplerVersionManagerInstaller]: Vega sdk command exit code: 0
+2026-10-13 09:34:49 debug [KeplerVersionManagerInstaller]: Vega sdk command stdout: No SDK versions installed.
+2026-10-13 09:34:49 debug [KeplerVersionManagerInstaller]: Noninteractive
+2026-10-13 09:34:49 debug [KeplerVersionManagerInstaller]: NONINTERACTIVE mode: automatically installing SDK version 0.24.12112
+2026-10-13 09:34:49 debug [KeplerVersionManagerInstaller]: Executing vega sdk command: /home/primeecto/vega/bin/vega sdk install 0.24.12112 --verbose 
+2026-10-13 09:34:49 debug [KeplerVersionManagerInstaller]: Registered temp file: /data/pinokio/cache/TMPDIR/tmp.oCLVkgEGnc
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Installing SDK version
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Using Backend Config Type: http
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Downloading and installing telemetry version 0.1.81
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: getting metadata for main@0.1.81 Telemetry from remote
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: getting presigned download url for main@0.1.81 Telemetry
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: starting download request for main@0.1.81 Telemetry
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: verifying download integrity
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: calculating /data/pinokio/cache/TMPDIR/telemetry-update-2793115311/telemetry's sha256 for download integrity
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: file /data/pinokio/cache/TMPDIR/telemetry-update-2793115311/telemetry's sha256 equals received sha
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Installing telemetry from /data/pinokio/cache/TMPDIR/telemetry-update-2793115311/telemetry (version 0.1.81)
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Copying telemetry binary from /data/pinokio/cache/TMPDIR/telemetry-update-2793115311/telemetry to /home/primeecto/vega/telemetry/telemetry
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Successfully copied telemetry binary to /home/primeecto/vega/telemetry/telemetry
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Installed 0.1.81 Telemetry
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: getting metadata for main@0.24.12112 KeplerSDK from remote
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: getting presigned download url for main@0.24.12112 KeplerSDK
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: starting download request for main@0.24.12112 KeplerSDK
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: verifying download integrity
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: calculating /data/pinokio/cache/TMPDIR/kepler-install-1062915691/installer's sha256 for download integrity
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: file /data/pinokio/cache/TMPDIR/kepler-install-1062915691/installer's sha256 equals received sha
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Detected shell script, attempting to execute with bash
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: 2026/10/13 09:35:23 [WARN] vvman command not found or failed: exec: "vvman": executable file not found in $PATH
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: 2026/10/13 09:35:23 [INFO] Attempting fallback to kepler --v command
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: 2026/10/13 09:35:23 [WARN] kepler command also failed: exec: "kepler": executable file not found in $PATH
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Getting opt-in status
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Spawning /home/primeecto/vega/telemetry/telemetry with args: [-baseDir /home/primeecto/vega/telemetry -getOptIn -sendLogsToFile]
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Retrieved opt-in status: true
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Process with PID 22219 is alive
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Telemetry service already running with PID: 22219
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Writing metric to file: /home/primeecto/vega/telemetry/metrics/vega_version_manager_2026-10-13_13.metric
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: getting metadata for main@0.24.12112 Simulator from remote
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: getting presigned download url for main@0.24.12112 Simulator
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: starting download request for main@0.24.12112 Simulator
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: verifying download integrity
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: calculating /home/primeecto/vega/sdk/vega-virtual-device/main/0.24.12112's sha256 for download integrity
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: file /home/primeecto/vega/sdk/vega-virtual-device/main/0.24.12112's sha256 equals received sha
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Download Complete
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Getting opt-in status
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Spawning /home/primeecto/vega/telemetry/telemetry with args: [-baseDir /home/primeecto/vega/telemetry -getOptIn -sendLogsToFile]
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Retrieved opt-in status: true
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Process with PID 22219 is alive
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Telemetry service already running with PID: 22219
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Writing metric to file: /home/primeecto/vega/telemetry/metrics/vega_version_manager_2026-10-13_13.metric
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Set default version after install
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Getting opt-in status
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Spawning /home/primeecto/vega/telemetry/telemetry with args: [-baseDir /home/primeecto/vega/telemetry -getOptIn -sendLogsToFile]
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Retrieved opt-in status: true
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Process with PID 22219 is alive
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Telemetry service already running with PID: 22219
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VEGA STDERR: Debug: Telemetry Client: Writing metric to file: /home/primeecto/vega/telemetry/metrics/vega_version_manager_2026-10-13_13.metric
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: Vega sdk command exit code: 0
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: _060_install_sdk completed successfully
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: _060_install_sdk completed successfully
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: Executing vega sdk command: /home/primeecto/vega/bin/vega sdk list-installed 
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: Registered temp file: /data/pinokio/cache/TMPDIR/tmp.21ShoGDGaH
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: Vega sdk command exit code: 0
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: Vega sdk command stdout: Installed SDK Versions:
+
+Channel: main
+→ 0.24.12112 - Active SDK Version
+
+Total: 1 versions
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: _065_list_installed completed successfully
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: Found VSCode in PATH: /usr/bin/code
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: VSCode found at: /usr/bin/code
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: Skipping Vega Studio installation 
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: _070_install_vscode_extension completed successfully
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: Adding KEPLER_SDK_PATH=/home/primeecto/vega/sdk/vega-sdk/main/0.24.12112 to vega/env
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: Symlinked vega to kepler for backward compatibility.
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: Symlinked vega to vvman.
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: _090_write_vega_env completed successfully
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: Modifying /home/primeecto/.bashrc
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: /home/primeecto/.zshrc not found, skipping
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: /home/primeecto/.bash_profile not found, skipping
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: /home/primeecto/.zprofile not found, skipping
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: Modifying /home/primeecto/.profile
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: _100_modify_rc_files completed successfully
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: _110_goodbye completed successfully
+2026-10-13 09:36:56 debug [KeplerVersionManagerInstaller]: cleanup: trap (signal EXIT)
+2026-10-13 09:36:56 info  [KeplerVersionManagerInstaller]: === Vega CLI Installer Log Ended ===

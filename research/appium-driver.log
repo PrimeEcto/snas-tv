@@ -1,0 +1,7 @@
+dbug Appium No manifest file found at /data/SNAS/research/automation-home/node_modules/.cache/appium/extensions.yaml; creating
+dbug Appium Discovering newly installed extensions...
+- Installing '@amazon-devices/appium-vega-driver@3.34.1'
+✔ Installing '@amazon-devices/appium-vega-driver@3.34.1'
+ℹ [32mDriver vega@3.34.1 successfully installed
+[39m- automationName: [32mautomation-toolkit/JSON-RPC[39m
+- platformNames: [32m["Vega","Kepler"][39m

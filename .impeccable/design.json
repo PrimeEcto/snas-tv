@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-13T14:34:38.456885+00:00",
+  "title": "Design System: SNAS",
+  "extensions": {
+    "motion": [
+      {
+        "name": "card-focus",
+        "value": "130ms; scale 1 \u2192 1.035",
+        "purpose": "Remote focus feedback."
+      }
+    ],
+    "shadows": []
+  },
+  "components": [
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "description": "Portable preview of the native control grammar.",
+      "html": "<button class=\"ds-control\">Play preview</button>",
+      "css": ".ds-control{background:#F5F4F0;color:#0C1015;height:49px;padding:0 22px;border:2px solid transparent;font:600 17px sans-serif}.ds-control:hover,.ds-control:focus-visible{background:#E8B77C;color:#0C1015;border-color:#F5F4F0;outline:none}"
+    },
+    {
+      "name": "Secondary button",
+      "kind": "button",
+      "description": "Portable preview of the native control grammar.",
+      "html": "<button class=\"ds-control\">Play preview</button>",
+      "css": ".ds-control{background:#252D37;color:#F5F4F0;height:49px;padding:0 22px;border:2px solid transparent;font:600 17px sans-serif}.ds-control:hover,.ds-control:focus-visible{background:#E8B77C;color:#0C1015;border-color:#F5F4F0;outline:none}"
+    },
+    {
+      "name": "Filter",
+      "kind": "button",
+      "description": "Portable preview of the native control grammar.",
+      "html": "<button class=\"ds-control\">Play preview</button>",
+      "css": ".ds-control{background:#F5F4F0;color:#0C1015;height:49px;padding:0 22px;border:2px solid transparent;font:600 17px sans-serif}.ds-control:hover,.ds-control:focus-visible{background:#E8B77C;color:#0C1015;border-color:#F5F4F0;outline:none}"
+    },
+    {
+      "name": "Query display",
+      "kind": "input",
+      "description": "Portable illustration; the application runtime is native Vega.",
+      "html": "<div class=\"ds-query\">Movies, series\u2026</div>",
+      "css": ".ds-query{background:#191F27;color:#8693A2;padding:14px 15px;border:1px solid #36414D;font:22px sans-serif}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "description": "Portable illustration; the application runtime is native Vega.",
+      "html": "<nav class=\"ds-nav\"><button>Home</button><button>Movies</button></nav>",
+      "css": ".ds-nav{display:flex;gap:7px;background:#0C1015}.ds-nav button{color:#B6BEC9;background:transparent;padding:11px 15px;border:2px solid transparent;font:17px sans-serif}.ds-nav button:hover,.ds-nav button:focus-visible{color:#0C1015;background:#F5F4F0;border-color:#E8B77C}"
+    },
+    {
+      "name": "Artwork card",
+      "kind": "card",
+      "description": "Portable illustration; the application runtime is native Vega.",
+      "html": "<button class=\"ds-card\"><span>Title artwork</span><strong>Interstellar</strong></button>",
+      "css": ".ds-card{display:grid;gap:8px;padding:7px;background:#0C1015;color:#F5F4F0;border:2px solid transparent;width:138px}.ds-card span{background:#191F27;height:186px}.ds-card:hover,.ds-card:focus-visible{border-color:#F5F4F0;transform:scale(1.035);transition:transform 130ms}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The evening edit",
+    "overview": "Artwork carries the atmosphere; the interface stays precise and quiet.",
+    "keyCharacteristics": [
+      "Genuine cinematic photography and legibility gradients.",
+      "Angular controls and portrait artwork."
+    ],
+    "rules": [
+      {
+        "name": "Focus First",
+        "body": "Color is reinforced with a white frame; it never carries focus alone.",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "Do preserve artwork ratios, safe margins and visible focus."
+    ],
+    "donts": [
+      "Don't request focus for a hidden scope or remove a focused page-loading control."
+    ]
+  }
+}

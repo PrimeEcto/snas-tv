@@ -1,0 +1,10 @@
+Saved native screenshot: search
+FAIL Search, preserved query after details, and no results The expression evaluated to a falsy value:
+
+  assert.ok((await source()).includes('results for “DUNE”'))
+
+Saved native screenshot: series-details
+Saved native screenshot: episode-player
+PASS Series seasons, episode selection, next episode, episode menu
+Saved native screenshot: continue-watching
+PASS Actual episode progress appears in Continue Watching

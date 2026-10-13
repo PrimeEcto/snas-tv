@@ -1,0 +1,23 @@
+AppCrashInfoBuffer:
+  Capacity: 10
+  Size: 6
+  [0] pid: 23346
+      packageId: com.snas.tv
+      timestamp: 1517.318633932s
+      version: 0.1.0
+      buildNumber: 0
+      hadCompInFg: true
+      metadata:
+        LCM_KILLREASON: AppNotResponding
+        LCM_KILLTIME: 2026-10-13 14:32:05.751 UTC (epoch ms: 1791901925751)
+        LCM_APP_IN_FOREGROUND: true
+        LCM_ANR_REASON: Lifecycle Callback
+        LCM_APP_TRANSITION: appInst[95](com.snas.tv.main): Creating surfaces
+        LCM_APPS_IN_FOREGROUND_WHEN_CRASHED:
+        displayId: 0 appId: com.amazon.keplerlauncherapp.main instId: 1
+        LCM_PROCESS_ACTIVITY_STATE: active
+
+{
+ "index": 9,
+ "status": 0
+}

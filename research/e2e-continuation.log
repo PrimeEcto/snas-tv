@@ -1,0 +1,10 @@
+Saved native screenshot: continue-watching
+PASS Watchlist and actual movie progress appear in My List
+PASS Movies remote genre selection and page loading
+FAIL Remote search, detail return, and empty results {"error":"unknown error","message":"An unknown server-side error occurred while processing the command. Original error: No element found using the selector xpath and the arguments 
+FAIL Series seasons, episodes and Next Episode {"error":"unknown error","message":"An unknown server-side error occurred while processing the command. Original error: No element found using the selector xpath and the arguments 
+FAIL Episode progress joins Continue Watching The expression evaluated to a falsy value:
+
+  assert.ok((await source()).includes('list-tv-66732'))
+
+Saved native screenshot: about

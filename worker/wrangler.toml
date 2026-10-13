@@ -1,0 +1,26 @@
+name = "snas-movy"
+main = "src/index.ts"
+compatibility_date = "2026-10-13"
+workers_dev = true
+
+# No bindings: caching lives in Supabase (Postgres over PostgREST), and R2 is not
+# enabled on this account.
+#
+# Secrets are set with `wrangler secret put <NAME>` (or in the Cloudflare dashboard), and
+# `.env` at the repository root (git-ignored) is the single source of truth for the whole
+# stack. They are never written to this file or to the repository:
+#   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY   durable cache + app data
+#   GITHUB_TOKEN, GITHUB_REPO                 private-repo release/update proxy
+#   TMDB_PROXY_URL                            optional title resolution, via the SNAS
+#                                             catalogue proxy (the TMDB key is not here)
+#   ALLOWED_ORIGINS                           optional CORS allow-list ("*" by default)
+#   UPSTREAM_RELAY_URL, UPSTREAM_RELAY_SECRET upstream fetch relay (see docs/BACKEND.md);
+#                                             without it the upstream answers HTTP 429
+#
+# Local development: copy .dev.vars.example to .dev.vars (git-ignored) and fill it in.
+
+[observability]
+enabled = true
+
+[placement]
+mode = "smart"

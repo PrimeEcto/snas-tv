@@ -1,0 +1,39 @@
+# Local development secrets for `wrangler dev` (copy to .dev.vars, which is git-ignored).
+#
+# In production these are set as Worker secrets, not committed anywhere:
+#   cd worker && wrangler secret put SUPABASE_URL
+#
+# `.env` at the repository root (git-ignored, mode 600) is the single source of truth for the
+# whole stack: `supabase secrets set --env-file .env --project-ref cwfflqvzzkzytxuaxahy`
+# pushes the function secrets (TMDB_API_KEY, RELAY_SECRET), and `wrangler secret put` sets the
+# Worker-only ones listed here.
+#
+# All of them are optional except the relay, without which the upstream answers the Worker
+# with HTTP 429.
+
+# Durable cache (Supabase Postgres over PostgREST). Without these the Worker
+# re-fetches upstream every time and hits the upstream rate limit much sooner.
+SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
+
+# Private repository used for the on-launch update check. GITHUB_REPO is
+# "owner/name"; the token needs Contents: read only.
+GITHUB_REPO=
+GITHUB_TOKEN=
+
+# Optional: lets the device ask with only a tmdbId, instead of sending the title. This is the
+# SNAS catalogue proxy, not a TMDB credential — the TMDB key lives only in the function's
+# environment variables, never in the app or in a Worker secret.
+TMDB_PROXY_URL=https://cwfflqvzzkzytxuaxahy.supabase.co/functions/v1/tmdb
+
+# Optional CORS allow-list; defaults to "*" because this API is read-only.
+ALLOWED_ORIGINS=*
+
+# Upstream fetch relay (see docs/BACKEND.md). The upstream blocks Cloudflare's shared egress
+# IPs with HTTP 429, so the HTTP fetch is made by the `movy-relay` function and these point at
+# it. The seed is bound to the client that requested it, so the relay also obtains the seed and
+# the sources request together in one invocation; the Worker never fetches a seed of its own
+# while a relay is configured. The secret must equal that function's RELAY_SECRET. Without
+# these the Worker fetches upstream directly and every provider fails with HTTP 429.
+UPSTREAM_RELAY_URL=https://cwfflqvzzkzytxuaxahy.supabase.co/functions/v1/movy-relay
+UPSTREAM_RELAY_SECRET=

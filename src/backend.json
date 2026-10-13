@@ -1,0 +1,4 @@
+{
+  "tmdbProxy": "https://cwfflqvzzkzytxuaxahy.supabase.co/functions/v1/tmdb",
+  "workerBase": "https://snas-movy.blockmindmcp.workers.dev"
+}

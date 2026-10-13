@@ -1,0 +1,74 @@
+Oct 13 14:19:31.738343 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139740409996864 INFO com.amazon.keplerscript: [KeplerScript-Native] [MountingManager::SurfaceTelemetryLogger] surfaceId=1 mutations=2636 transactions=149 commitTime={:.2f}ms diffTime={:.2f}ms layoutTime={:.2f}ms mountTime={:.2f}ms
+Oct 13 14:19:36.738524 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139740409996864 INFO com.amazon.keplerscript: [KeplerScript-Native] [MountingManager::SurfaceTelemetryLogger] surfaceId=1 mutations=2641 transactions=154 commitTime={:.2f}ms diffTime={:.2f}ms layoutTime={:.2f}ms mountTime={:.2f}ms
+Oct 13 14:19:39.894974 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 8 I GWSI_LOG:51 KB key:[INPUT] state:1 evtId:5
+Oct 13 14:19:39.895137 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I GWSI_LOG:52 injectKeyEventToInputD, sec: 1791901179, usec: 894661
+Oct 13 14:19:39.895321 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I GWSI_LOG:53 Injected key:[INPUT] state:1 evtId:5
+Oct 13 14:19:40.000841 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 8 I GWSI_LOG:54 KB key:[INPUT] state:0 evtId:6
+Oct 13 14:19:40.000903 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I GWSI_LOG:55 injectKeyEventToInputD, sec: 1791901180, usec: 499
+Oct 13 14:19:40.001109 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I GWSI_LOG:56 Injected key:[INPUT] state:0 evtId:6
+Oct 13 14:19:40.738216 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 8 I GWSI_LOG:57 send touch down x: 375 y: 941
+Oct 13 14:19:40.738251 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO GestureArbitratorManager: constructing arbitrator
+Oct 13 14:19:40.738276 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO com.amazon.kepler.gesture.arbitrator.stable: registerGestureHolderDelegate (legacy): no pointerId
+Oct 13 14:19:40.738300 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO com.amazon.kepler.gesture.arbitrator.stable: registerGestureHolderDelegate (legacy): no pointerId
+Oct 13 14:19:40.738316 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO GestureArbitratorManager: acquireArbitrator: reusing existing arbitrator
+Oct 13 14:19:40.738332 amazon-7c6daea3e2f75256 local0.err com.snas.tv[11737]: 2 E GWSI_LOG:58 Client returned invalid evtId=7, please check with client
+Oct 13 14:19:40.738356 amazon-7c6daea3e2f75256 local0.err com.snas.tv[11737]: 2 E GWSI_LOG:59 Invalid evtId 7, it could be possible mixing using async and sync handler, please check with client
+Oct 13 14:19:40.738373 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I Volta: 139741598009152 [RenderObject] Touch Down : [nativeId=7, id=0, location=Point(x=187 y=470)] | notifyListeners() | onTouchBegan() | event() | notifyListeners() | onTouchBegan() | event() | 
+Oct 13 14:19:40.837604 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 8 I GWSI_LOG:60 send touch up x: 375 y: 941
+Oct 13 14:19:40.837790 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO GestureArbitratorManager: acquireArbitrator: reusing existing arbitrator
+Oct 13 14:19:40.837873 amazon-7c6daea3e2f75256 local0.err com.snas.tv[11737]: 2 E GWSI_LOG:61 Client returned invalid evtId=8, please check with client
+Oct 13 14:19:40.837930 amazon-7c6daea3e2f75256 local0.err com.snas.tv[11737]: 2 E GWSI_LOG:62 Invalid evtId 8, it could be possible mixing using async and sync handler, please check with client
+Oct 13 14:19:40.837958 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO GestureArbitratorManager: destructing arbitrator
+Oct 13 14:19:40.837982 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I Volta: 139741598009152 [RenderObject] Touch Up : [nativeId=8, id=0, location=Point(x=187 y=470)] | notifyListeners() | onTouchEnded() | event() | notifyListeners() | onTouchEnded() | event() | 
+Oct 13 14:19:40.851115 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I Volta: 139741598009152 [createCompatGesture] Creating compat gesture for unstable=0x560497a04010
+Oct 13 14:19:40.851234 amazon-7c6daea3e2f75256 local0.err com.snas.tv[11737]: 2 E Volta: 139741598009152 [AbiUtils] IView not found for the RenderObject
+Oct 13 14:19:40.851257 amazon-7c6daea3e2f75256 local0.err com.snas.tv[11737]: 139741598009152 ERROR com.amazon.kepler.uitoolkit.react.svg: RNSVGDelegate::rerender view parent is null, aborting
+Oct 13 14:19:40.851284 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO com.amazon.kepler.uitoolkit.react.svg: RNSVGGroupDelegate::getINode
+Oct 13 14:19:41.738710 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139740409996864 INFO com.amazon.keplerscript: [KeplerScript-Native] [MountingManager::SurfaceTelemetryLogger] surfaceId=1 mutations=2694 transactions=161 commitTime={:.2f}ms diffTime={:.2f}ms layoutTime={:.2f}ms mountTime={:.2f}ms
+Oct 13 14:19:43.501437 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 8 I GWSI_LOG:63 send touch down x: 557 y: 941
+Oct 13 14:19:43.501984 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO GestureArbitratorManager: constructing arbitrator
+Oct 13 14:19:43.502112 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO com.amazon.kepler.gesture.arbitrator.stable: registerGestureHolderDelegate (legacy): no pointerId
+Oct 13 14:19:43.502141 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO com.amazon.kepler.gesture.arbitrator.stable: registerGestureHolderDelegate (legacy): no pointerId
+Oct 13 14:19:43.502168 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO GestureArbitratorManager: acquireArbitrator: reusing existing arbitrator
+Oct 13 14:19:43.503489 amazon-7c6daea3e2f75256 local0.err com.snas.tv[11737]: 2 E GWSI_LOG:64 Client returned invalid evtId=9, please check with client
+Oct 13 14:19:43.503512 amazon-7c6daea3e2f75256 local0.err com.snas.tv[11737]: 2 E GWSI_LOG:65 Invalid evtId 9, it could be possible mixing using async and sync handler, please check with client
+Oct 13 14:19:43.503527 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I Volta: 139741598009152 [RenderObject] Touch Down : [nativeId=9, id=0, location=Point(x=278 y=470)] | notifyListeners() | onTouchBegan() | event() | notifyListeners() | onTouchBegan() | event() | 
+Oct 13 14:19:43.600245 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 8 I GWSI_LOG:66 send touch up x: 557 y: 941
+Oct 13 14:19:43.600834 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO GestureArbitratorManager: acquireArbitrator: reusing existing arbitrator
+Oct 13 14:19:43.600878 amazon-7c6daea3e2f75256 local0.err com.snas.tv[11737]: 2 E GWSI_LOG:67 Client returned invalid evtId=10, please check with client
+Oct 13 14:19:43.600897 amazon-7c6daea3e2f75256 local0.err com.snas.tv[11737]: 2 E GWSI_LOG:68 Invalid evtId 10, it could be possible mixing using async and sync handler, please check with client
+Oct 13 14:19:43.600914 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO GestureArbitratorManager: destructing arbitrator
+Oct 13 14:19:43.600939 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I Volta: 139741598009152 [RenderObject] Touch Up : [nativeId=10, id=0, location=Point(x=278 y=470)] | notifyListeners() | onTouchEnded() | event() | notifyListeners() | onTouchEnded() | event() | 
+Oct 13 14:19:44.348621 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 8 I GWSI_LOG:69 send touch down x: 1352 y: 941
+Oct 13 14:19:44.348643 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO GestureArbitratorManager: constructing arbitrator
+Oct 13 14:19:44.348658 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO com.amazon.kepler.gesture.arbitrator.stable: registerGestureHolderDelegate (legacy): no pointerId
+Oct 13 14:19:44.348675 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO com.amazon.kepler.gesture.arbitrator.stable: registerGestureHolderDelegate (legacy): no pointerId
+Oct 13 14:19:44.348689 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO GestureArbitratorManager: acquireArbitrator: reusing existing arbitrator
+Oct 13 14:19:44.348705 amazon-7c6daea3e2f75256 local0.err com.snas.tv[11737]: 2 E GWSI_LOG:70 Client returned invalid evtId=11, please check with client
+Oct 13 14:19:44.348722 amazon-7c6daea3e2f75256 local0.err com.snas.tv[11737]: 2 E GWSI_LOG:71 Invalid evtId 11, it could be possible mixing using async and sync handler, please check with client
+Oct 13 14:19:44.348737 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I Volta: 139741598009152 [RenderObject] Touch Down : [nativeId=11, id=0, location=Point(x=676 y=470)] | notifyListeners() | onTouchBegan() | event() | notifyListeners() | onTouchBegan() | event() | 
+Oct 13 14:19:44.444898 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 8 I GWSI_LOG:72 send touch up x: 1352 y: 941
+Oct 13 14:19:44.445238 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO GestureArbitratorManager: acquireArbitrator: reusing existing arbitrator
+Oct 13 14:19:44.445309 amazon-7c6daea3e2f75256 local0.err com.snas.tv[11737]: 2 E GWSI_LOG:73 Client returned invalid evtId=12, please check with client
+Oct 13 14:19:44.445332 amazon-7c6daea3e2f75256 local0.err com.snas.tv[11737]: 2 E GWSI_LOG:74 Invalid evtId 12, it could be possible mixing using async and sync handler, please check with client
+Oct 13 14:19:44.445349 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO GestureArbitratorManager: destructing arbitrator
+Oct 13 14:19:44.445364 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I Volta: 139741598009152 [RenderObject] Touch Up : [nativeId=12, id=0, location=Point(x=676 y=470)] | notifyListeners() | onTouchEnded() | event() | notifyListeners() | onTouchEnded() | event() | 
+Oct 13 14:19:44.463458 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I Volta: 139741598009152 [createCompatGesture] Creating compat gesture for unstable=0x5604979fdff0
+Oct 13 14:19:44.463527 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I Volta: 139741598009152 [createCompatGesture] Creating compat gesture for unstable=0x560497a916a0
+Oct 13 14:19:44.463546 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I Volta: 139741598009152 [createCompatGesture] Creating compat gesture for unstable=0x560495eb4450
+Oct 13 14:19:44.463561 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I Volta: 139741598009152 [createCompatGesture] Creating compat gesture for unstable=0x560497a7c380
+Oct 13 14:19:44.463575 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I Volta: 139741598009152 [createCompatGesture] Creating compat gesture for unstable=0x560497a894e0
+Oct 13 14:19:44.463598 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I Volta: 139741598009152 [createCompatGesture] Creating compat gesture for unstable=0x560497b9a6d0
+Oct 13 14:19:44.463613 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I Volta: 139741598009152 [ScrollableRenderObject] Not scrolling as scrollable already at requested position
+Oct 13 14:19:44.463628 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I Volta: 139741598009152 [createCompatGesture] Creating compat gesture for unstable=0x560497ba2eb0
+Oct 13 14:19:44.463642 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO com.amazon.kepler.uitoolkit.react.svg: RNSVGSvgDelegate::RNSVGVSvgView before svgSvg_
+Oct 13 14:19:44.463659 amazon-7c6daea3e2f75256 local0.warning com.snas.tv[11737]: 2 W Volta: 139741598009152 [Style] Size not set for style layer
+Oct 13 14:19:44.463675 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO com.amazon.kepler.uitoolkit.react.svg: RNSVGSvgDelegate::RNSVGVSvgView after svgSvg_
+Oct 13 14:19:44.463701 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I Volta: 139741598009152 [createCompatGesture] Creating compat gesture for unstable=0x560497ba8a60
+Oct 13 14:19:44.463717 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I Volta: 139741598009152 [createCompatGesture] Creating compat gesture for unstable=0x560497baf860
+Oct 13 14:19:44.463731 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 139741598009152 INFO com.amazon.kepler.uitoolkit.react.svg: RNSVGGroupDelegate::RNSVGGroupDelegate
+Oct 13 14:19:44.463762 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I Volta: 139741598009152 [createCompatGesture] Creating compat gesture for unstable=0x560497bb58b0
+Oct 13 14:19:44.500897 amazon-7c6daea3e2f75256 local0.info com.snas.tv[11737]: 2 I Volta: 139741598009152 [createCompatGesture] Creating compat gesture for unstable=0x560497bbb3a0
+Oct 13 14:19:44.500961 amazon-7c6daea3e2f75256 local0.err com.snas.tv[11737]: 2 E Volta: 139741598009152 [AbiUtils] IView not found for the RenderObject
+Oct 13 14:19:44.500983 amazon-7c6daea3e2f75256 local0.err com.snas.tv[11737]: 139741598009152 ERROR com.amazon.kepler.uitoolkit.react.svg: RNSVGDelegate::rerender view parent is null, aborting
+

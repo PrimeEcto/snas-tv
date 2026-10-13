@@ -1,0 +1,39 @@
+node_modules/
+build/
+dist/
+research/automation*/
+research/*.html
+research/*.ppm
+src/config.local.json
+.env*
+!.env.example
+
+# The account owner's plaintext TMDB credential, attached outside version control.
+TMDBAPI
+
+# Supabase CLI project link (a project ref, not a secret, but generated).
+supabase/.temp/
+
+# Cloudflare credentials supplied by the account owner; never committed.
+CloudflareCredentials/
+
+# Worker-local state and secrets
+worker/node_modules/
+worker/.wrangler/
+worker/.dev.vars
+worker/test/fixtures/live-*.json
+!worker/.dev.vars.example
+.codebase-memory/
+.aider*
+
+# Freebuff agent runtime state (project id, caches).
+.freebuff/
+
+# Large local research artifacts: virtual-device disk images, guest journals and
+# shared libraries captured while testing. Evidence stays in text form; these do not
+# belong in a repository (and one disk image was over GitHub's 100 MB limit).
+research/vvd-data-backup/
+research/*-journal/
+research/*.qcow2*
+research/*.so
+research/*.so.*

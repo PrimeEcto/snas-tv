@@ -1,0 +1,23 @@
+AppCrashInfoBuffer:
+  Capacity: 10
+  Size: 3
+  [0] pid: 6061
+      packageId: com.snas.tv
+      timestamp: 214.411889130s
+      version: 0.1.0
+      buildNumber: 0
+      hadCompInFg: true
+      metadata:
+        LCM_KILLREASON: 
+        LCM_KILLTIME: 2026-10-13 14:10:22.845 UTC (epoch ms: 1791900622845)
+        LCM_APP_IN_FOREGROUND: true
+        LCM_APPS_IN_FOREGROUND_WHEN_CRASHED:
+        displayId: 0 appId: com.snas.tv.main instId: 41
+        LCM_PROCESS_ACTIVITY_STATE: active
+
+{
+ "providers": [
+  "acr"
+ ],
+ "status": 0
+}

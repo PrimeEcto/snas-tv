@@ -1,0 +1,1444 @@
+[
+  {
+    "id": 157336,
+    "kind": "movie",
+    "title": "Interstellar",
+    "year": "2014",
+    "overview": "The adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel and conquer the vast distances involved in an interstellar voyage.",
+    "poster": "/yQvGrMoipbRoddT0ZR8tPoR7NfX.jpg",
+    "backdrop": "/8sNiAPPYU14PUepFNeSNGUTiHW.jpg",
+    "genres": [
+      "Adventure",
+      "Drama",
+      "Science Fiction"
+    ],
+    "rating": null,
+    "runtime": 169,
+    "cast": [
+      "Matthew McConaughey",
+      "Anne Hathaway",
+      "Michael Caine",
+      "Jessica Chastain",
+      "Casey Affleck",
+      "Wes Bentley",
+      "Topher Grace",
+      "Mackenzie Foy"
+    ],
+    "director": "Christopher Nolan",
+    "seasons": null
+  },
+  {
+    "id": 693134,
+    "kind": "movie",
+    "title": "Dune: Part Two",
+    "year": "2024",
+    "overview": "Follow the mythic journey of Paul Atreides as he unites with Chani and the Fremen while on a path of revenge against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the known universe, Paul endeavors to prevent a terrible future only he can foresee.",
+    "poster": "/6izwz7rsy95ARzTR3poZ8H6c5pp.jpg",
+    "backdrop": "/eZ239CUp1d6OryZEBPnO2n87gMG.jpg",
+    "genres": [
+      "Science Fiction",
+      "Adventure"
+    ],
+    "rating": null,
+    "runtime": 167,
+    "cast": [
+      "Timothée Chalamet",
+      "Zendaya",
+      "Rebecca Ferguson",
+      "Javier Bardem",
+      "Josh Brolin",
+      "Austin Butler",
+      "Florence Pugh",
+      "Dave Bautista"
+    ],
+    "director": "Denis Villeneuve",
+    "seasons": null
+  },
+  {
+    "id": 438631,
+    "kind": "movie",
+    "title": "Dune",
+    "year": "2021",
+    "overview": "Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence - a commodity capable of unlocking humanity's greatest potential - only those who can conquer their fear will survive.",
+    "poster": "/v1tRXZ4JtD2Iv6fjkPvT4GiwslV.jpg",
+    "backdrop": "/zRKQW58MBEY078AxkHxEJzUskCl.jpg",
+    "genres": [
+      "Science Fiction",
+      "Adventure"
+    ],
+    "rating": null,
+    "runtime": 155,
+    "cast": [
+      "Timothée Chalamet",
+      "Rebecca Ferguson",
+      "Oscar Isaac",
+      "Jason Momoa",
+      "Stellan Skarsgård",
+      "Stephen McKinley Henderson",
+      "Josh Brolin",
+      "Javier Bardem"
+    ],
+    "director": "Denis Villeneuve",
+    "seasons": null
+  },
+  {
+    "id": 27205,
+    "kind": "movie",
+    "title": "Inception",
+    "year": "2010",
+    "overview": "Cobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets is offered a chance to regain his old life as payment for a task considered to be impossible: \"inception\", the implantation of another person's idea into a target's subconscious.",
+    "poster": "/xlaY2zyzMfkhk0HSC5VUwzoZPU1.jpg",
+    "backdrop": "/8ZTVqvKDQ8emSGUEMjsS4yHAwrp.jpg",
+    "genres": [
+      "Action",
+      "Science Fiction",
+      "Crime"
+    ],
+    "rating": null,
+    "runtime": 148,
+    "cast": [
+      "Leonardo DiCaprio",
+      "Joseph Gordon-Levitt",
+      "Ken Watanabe",
+      "Tom Hardy",
+      "Elliot Page",
+      "Dileep Rao",
+      "Cillian Murphy",
+      "Tom Berenger"
+    ],
+    "director": "Christopher Nolan",
+    "seasons": null
+  },
+  {
+    "id": 335984,
+    "kind": "movie",
+    "title": "Blade Runner 2049",
+    "year": "2017",
+    "overview": "Thirty years after the events of the first film, a new blade runner, LAPD Officer K, unearths a long-buried secret that has the potential to plunge what's left of society into chaos. K's discovery leads him on a quest to find Rick Deckard, a former LAPD blade runner who has been missing for 30 years.",
+    "poster": "/gajva2L0rPYkEWjzgFlBXCAVBE5.jpg",
+    "backdrop": "/gNdLJU9TxrpGx4dkZidjys3fyy0.jpg",
+    "genres": [
+      "Science Fiction",
+      "Drama"
+    ],
+    "rating": null,
+    "runtime": 164,
+    "cast": [
+      "Ryan Gosling",
+      "Harrison Ford",
+      "Ana de Armas",
+      "Dave Bautista",
+      "Robin Wright",
+      "Sylvia Hoeks",
+      "Mackenzie Davis",
+      "Jared Leto"
+    ],
+    "director": "Hampton Fancher  \n                       Screenplay, Story \n                     \n                     \n                        Philip K. Dick  \n                       Characters \n                     \n                     \n                        Denis Villeneuve",
+    "seasons": null
+  },
+  {
+    "id": 155,
+    "kind": "movie",
+    "title": "The Dark Knight",
+    "year": "2008",
+    "overview": "Batman raises the stakes in his war on crime. With the help of Lt. Jim Gordon and District Attorney Harvey Dent, Batman sets out to dismantle the remaining criminal organizations that plague the streets. The partnership proves to be effective, but they soon find themselves prey to a reign of chaos unleashed by a rising criminal mastermind known to the terrified citizens of Gotham as the Joker.",
+    "poster": "/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+    "backdrop": "/9FE5eD92WfVCiivM9Pq9GVSrlWk.jpg",
+    "genres": [
+      "Action",
+      "Thriller",
+      "Crime"
+    ],
+    "rating": null,
+    "runtime": 152,
+    "cast": [
+      "Christian Bale",
+      "Heath Ledger",
+      "Aaron Eckhart",
+      "Michael Caine",
+      "Maggie Gyllenhaal",
+      "Gary Oldman",
+      "Morgan Freeman",
+      "Monique Gabriela Curnen"
+    ],
+    "director": "Christopher Nolan",
+    "seasons": null
+  },
+  {
+    "id": 680,
+    "kind": "movie",
+    "title": "Pulp Fiction",
+    "year": "1994",
+    "overview": "A burger-loving hit man, his philosophical partner, a drug-addled gangster's moll and a washed-up boxer converge in this sprawling, comedic crime caper. Their adventures unfurl in three stories that ingeniously trip back and forth in time.",
+    "poster": "/vQWk5YBFWF4bZaofAbv0tShwBvQ.jpg",
+    "backdrop": "/suaEOtk1N1sgg2MTM7oZd2cfVp3.jpg",
+    "genres": [
+      "Thriller",
+      "Crime",
+      "Comedy"
+    ],
+    "rating": null,
+    "runtime": 154,
+    "cast": [
+      "John Travolta",
+      "Samuel L. Jackson",
+      "Uma Thurman",
+      "Bruce Willis",
+      "Ving Rhames",
+      "Harvey Keitel",
+      "Eric Stoltz",
+      "Tim Roth"
+    ],
+    "director": "Quentin Tarantino",
+    "seasons": null
+  },
+  {
+    "id": 550,
+    "kind": "movie",
+    "title": "Fight Club",
+    "year": "1999",
+    "overview": "A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground \"fight clubs\" forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion.",
+    "poster": "/jSziioSwPVrOy9Yow3XhWIBDjq1.jpg",
+    "backdrop": "/c6OLXfKAk5BKeR6broC8pYiCquX.jpg",
+    "genres": [
+      "Drama",
+      "Thriller"
+    ],
+    "rating": null,
+    "runtime": 139,
+    "cast": [
+      "Edward Norton",
+      "Brad Pitt",
+      "Helena Bonham Carter",
+      "Meat Loaf",
+      "Jared Leto",
+      "Zach Grenier",
+      "Holt McCallany",
+      "Eion Bailey"
+    ],
+    "director": "David Fincher",
+    "seasons": null
+  },
+  {
+    "id": 278,
+    "kind": "movie",
+    "title": "The Shawshank Redemption",
+    "year": "1994",
+    "overview": "Imprisoned in the 1940s for the double murder of his wife and her lover, upstanding banker Andy Dufresne begins a new life at the Shawshank prison, where he puts his accounting skills to work for an amoral warden. During his long stretch in prison, Dufresne comes to be admired by the other inmates -- including an older prisoner named Red -- for his integrity and unquenchable sense of hope.",
+    "poster": "/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg",
+    "backdrop": "/pNjh59JSxChQktamG3LMp9ZoQzp.jpg",
+    "genres": [
+      "Drama",
+      "Crime"
+    ],
+    "rating": null,
+    "runtime": 142,
+    "cast": [
+      "Tim Robbins",
+      "Morgan Freeman",
+      "Bob Gunton",
+      "William Sadler",
+      "Clancy Brown",
+      "Gil Bellows",
+      "James Whitmore",
+      "Mark Rolston"
+    ],
+    "director": "Frank Darabont",
+    "seasons": null
+  },
+  {
+    "id": 13,
+    "kind": "movie",
+    "title": "Forrest Gump",
+    "year": "1994",
+    "overview": "A man with a low IQ has accomplished great things in his life and been present during significant historic events—in each case, far exceeding what anyone imagined he could do. But despite all he has achieved, his one true love eludes him.",
+    "poster": "/saHP97rTPS5eLmrLQEcANmKrsFl.jpg",
+    "backdrop": "/66Kn4XWhkuPkJxOJyPEx4U2CUfN.jpg",
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Romance"
+    ],
+    "rating": null,
+    "runtime": 142,
+    "cast": [
+      "Tom Hanks",
+      "Robin Wright",
+      "Gary Sinise",
+      "Sally Field",
+      "Mykelti Williamson",
+      "Michael Conner Humphreys",
+      "Hanna Hall",
+      "Haley Joel Osment"
+    ],
+    "director": "Robert Zemeckis",
+    "seasons": null
+  },
+  {
+    "id": 120,
+    "kind": "movie",
+    "title": "The Lord of the Rings: The Fellowship of the Ring",
+    "year": "2001",
+    "overview": "Young hobbit Frodo Baggins, after inheriting a mysterious ring from his uncle Bilbo, must leave his home in order to keep it from falling into the hands of its evil creator. Along the way, a fellowship is formed to protect the ringbearer and make sure that the ring arrives at its final destination: Mt. Doom, the only place where it can be destroyed.",
+    "poster": "/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg",
+    "backdrop": "/oiwc338EoBgS4sEI2ixAny4KQKg.jpg",
+    "genres": [
+      "Adventure",
+      "Fantasy",
+      "Action"
+    ],
+    "rating": null,
+    "runtime": 179,
+    "cast": [
+      "Elijah Wood",
+      "Ian McKellen",
+      "Viggo Mortensen",
+      "Sean Astin",
+      "Ian Holm",
+      "Liv Tyler",
+      "Christopher Lee",
+      "Sean Bean"
+    ],
+    "director": "Peter Jackson",
+    "seasons": null
+  },
+  {
+    "id": 121,
+    "kind": "movie",
+    "title": "The Lord of the Rings: The Two Towers",
+    "year": "2002",
+    "overview": "Frodo Baggins and the other members of the Fellowship continue on their sacred quest to destroy the One Ring--but on separate paths. Their destinies lie at two towers--Orthanc Tower in Isengard, where the corrupt wizard Saruman awaits, and Sauron's fortress at Barad-dur, deep within the dark lands of Mordor.",
+    "poster": "/5VTN0pR8gcqV3EPUHHfMGnJYN9L.jpg",
+    "backdrop": "/6G73mNyooWAEQTpckPSnFxFoNmc.jpg",
+    "genres": [
+      "Adventure",
+      "Fantasy",
+      "Action"
+    ],
+    "rating": null,
+    "runtime": 179,
+    "cast": [
+      "Elijah Wood",
+      "Ian McKellen",
+      "Viggo Mortensen",
+      "Sean Astin",
+      "Andy Serkis",
+      "John Rhys-Davies",
+      "Orlando Bloom",
+      "Bernard Hill"
+    ],
+    "director": "Peter Jackson",
+    "seasons": null
+  },
+  {
+    "id": 122,
+    "kind": "movie",
+    "title": "The Lord of the Rings: The Return of the King",
+    "year": "2003",
+    "overview": "As armies mass for a final battle that will decide the fate of the world--and powerful, ancient forces of Light and Dark compete to determine the outcome--one member of the Fellowship of the Ring is revealed as the noble heir to the throne of the Kings of Men. Yet, the sole hope for triumph over evil lies with a brave hobbit, Frodo, who, accompanied by his loyal friend Sam and the hideous, wretched Gollum, ventures deep into the very dark heart of Mordor on his seemingly impossible quest to destroy the Ring of Power.​",
+    "poster": "/rCzpDGLbOoPwLjy3OAm5NUPOTrC.jpg",
+    "backdrop": "/ctiw6FZK4N36LmkjSklWEbuvlq9.jpg",
+    "genres": [
+      "Adventure",
+      "Fantasy",
+      "Action"
+    ],
+    "rating": null,
+    "runtime": 201,
+    "cast": [
+      "Elijah Wood",
+      "Ian McKellen",
+      "Viggo Mortensen",
+      "Sean Astin",
+      "Andy Serkis",
+      "Dominic Monaghan",
+      "Billy Boyd",
+      "John Noble"
+    ],
+    "director": "Peter Jackson",
+    "seasons": null
+  },
+  {
+    "id": 603,
+    "kind": "movie",
+    "title": "The Matrix",
+    "year": "1999",
+    "overview": "Set in the 22nd century, The Matrix tells the story of a computer hacker who joins a group of underground insurgents fighting the vast and powerful computers who now rule the earth.",
+    "poster": "/dXNAPwY7VrqMAo51EKhhCJfaGb5.jpg",
+    "backdrop": "/tlm8UkiQsitc8rSuIAscQDCnP8d.jpg",
+    "genres": [
+      "Action",
+      "Science Fiction"
+    ],
+    "rating": null,
+    "runtime": 136,
+    "cast": [
+      "Keanu Reeves",
+      "Laurence Fishburne",
+      "Carrie-Anne Moss",
+      "Hugo Weaving",
+      "Gloria Foster",
+      "Joe Pantoliano",
+      "Marcus Chong",
+      "Julian Arahanga"
+    ],
+    "director": "Lilly Wachowski",
+    "seasons": null
+  },
+  {
+    "id": 424,
+    "kind": "movie",
+    "title": "Schindler's List",
+    "year": "1993",
+    "overview": "The true story of how businessman Oskar Schindler saved over a thousand Jewish lives from the Nazis while they worked as slaves in his factory during World War II.",
+    "poster": "/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg",
+    "backdrop": "/zb6fM1CX41D9rF9hdgclu0peUmy.jpg",
+    "genres": [
+      "Drama",
+      "History",
+      "War"
+    ],
+    "rating": null,
+    "runtime": 195,
+    "cast": [
+      "Liam Neeson",
+      "Ben Kingsley",
+      "Ralph Fiennes",
+      "Caroline Goodall",
+      "Jonathan Sagall",
+      "Embeth Davidtz",
+      "Małgorzata Gebel",
+      "Shmuel Levy"
+    ],
+    "director": "Steven Spielberg",
+    "seasons": null
+  },
+  {
+    "id": 497,
+    "kind": "movie",
+    "title": "The Green Mile",
+    "year": "1999",
+    "overview": "A supernatural tale set on death row in a Southern prison, where gentle giant John Coffey possesses the mysterious power to heal people's ailments. When the cell block's head guard, Paul Edgecomb, recognizes Coffey's miraculous gift, he tries desperately to help stave off the condemned man's execution.",
+    "poster": "/8VG8fDNiy50H4FedGwdSVUPoaJe.jpg",
+    "backdrop": "/amZavErrjrdgDwhsIdpWxHNenIx.jpg",
+    "genres": [
+      "Fantasy",
+      "Drama",
+      "Crime"
+    ],
+    "rating": null,
+    "runtime": 189,
+    "cast": [
+      "Tom Hanks",
+      "David Morse",
+      "Bonnie Hunt",
+      "Michael Clarke Duncan",
+      "James Cromwell",
+      "Michael Jeter",
+      "Graham Greene",
+      "Doug Hutchison"
+    ],
+    "director": "Frank Darabont",
+    "seasons": null
+  },
+  {
+    "id": 129,
+    "kind": "movie",
+    "title": "Spirited Away",
+    "year": "2001",
+    "overview": "A young girl, Chihiro, becomes trapped in a strange new world of spirits. When her parents undergo a mysterious transformation, she must call upon the courage she never knew she had to free her family.",
+    "poster": "/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg",
+    "backdrop": "/6oaL4DP75yABrd5EbC4H2zq5ghc.jpg",
+    "genres": [
+      "Animation",
+      "Family",
+      "Fantasy"
+    ],
+    "rating": null,
+    "runtime": 125,
+    "cast": [
+      "Rumi Hiiragi",
+      "Miyu Irino",
+      "Mari Natsuki",
+      "Takashi Naito",
+      "Yasuko Sawaguchi",
+      "Tatsuya Gashuin",
+      "Ryunosuke Kamiki",
+      "Yumi Tamai"
+    ],
+    "director": "Hayao Miyazaki",
+    "seasons": null
+  },
+  {
+    "id": 19995,
+    "kind": "movie",
+    "title": "Avatar",
+    "year": "2009",
+    "overview": "In the 22nd century, a paraplegic Marine is dispatched to the moon Pandora on a unique mission, but becomes torn between following orders and protecting an alien civilization.",
+    "poster": "/gKY6q7SjCkAU6FqvqWybDYgUKIF.jpg",
+    "backdrop": "/vL5LR6WdxWPjLPFRLe133jXWsh5.jpg",
+    "genres": [
+      "Science Fiction",
+      "Action",
+      "Adventure"
+    ],
+    "rating": null,
+    "runtime": 162,
+    "cast": [
+      "Sam Worthington",
+      "Zoe Saldaña",
+      "Sigourney Weaver",
+      "Stephen Lang",
+      "Michelle Rodriguez",
+      "Giovanni Ribisi",
+      "Joel David Moore",
+      "CCH Pounder"
+    ],
+    "director": "James Cameron",
+    "seasons": null
+  },
+  {
+    "id": 105,
+    "kind": "movie",
+    "title": "Back to the Future",
+    "year": "1985",
+    "overview": "Eighties teenager Marty McFly is accidentally sent back in time to 1955, inadvertently disrupting his parents' first meeting and attracting his mother's romantic interest. Marty must repair the damage to history by rekindling his parents' romance and - with the help of his eccentric inventor friend Doc Brown - return to 1985.",
+    "poster": "/vN5B5WgYscRGcQpVhHl6p9DDTP0.jpg",
+    "backdrop": "/5bzPWQ2dFUl2aZKkp7ILJVVkRed.jpg",
+    "genres": [
+      "Adventure",
+      "Comedy",
+      "Science Fiction"
+    ],
+    "rating": null,
+    "runtime": 116,
+    "cast": [
+      "Michael J. Fox",
+      "Christopher Lloyd",
+      "Crispin Glover",
+      "Lea Thompson",
+      "Claudia Wells",
+      "Thomas F. Wilson",
+      "Marc McClure",
+      "Wendie Jo Sperber"
+    ],
+    "director": "Robert Zemeckis",
+    "seasons": null
+  },
+  {
+    "id": 11,
+    "kind": "movie",
+    "title": "Star Wars",
+    "year": "1977",
+    "overview": "Princess Leia is captured and held hostage by the evil Imperial forces in their effort to take over the galactic Empire. Venturesome Luke Skywalker and dashing captain Han Solo team together with the loveable robot duo R2-D2 and C-3PO to rescue the beautiful princess and restore peace and justice in the Empire.",
+    "poster": "/fai0rspsNeJCS69wHNjOdWxcI7P.jpg",
+    "backdrop": "/zqkmTXzjkAgXmEWLRsY4UpTWCeo.jpg",
+    "genres": [
+      "Adventure",
+      "Action",
+      "Science Fiction"
+    ],
+    "rating": null,
+    "runtime": 121,
+    "cast": [
+      "Mark Hamill",
+      "Harrison Ford",
+      "Carrie Fisher",
+      "Peter Cushing",
+      "Alec Guinness",
+      "Anthony Daniels",
+      "Kenny Baker",
+      "Peter Mayhew"
+    ],
+    "director": "George Lucas",
+    "seasons": null
+  },
+  {
+    "id": 299534,
+    "kind": "movie",
+    "title": "Avengers: Endgame",
+    "year": "2019",
+    "overview": "After the devastating events of Avengers: Infinity War, the universe is in ruins due to the efforts of the Mad Titan, Thanos. With the help of remaining allies, the Avengers must assemble once more in order to undo Thanos' actions and restore order to the universe once and for all, no matter what consequences may be in store.",
+    "poster": "/bR8ISy1O9XQxqiy0fQFw2BX72RQ.jpg",
+    "backdrop": "/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg",
+    "genres": [
+      "Adventure",
+      "Science Fiction",
+      "Action"
+    ],
+    "rating": null,
+    "runtime": 181,
+    "cast": [
+      "Robert Downey Jr.",
+      "Chris Evans",
+      "Mark Ruffalo",
+      "Chris Hemsworth",
+      "Scarlett Johansson",
+      "Jeremy Renner",
+      "Josh Brolin",
+      "Don Cheadle"
+    ],
+    "director": "Don Heck  \n                       Characters \n                     \n                     \n                        Keith Giffen  \n                       Characters \n                     \n                     \n                        Jim Starlin  \n                       Characters \n                     \n                     \n                        Joe Simon  \n                       Characters \n                     \n                     \n                        Steve Englehart  \n                       Characters \n                     \n                     \n                        Bill Mantlo  \n                       Characters \n                     \n                     \n                        Steve Gan  \n                       Characters \n                     \n                     \n                        Stan Lee  \n                       Characters \n                     \n                     \n                        Jack Kirby  \n                       Characters \n                     \n                     \n                        Larry Lieber  \n                       Characters \n                     \n                     \n                        Joe Russo",
+    "seasons": null
+  },
+  {
+    "id": 299536,
+    "kind": "movie",
+    "title": "Avengers: Infinity War",
+    "year": "2018",
+    "overview": "As the Avengers and their allies have continued to protect the world from threats too large for any one hero to handle, a new danger has emerged from the cosmic shadows: Thanos. A despot of intergalactic infamy, his goal is to collect all six Infinity Stones, artifacts of unimaginable power, and use them to inflict his twisted will on all of reality. Everything the Avengers have fought for has led up to this moment - the fate of Earth and existence itself has never been more uncertain.",
+    "poster": "/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
+    "backdrop": "/mDfJG3LC3Dqb67AZ52x3Z0jU0uB.jpg",
+    "genres": [
+      "Adventure",
+      "Action",
+      "Science Fiction"
+    ],
+    "rating": null,
+    "runtime": 149,
+    "cast": [
+      "Robert Downey Jr.",
+      "Chris Evans",
+      "Chris Hemsworth",
+      "Josh Brolin",
+      "Mark Ruffalo",
+      "Scarlett Johansson",
+      "Don Cheadle",
+      "Benedict Cumberbatch"
+    ],
+    "director": "Larry Lieber  \n                       Characters \n                     \n                     \n                        Don Heck  \n                       Characters \n                     \n                     \n                        Stan Lee  \n                       Characters \n                     \n                     \n                        Joe Simon  \n                       Characters \n                     \n                     \n                        Keith Giffen  \n                       Characters \n                     \n                     \n                        Jim Starlin  \n                       Characters \n                     \n                     \n                        Steve Englehart  \n                       Characters \n                     \n                     \n                        Bill Mantlo  \n                       Characters \n                     \n                     \n                        Steve Gan  \n                       Characters \n                     \n                     \n                        Jack Kirby  \n                       Characters \n                     \n                     \n                        Joe Russo",
+    "seasons": null
+  },
+  {
+    "id": 324857,
+    "kind": "movie",
+    "title": "Spider-Man: Into the Spider-Verse",
+    "year": "2018",
+    "overview": "Struggling to find his place in the world while juggling school and family, Brooklyn teenager Miles Morales is unexpectedly bitten by a radioactive spider and develops unfathomable powers just like the one and only Spider-Man. While wrestling with the implications of his new abilities, Miles discovers a super collider created by the madman Wilson \"Kingpin\" Fisk, causing others from across the Spider-Verse to be inadvertently transported to his dimension.",
+    "poster": "/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg",
+    "backdrop": "/1ntePsIqeklfmrQJqZPncCydsqY.jpg",
+    "genres": [
+      "Animation",
+      "Action",
+      "Adventure",
+      "Science Fiction"
+    ],
+    "rating": null,
+    "runtime": 117,
+    "cast": [
+      "Shameik Moore",
+      "Jake Johnson",
+      "Hailee Steinfeld",
+      "Mahershala Ali",
+      "Brian Tyree Henry",
+      "Lily Tomlin",
+      "Luna Lauren Vélez",
+      "Zoë Kravitz"
+    ],
+    "director": "Rodney Rothman",
+    "seasons": null
+  },
+  {
+    "id": 569094,
+    "kind": "movie",
+    "title": "Spider-Man: Across the Spider-Verse",
+    "year": "2023",
+    "overview": "After reuniting with Gwen Stacy, Brooklyn’s full-time, friendly neighborhood Spider-Man is catapulted across the Multiverse, where he encounters the Spider Society, a team of Spider-People charged with protecting the Multiverse's very existence. But when the heroes clash on how to handle a new threat, Miles finds himself pitted against the other Spiders and must set out on his own to save those he loves most.",
+    "poster": "/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
+    "backdrop": "/kVd3a9YeLGkoeR50jGEXM6EqseS.jpg",
+    "genres": [
+      "Animation",
+      "Action",
+      "Adventure",
+      "Science Fiction"
+    ],
+    "rating": null,
+    "runtime": 140,
+    "cast": [
+      "Shameik Moore",
+      "Hailee Steinfeld",
+      "Brian Tyree Henry",
+      "Luna Lauren Vélez",
+      "Jake Johnson",
+      "Oscar Isaac",
+      "Jason Schwartzman",
+      "Issa Rae"
+    ],
+    "director": "Justin K. Thompson",
+    "seasons": null
+  },
+  {
+    "id": 76341,
+    "kind": "movie",
+    "title": "Mad Max: Fury Road",
+    "year": "2015",
+    "overview": "An apocalyptic story set in the furthest reaches of our planet, in a stark desert landscape where humanity is broken, and most everyone is crazed fighting for the necessities of life. Within this world exist two rebels on the run who just might be able to restore order.",
+    "poster": "/ulcAi4dKpAjHwYGS08vNyx9H6I9.jpg",
+    "backdrop": "/gqrnQA6Xppdl8vIb2eJc58VC1tW.jpg",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science Fiction"
+    ],
+    "rating": null,
+    "runtime": 121,
+    "cast": [
+      "Tom Hardy",
+      "Charlize Theron",
+      "Nicholas Hoult",
+      "Hugh Keays-Byrne",
+      "Josh Helman",
+      "Nathan Jones",
+      "Zoë Kravitz",
+      "Rosie Huntington-Whiteley"
+    ],
+    "director": "George Miller",
+    "seasons": null
+  },
+  {
+    "id": 872585,
+    "kind": "movie",
+    "title": "Oppenheimer",
+    "year": "2023",
+    "overview": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II.",
+    "poster": "/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg",
+    "backdrop": "/neeNHeXjMF5fXoCJRsOmkNGC7q.jpg",
+    "genres": [
+      "Drama",
+      "History"
+    ],
+    "rating": null,
+    "runtime": 181,
+    "cast": [
+      "Cillian Murphy",
+      "Emily Blunt",
+      "Matt Damon",
+      "Robert Downey Jr.",
+      "Florence Pugh",
+      "Josh Hartnett",
+      "Casey Affleck",
+      "Rami Malek"
+    ],
+    "director": "Christopher Nolan",
+    "seasons": null
+  },
+  {
+    "id": 346698,
+    "kind": "movie",
+    "title": "Barbie",
+    "year": "2023",
+    "overview": "Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land. However, when they get a chance to go to the real world, they soon discover the joys and perils of living among humans.",
+    "poster": "/iuFNMS8U5cb6xfzi51Dbkovj7vM.jpg",
+    "backdrop": "/1esAE8sLJRWWFsLLeh5r3g2WanI.jpg",
+    "genres": [
+      "Comedy",
+      "Adventure",
+      "Fantasy"
+    ],
+    "rating": null,
+    "runtime": 114,
+    "cast": [
+      "Margot Robbie",
+      "Ryan Gosling",
+      "America Ferrera",
+      "Ariana Greenblatt",
+      "Issa Rae",
+      "Kate McKinnon",
+      "Alexandra Shipp",
+      "Emma Mackey"
+    ],
+    "director": "Greta Gerwig",
+    "seasons": null
+  },
+  {
+    "id": 545611,
+    "kind": "movie",
+    "title": "Everything Everywhere All at Once",
+    "year": "2022",
+    "overview": "An aging Chinese immigrant is swept up in an insane adventure, where she alone can save what's important to her by connecting with the lives she could have led in other universes.",
+    "poster": "/u68AjlvlutfEIcpmbYpKcdi09ut.jpg",
+    "backdrop": "/fIwiFha3WPu5nHkBeMQ4GzEk0Hv.jpg",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science Fiction"
+    ],
+    "rating": null,
+    "runtime": 140,
+    "cast": [
+      "Michelle Yeoh",
+      "Stephanie Hsu",
+      "Ke Huy Quan",
+      "James Hong",
+      "Jamie Lee Curtis",
+      "Tallie Medel",
+      "Jenny Slate",
+      "Harry Shum Jr."
+    ],
+    "director": "Daniel Scheinert",
+    "seasons": null
+  },
+  {
+    "id": 496243,
+    "kind": "movie",
+    "title": "Parasite",
+    "year": "2019",
+    "overview": "All unemployed, Ki-taek's family takes peculiar interest in the wealthy and glamorous Parks for their livelihood until they get entangled in an unexpected incident.",
+    "poster": "/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg",
+    "backdrop": "/TU9NIjwzjoKPwQHoHshkFcQUCG.jpg",
+    "genres": [
+      "Comedy",
+      "Thriller",
+      "Drama"
+    ],
+    "rating": null,
+    "runtime": 133,
+    "cast": [
+      "Song Kang-ho",
+      "Lee Sun-kyun",
+      "Cho Yeo-jeong",
+      "Choi Woo-shik",
+      "Park So-dam",
+      "Lee Jung-eun",
+      "Jang Hye-jin",
+      "Park Myung-hoon"
+    ],
+    "director": "Bong Joon Ho",
+    "seasons": null
+  },
+  {
+    "id": 1124,
+    "kind": "movie",
+    "title": "The Prestige",
+    "year": "2006",
+    "overview": "A mysterious story of two magicians whose intense rivalry leads them on a life-long battle for supremacy -- full of obsession, deceit and jealousy with dangerous and deadly consequences.",
+    "poster": "/Ag2B2KHKQPukjH7WutmgnnSNurZ.jpg",
+    "backdrop": "/yaExZh6qE2cfyK3o4kAMEq0mkgy.jpg",
+    "genres": [
+      "Drama",
+      "Mystery",
+      "Science Fiction"
+    ],
+    "rating": null,
+    "runtime": 130,
+    "cast": [
+      "Hugh Jackman",
+      "Christian Bale",
+      "Michael Caine",
+      "Piper Perabo",
+      "Rebecca Hall",
+      "Scarlett Johansson",
+      "Samantha Mahurin",
+      "David Bowie"
+    ],
+    "director": "Christopher Nolan",
+    "seasons": null
+  },
+  {
+    "id": 862,
+    "kind": "movie",
+    "title": "Toy Story",
+    "year": "1995",
+    "overview": "Led by Woody, Andy's toys live happily in his room until Andy's birthday brings Buzz Lightyear onto the scene. Afraid of losing his place in Andy's heart, Woody plots against Buzz. But when circumstances separate Buzz and Woody from their owner, the duo eventually learns to put aside their differences.",
+    "poster": "/uXDfjJbdP4ijW5hWSBrPrlKpxab.jpg",
+    "backdrop": "/3Rfvhy1Nl6sSGJwyjb0QiZzZYlB.jpg",
+    "genres": [
+      "Family",
+      "Comedy",
+      "Animation",
+      "Adventure"
+    ],
+    "rating": null,
+    "runtime": 81,
+    "cast": [
+      "Tom Hanks",
+      "Tim Allen",
+      "Don Rickles",
+      "Jim Varney",
+      "Wallace Shawn",
+      "John Ratzenberger",
+      "Annie Potts",
+      "John Morris"
+    ],
+    "director": "John Lasseter",
+    "seasons": null
+  },
+  {
+    "id": 354912,
+    "kind": "movie",
+    "title": "Coco",
+    "year": "2017",
+    "overview": "Despite his family’s baffling generations-old ban on music, Miguel dreams of becoming an accomplished musician like his idol, Ernesto de la Cruz. Desperate to prove his talent, Miguel finds himself in the stunning and colorful Land of the Dead following a mysterious chain of events. Along the way, he meets charming trickster Hector, and together, they set off on an extraordinary journey to unlock the real story behind Miguel's family history.",
+    "poster": "/6Ryitt95xrO8KXuqRGm1fUuNwqF.jpg",
+    "backdrop": "/g7CHF8gTLGooTbP4GznIGwaqAGL.jpg",
+    "genres": [
+      "Family",
+      "Animation",
+      "Music",
+      "Adventure"
+    ],
+    "rating": null,
+    "runtime": 105,
+    "cast": [
+      "Anthony Gonzalez",
+      "Gael García Bernal",
+      "Benjamin Bratt",
+      "Alanna Ubach",
+      "Renée Victor",
+      "Jaime Camil",
+      "Alfonso Arau",
+      "Herbert Siguenza"
+    ],
+    "director": "Lee Unkrich",
+    "seasons": null
+  },
+  {
+    "id": 508943,
+    "kind": "movie",
+    "title": "Luca",
+    "year": "2021",
+    "overview": "Luca and his best friend Alberto experience an unforgettable summer on the Italian Riviera. But all the fun is threatened by a deeply-held secret: they are sea monsters from another world just below the water’s surface.",
+    "poster": "/9x4i9uKGXt8IiiIF5Ey0DIoY738.jpg",
+    "backdrop": "/620hnMVLu6RSZW6a5rwO8gqpt0t.jpg",
+    "genres": [
+      "Animation",
+      "Family",
+      "Fantasy",
+      "Drama",
+      "Comedy"
+    ],
+    "rating": null,
+    "runtime": 95,
+    "cast": [
+      "Jacob Tremblay",
+      "Jack Dylan Grazer",
+      "Emma Berman",
+      "Maya Rudolph",
+      "Marco Barricelli",
+      "Jim Gaffigan",
+      "Peter Sohn"
+    ],
+    "director": "Enrico Casarosa",
+    "seasons": null
+  },
+  {
+    "id": 2062,
+    "kind": "movie",
+    "title": "Ratatouille",
+    "year": "2007",
+    "overview": "In one of Paris's finest restaurants, Remy, a determined young rat, dreams of becoming a renowned French chef. Torn between his family's wishes and his true calling, Remy and his pal Linguini set in motion a hilarious chain of events that turns the City of Lights upside down.",
+    "poster": "/t3vaWRPSf6WjDSamIkKDs1iQWna.jpg",
+    "backdrop": "/zeoaHdXRDd5IoUiMVsNhwTZm78B.jpg",
+    "genres": [
+      "Animation",
+      "Comedy",
+      "Family",
+      "Fantasy"
+    ],
+    "rating": null,
+    "runtime": 111,
+    "cast": [
+      "Patton Oswalt",
+      "Lou Romano",
+      "Ian Holm",
+      "Brian Dennehy",
+      "Peter Sohn",
+      "Peter O'Toole",
+      "Brad Garrett",
+      "Janeane Garofalo"
+    ],
+    "director": "Brad Bird",
+    "seasons": null
+  },
+  {
+    "id": 539,
+    "kind": "movie",
+    "title": "Psycho",
+    "year": "1960",
+    "overview": "When larcenous real estate clerk Marion Crane goes on the lam with a wad of cash and hopes of starting a new life, she ends up at the notorious Bates Motel, where manager Norman Bates cares for his housebound mother.",
+    "poster": "/yz4QVqPx3h1hD1DfqqQkCq3rmxW.jpg",
+    "backdrop": "/mufF1aYvwdpKerhq5R1YrVcbJLY.jpg",
+    "genres": [
+      "Horror",
+      "Thriller",
+      "Mystery"
+    ],
+    "rating": null,
+    "runtime": 109,
+    "cast": [
+      "Anthony Perkins",
+      "Janet Leigh",
+      "Vera Miles",
+      "John Gavin",
+      "Martin Balsam",
+      "John McIntire",
+      "Simon Oakland",
+      "Frank Albertson"
+    ],
+    "director": "Alfred Hitchcock",
+    "seasons": null
+  },
+  {
+    "id": 194,
+    "kind": "movie",
+    "title": "Amélie",
+    "year": "2001",
+    "overview": "At a tiny Parisian café, the adorable yet painfully shy Amélie accidentally discovers a gift for helping others. Soon Amelie is spending her days as a matchmaker, guardian angel, and all-around do-gooder. But when she bumps into a handsome stranger, will she find the courage to become the star of her very own love story?",
+    "poster": "/nSxDa3M9aMvGVLoItzWTepQ5h5d.jpg",
+    "backdrop": "/6n53UI4mX9QMfe2S0Pgt8mGebY1.jpg",
+    "genres": [
+      "Comedy",
+      "Romance"
+    ],
+    "rating": null,
+    "runtime": 122,
+    "cast": [
+      "Audrey Tautou",
+      "Mathieu Kassovitz",
+      "Rufus",
+      "Serge Merlin",
+      "Jamel Debbouze",
+      "Clotilde Mollet",
+      "Claire Maurier",
+      "Isabelle Nanty"
+    ],
+    "director": "Jean-Pierre Jeunet",
+    "seasons": null
+  },
+  {
+    "id": 264660,
+    "kind": "movie",
+    "title": "Ex Machina",
+    "year": "2015",
+    "overview": "Caleb, a coder at the world's largest internet company, wins a competition to spend a week at a private mountain retreat belonging to Nathan, the reclusive CEO of the company. But when Caleb arrives at the remote location he finds that he will have to participate in a strange and fascinating experiment in which he must interact with the world's first true artificial intelligence, housed in the body of a beautiful robot girl.",
+    "poster": "/dmJW8IAKHKxFNiUnoDR7JfsK7Rp.jpg",
+    "backdrop": "/uqOuJ50EtTj7kkDIXP8LCg7G45D.jpg",
+    "genres": [
+      "Drama",
+      "Science Fiction"
+    ],
+    "rating": null,
+    "runtime": 108,
+    "cast": [
+      "Domhnall Gleeson",
+      "Alicia Vikander",
+      "Oscar Isaac",
+      "Sonoya Mizuno",
+      "Corey Johnson",
+      "Claire Selby",
+      "Symara A. Templeman",
+      "Gana Bayarsaikhan"
+    ],
+    "director": "Alex Garland",
+    "seasons": null
+  },
+  {
+    "id": 2649,
+    "kind": "movie",
+    "title": "The Game",
+    "year": "1997",
+    "overview": "In honor of his birthday, San Francisco banker Nicholas Van Orton, a financial genius and a cold-hearted loner, receives an unusual present from his younger brother, Conrad: a gift certificate to play a unique kind of game. In nary a nanosecond, Nicholas finds himself consumed by a dangerous set of ever-changing rules, unable to distinguish where the charade ends and reality begins.",
+    "poster": "/4UOa079915QjiTA2u5hT2yKVgUu.jpg",
+    "backdrop": "/k7GM13qRYSour3lk90Dq1EwdpoW.jpg",
+    "genres": [
+      "Drama",
+      "Thriller",
+      "Mystery"
+    ],
+    "rating": null,
+    "runtime": 129,
+    "cast": [
+      "Michael Douglas",
+      "Sean Penn",
+      "Deborah Kara Unger",
+      "James Rebhorn",
+      "Peter Donat",
+      "Carroll Baker",
+      "Anna Katarina",
+      "Armin Mueller-Stahl"
+    ],
+    "director": "David Fincher",
+    "seasons": null
+  },
+  {
+    "id": 76203,
+    "kind": "movie",
+    "title": "12 Years a Slave",
+    "year": "2013",
+    "overview": "In the pre-Civil War United States, Solomon Northup, a free black man from upstate New York, is abducted and sold into slavery. Facing cruelty as well as unexpected kindnesses Solomon struggles not only to stay alive, but to retain his dignity. In the twelfth year of his unforgettable odyssey, Solomon’s chance meeting with a Canadian abolitionist will forever alter his life.",
+    "poster": "/xdANQijuNrJaw1HA61rDccME4Tm.jpg",
+    "backdrop": "/4Bb1kMIfrT2tYRZ9M6Jhqy6gkeF.jpg",
+    "genres": [
+      "Drama",
+      "History"
+    ],
+    "rating": null,
+    "runtime": 134,
+    "cast": [
+      "Chiwetel Ejiofor",
+      "Michael Fassbender",
+      "Lupita Nyong'o",
+      "Benedict Cumberbatch",
+      "Paul Dano",
+      "Sarah Paulson",
+      "Adepero Oduye",
+      "Scoot McNairy"
+    ],
+    "director": "Steve McQueen",
+    "seasons": null
+  },
+  {
+    "id": 359940,
+    "kind": "movie",
+    "title": "Three Billboards Outside Ebbing, Missouri",
+    "year": "2017",
+    "overview": "After seven months have passed without a culprit in her daughter's murder case, Mildred Hayes makes a bold move, painting three signs leading into her town with a controversial message directed at Bill Willoughby, the town's revered chief of police. When his second-in-command Officer Jason Dixon, an immature mother's boy with a penchant for violence, gets involved, the battle between Mildred and Ebbing's law enforcement is only exacerbated.",
+    "poster": "/bRYLt8fV82tdVoDppSFTZIcJiLN.jpg",
+    "backdrop": "/oQHF0Y4gCw6VdPmapjsbZoxY2ht.jpg",
+    "genres": [
+      "Crime",
+      "Drama"
+    ],
+    "rating": null,
+    "runtime": 115,
+    "cast": [
+      "Frances McDormand",
+      "Woody Harrelson",
+      "Sam Rockwell",
+      "Abbie Cornish",
+      "Lucas Hedges",
+      "Željko Ivanek",
+      "Caleb Landry Jones",
+      "Clarke Peters"
+    ],
+    "director": "Martin McDonagh",
+    "seasons": null
+  },
+  {
+    "id": 66732,
+    "kind": "tv",
+    "title": "Stranger Things",
+    "year": "2016",
+    "overview": "When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces, and one strange little girl.",
+    "poster": "/uOOtwVbSr4QDjAGIifLDwpb2Pdl.jpg",
+    "backdrop": "/9P4IIMYY3HifqeruZq0ZZ9g7YUi.jpg",
+    "genres": [
+      "Action & Adventure",
+      "Mystery",
+      "Sci-Fi & Fantasy"
+    ],
+    "rating": null,
+    "runtime": null,
+    "cast": [
+      "Winona Ryder as Joyce Byers",
+      "David Harbour as Jim Hopper",
+      "Millie Bobby Brown as Eleven / Jane Hopper and Eleven",
+      "Finn Wolfhard as Mike Wheeler",
+      "Gaten Matarazzo as Dustin Henderson",
+      "Caleb McLaughlin as Lucas Sinclair",
+      "Natalia Dyer as Nancy Wheeler",
+      "Charlie Heaton as Jonathan Byers"
+    ],
+    "director": null,
+    "seasons": 5
+  },
+  {
+    "id": 1396,
+    "kind": "tv",
+    "title": "Breaking Bad",
+    "year": "2008",
+    "overview": "Walter White, a New Mexico chemistry teacher, is diagnosed with Stage III cancer and given a prognosis of only two years left to live. He becomes filled with a sense of fearlessness and an unrelenting desire to secure his family's financial future at any cost as he enters the dangerous world of drugs and crime.",
+    "poster": "/anFx9aTOOYqgS3v7x3R84Kz67ly.jpg",
+    "backdrop": "/tsRy63Mu5cu8etL1X7ZLyf7UP1M.jpg",
+    "genres": [
+      "Drama",
+      "Crime"
+    ],
+    "rating": null,
+    "runtime": null,
+    "cast": [
+      "Bryan Cranston as Walter White",
+      "Aaron Paul as Jesse Pinkman",
+      "Anna Gunn as Skyler White",
+      "RJ Mitte as Walter White Jr.",
+      "Dean Norris as Hank Schrader",
+      "Betsy Brandt as Marie Schrader",
+      "Bob Odenkirk as Saul Goodman",
+      "Jonathan Banks as Mike Ehrmantraut"
+    ],
+    "director": null,
+    "seasons": 5
+  },
+  {
+    "id": 1399,
+    "kind": "tv",
+    "title": "Game of Thrones",
+    "year": "2011",
+    "overview": "Seven noble families fight for control of the mythical land of Westeros. Friction between the houses leads to full-scale war. All while a very ancient evil awakens in the farthest north. Amidst the war, a neglected military order of misfits, the Night's Watch, is all that stands between the realms of men and icy horrors beyond.",
+    "poster": "/1XS1oqL89opfnbLl8WnZY1O1uJx.jpg",
+    "backdrop": "/zZqpAXxVSBtxV9qPBcscfXBcL2w.jpg",
+    "genres": [
+      "Sci-Fi & Fantasy",
+      "Drama",
+      "Action & Adventure"
+    ],
+    "rating": null,
+    "runtime": null,
+    "cast": [
+      "Peter Dinklage as Tyrion 'The Halfman' Lannister",
+      "Kit Harington as Jon Snow",
+      "Nikolaj Coster-Waldau as Sir Jaime 'Kingslayer' Lannister",
+      "Lena Headey as Cersei Lannister",
+      "Emilia Clarke as Daenerys Targaryen",
+      "Maisie Williams as Arya Stark",
+      "Isaac Hempstead Wright as Brandon 'Bran' Stark",
+      "Sophie Turner as Sansa Stark"
+    ],
+    "director": null,
+    "seasons": 8
+  },
+  {
+    "id": 100088,
+    "kind": "tv",
+    "title": "The Last of Us",
+    "year": "2023",
+    "overview": "Twenty years after modern civilization has been destroyed, Joel, a hardened survivor, is hired to smuggle Ellie, a 14-year-old girl, out of an oppressive quarantine zone. What starts as a small job soon becomes a brutal, heartbreaking journey, as they both must traverse the United States and depend on each other for survival.",
+    "poster": "/dmo6TYuuJgaYinXBPjrgG9mB5od.jpg",
+    "backdrop": "/lY2DhbA7Hy44fAKddr06UrXWWaQ.jpg",
+    "genres": [
+      "Drama"
+    ],
+    "rating": null,
+    "runtime": null,
+    "cast": [
+      "Bella Ramsey as Ellie Williams",
+      "Pedro Pascal as Joel Miller (uncredited) and Joel Miller",
+      "Gabriel Luna as Tommy Miller",
+      "Isabela Merced as Dina",
+      "Young Mazino as Jesse",
+      "Rutina Wesley as Maria",
+      "Samuel Hoeksema as Clicker and Museum Clicker",
+      "Danny Ramirez as Manny Alvarez"
+    ],
+    "director": null,
+    "seasons": 2
+  },
+  {
+    "id": 94997,
+    "kind": "tv",
+    "title": "House of the Dragon",
+    "year": "2022",
+    "overview": "The Targaryen dynasty is at the absolute apex of its power, with more than 15 dragons under their yoke. Most empires crumble from such heights. In the case of the Targaryens, their slow fall begins when King Viserys breaks with a century of tradition by naming his daughter Rhaenyra heir to the Iron Throne. But when Viserys later fathers a son, the court is shocked when Rhaenyra retains her status as his heir, and seeds of division sow friction across the realm.",
+    "poster": "/7V0Ebks0GgpKvQ7QbLAIdX5dos4.jpg",
+    "backdrop": "/577eXC8wFQT0eUrJcgznSiFPRmk.jpg",
+    "genres": [
+      "Sci-Fi & Fantasy",
+      "Drama",
+      "Action & Adventure"
+    ],
+    "rating": null,
+    "runtime": null,
+    "cast": [
+      "Matt Smith as Prince Daemon Targaryen",
+      "Steve Toussaint as Lord Corlys 'The Sea Snake' Velaryon",
+      "Sonoya Mizuno as Mysaria 'The White Worm'",
+      "Fabien Frankel as Ser Criston Cole",
+      "Matthew Needham as Lord Larys 'Clubfoot' Strong",
+      "Kurt Egyiawan as Grand Maester Orwyle and Maester Orwyle",
+      "Olivia Cooke as Queen Alicent Hightower",
+      "Emma D'Arcy as Princess Rhaenyra Targaryen (voice) and Queen Rhaenyra Targaryen"
+    ],
+    "director": null,
+    "seasons": 3
+  },
+  {
+    "id": 100095,
+    "kind": "tv",
+    "title": "Tournament of Champions",
+    "year": "2020",
+    "overview": "Host Guy Fieri gathers the world's greatest chefs for the most-intense culinary competition ever held. Emotions run high in the single-elimination, sudden-death bracket tournament as the competitors face off in head-to-head battles to stay alive. As the pressure mounts, shocking surprises unfold both inside and outside the arena. All the chefs have the talent and skill to walk away with the ultimate championship title in food, but only one will win the Tournament of Champions.",
+    "poster": "/3IXkZkZ6Pcj3u2PoOgTJUt51W6k.jpg",
+    "backdrop": "/euBCqWfQv2Kv71lkGWtPb7BWzf8.jpg",
+    "genres": [
+      "Reality"
+    ],
+    "rating": null,
+    "runtime": null,
+    "cast": [
+      "Guy Fieri as Self - Host",
+      "Simon Majumdar as Self - Culinary Correspondent",
+      "Justin Warner as Self - Culinary Correspondent",
+      "Antonia Lofaso as Self - Contestant and Self",
+      "Rocco DiSpirito as Self and Self - Contestant",
+      "Nancy Silverton as Self",
+      "Karen Akunowicz as Self - Contestant and Self",
+      "Tobias Dorzon as Self and Self - Contestant"
+    ],
+    "director": null,
+    "seasons": 7
+  },
+  {
+    "id": 84773,
+    "kind": "tv",
+    "title": "The Lord of the Rings: The Rings of Power",
+    "year": "2022",
+    "overview": "Beginning in a time of relative peace, we follow an ensemble cast of characters as they confront the re-emergence of evil to Middle-earth. From the darkest depths of the Misty Mountains, to the majestic forests of Lindon, to the breathtaking island kingdom of Númenor, to the furthest reaches of the map, these kingdoms and characters will carve out legacies that live on long after they are gone.",
+    "poster": "/kf5Hz70tjNAHg4swGDzOr9BfoZ1.jpg",
+    "backdrop": "/o2wg8QiSCQrhj91tBfxunE3O5Ba.jpg",
+    "genres": [
+      "Action & Adventure",
+      "Drama",
+      "Sci-Fi & Fantasy"
+    ],
+    "rating": null,
+    "runtime": null,
+    "cast": [
+      "Morfydd Clark as Galadriel",
+      "Robert Aramayo as Elrond",
+      "Owain Arthur as Durin IV",
+      "Sophia Nomvete as Disa",
+      "Markella Kavenagh as Elanor 'Nori' Brandyfoot",
+      "Ismael Cruz Cordova as Arondir",
+      "Charlie Vickers as Sauron and Halbrand",
+      "Charles Edwards as Lord Celebrimbor"
+    ],
+    "director": null,
+    "seasons": 3
+  },
+  {
+    "id": 42009,
+    "kind": "tv",
+    "title": "Black Mirror",
+    "year": "2011",
+    "overview": "Twisted tales run wild in this mind-bending anthology series that reveals humanity's worst traits, greatest innovations and more.",
+    "poster": "/seN6rRfN0I6n8iDXjlSMk1QjNcq.jpg",
+    "backdrop": "/dg3OindVAGZBjlT3xYKqIAdukPL.jpg",
+    "genres": [
+      "Sci-Fi & Fantasy",
+      "Drama",
+      "Mystery"
+    ],
+    "rating": null,
+    "runtime": null,
+    "cast": [
+      "Jesse Plemons as Robert Daly",
+      "Cristin Milioti as Nanette Cole",
+      "Jimmi Simpson as James Walton",
+      "Milanka Brooks as Elena Tulaska",
+      "Osy Ikhile as Nate Packer",
+      "Paul G. Raymond as Kabir Dudani",
+      "Monica Dolan as CS Linda Grace and Janet McCardle",
+      "Daniel Lapaine as Max and Dawson"
+    ],
+    "director": null,
+    "seasons": 7
+  },
+  {
+    "id": 2316,
+    "kind": "tv",
+    "title": "The Office",
+    "year": "2005",
+    "overview": "The everyday lives of office employees in the Scranton, Pennsylvania branch of the fictional Dunder Mifflin Paper Company.",
+    "poster": "/7DJKHzAi83BmQrWLrYYOqcoKfhR.jpg",
+    "backdrop": "/mLyW3UTgi2lsMdtueYODcfAB9Ku.jpg",
+    "genres": [
+      "Comedy"
+    ],
+    "rating": null,
+    "runtime": null,
+    "cast": [
+      "Rainn Wilson as Dwight Schrute",
+      "John Krasinski as Jim Halpert",
+      "Jenna Fischer as Pam Beesly",
+      "Leslie David Baker as Stanley Hudson",
+      "Brian Baumgartner as Kevin Malone",
+      "Angela Kinsey as Angela Martin",
+      "Kate Flannery as Meredith Palmer",
+      "Phyllis Smith as Phyllis Lapin"
+    ],
+    "director": null,
+    "seasons": 9
+  },
+  {
+    "id": 82856,
+    "kind": "tv",
+    "title": "The Mandalorian",
+    "year": "2019",
+    "overview": "After the fall of the Galactic Empire, lawlessness has spread throughout the galaxy. A lone gunfighter makes his way through the outer reaches, earning his keep as a bounty hunter.",
+    "poster": "/sWgBv7LV2PRoQgkxwlibdGXKz1S.jpg",
+    "backdrop": "/9zcbqSxdsRMZWHYtyCd1nXPr2xq.jpg",
+    "genres": [
+      "Sci-Fi & Fantasy",
+      "Action & Adventure"
+    ],
+    "rating": null,
+    "runtime": null,
+    "cast": [
+      "Pedro Pascal as Din Djarin / The Mandalorian",
+      "Katee Sackhoff as Bo-Katan Kryze",
+      "Misty Rosas as Snivvian Bartender, Saifir (Performance Artist), Kuiil (Performance Artist), Frog Lady, and Pirate Coxswain (Performance Artist)",
+      "Chris Bartlett as Ferryman, RA-7 (Performance Artist), RA-7 Droid (Performance Artist), Teacher Droid Performer, Nevarro Copper Droid (Performance Artist), and Zero (Q9-0) (Performance Artist)",
+      "Carl Weathers as Greef Karga",
+      "Emily Swallow as Armorer",
+      "Brendan Wayne as Mandalorian Warrior and The Mandalorian Body Actor",
+      "Giancarlo Esposito as Moff Gideon"
+    ],
+    "director": null,
+    "seasons": 3
+  },
+  {
+    "id": 60625,
+    "kind": "tv",
+    "title": "Rick and Morty",
+    "year": "2013",
+    "overview": "Follows a sociopathic genius scientist who drags his inherently timid grandson on adventures across the universe.",
+    "poster": "/owhkU6KRqdXoUQpjV8uyZGPtX58.jpg",
+    "backdrop": "/5BDNWWHweQL0q1fmTv7gmRXfnl4.jpg",
+    "genres": [
+      "Animation",
+      "Comedy",
+      "Sci-Fi & Fantasy",
+      "Action & Adventure"
+    ],
+    "rating": null,
+    "runtime": null,
+    "cast": [
+      "Chris Parnell as Jerry Smith (voice)",
+      "Spencer Grammer as Summer Smith (voice)",
+      "Sarah Chalke as Beth Smith (voice)",
+      "Justin Roiland as Rick Sanchez / Morty Smith (voice)",
+      "Kari Wahlgren as Rick's Computer (voice), Assimilated Alien 4 (voice), Garage AI (voice), Rick's Computer / Woman (voice), Diane Sanchez (voice), Diane Sanchez / Rick's Computer (voice), Rick's Computer / Alien News Anchorwoman (voice), Jessica / Rick's Computer / Customs Announcement (voice), Jessica (voice), Sharon Lewis (voice), Roy's Wife (voice), Plutonian Chat Show Host 1 / Talking Doll (voice), Jessica / Newscaster (voice), (voice), Gaia (voice), Jessica / Cynthia / Hot Woman (voice), Diane Sanchez / Additional Voices (voice), Corsica (voice), Jessica / Girl (voice), Gazorpian Judge (voice), Samantha / Hostage Woman (voice), BugAnne (voice), Additional Voices (voice), and Connie TinuityError / Katie (voice)",
+      "Tom Kenny as Additional Voices (voice), Pawnshop Clerk (voice), Pizza 1 / Phone 1 / Chair 1 (voice), Bunker Gene (voice), Tour Guide (voice), Mr. Stringbean (voice), Nazi / Pencilvester (voice), Hunter (voice), Squanchy (voice), Gene (voice), Gear Newscaster / Gear Police Officer (voice), Mr. Stabby / Scientist #2 (voice), Jon Arbuckle (voice), Tour Guide / Squanchy (voice), Shnoopy Bloopers / Call Centre Alien #1 / Gene (voice), Million Ants (voice), Child / Takey Member / 3-Eyed Alien / Alien Who Got to Pay (voice), Bad Cop / Mr. Jellybean (voice), Shadow Jacker (voice), (voice), Squanchy / Bartender / Customs Gromflomite (voice), Conroy / Federation Admiral / Additional Voices (voice), and Squanchy / Gene Gilligan (voice)",
+      "Ryan Ridley as Alien Waiter / Assassin / Customs Alien / Call Centre Alien #2 (voice), (voice), Paul Fleishman (voice), Head Vampire (voice), Pizza 2 / Phone 2 / Chair 2 / Chair Waiter (voice), Trunkman / Bachelor (voice), Lighthouse Chief (voice), Concerto (voice), Cousin Nicky (voice), Additional Voices (voice), Giant Lawyer / Peasant 2 (voice), Alien  / Student 1 (voice), Chuxley (voice), Amortycan Grickfitti (voice), Frank Palicky / Tom (voice), Slave Owner (voice), and Roy's Doctor (voice)",
+      "Dan Harmon as Acid Man (voice), Water-T / Ice-T / Magma-T (voice), Mr. Marklevitz / Kevin (voice), Birdperson / Phoenixperson (voice), Mr. Nimbus (voice), Davin / Red Alien / Gromflomite Guard (voice), Birdperson (voice), Council Of Glorzos Member (voice), Reggie (voice), Heistotron / Randotron (voice), FDR (voice), Flu Hatin' Rapper (voice), Student (voice), Birdperson / Wedding Singer / Screaming Sun (voice), Triceratops (voice), Joseph Campbell (voice), Birdperson / Ice-T (voice), Additional Voices (voice), Alejandro (voice), Birdperson / Tickets Please Guy (voice), Phoenixperson / McDoncalds Employee (voice), and Phoenixperson (voice)"
+    ],
+    "director": null,
+    "seasons": 9
+  },
+  {
+    "id": 87108,
+    "kind": "tv",
+    "title": "Chernobyl",
+    "year": "2019",
+    "overview": "The true story of one of the worst man-made catastrophes in history: the catastrophic nuclear accident at Chernobyl. A tale of the brave men and women who sacrificed to save Europe from unimaginable disaster.",
+    "poster": "/hlLXt2tOPT6RRnjiUmoxyG1LTFi.jpg",
+    "backdrop": "/900tHlUYUkp7Ol04XFSoAaEIXcT.jpg",
+    "genres": [
+      "Drama"
+    ],
+    "rating": null,
+    "runtime": null,
+    "cast": [
+      "Jared Harris as Valery Legasov",
+      "Stellan Skarsgård as Boris Shcherbina",
+      "Emily Watson as Ulana Khomyuk",
+      "Paul Ritter as Anatoly Dyatlov",
+      "Jessie Buckley as Lyudmilla Ignatenko",
+      "Adam Nagaitis as Vasily Ignatenko",
+      "Sam Troughton as Alexandr Akimov",
+      "Robert Emms as Leonid Toptunov"
+    ],
+    "director": null,
+    "seasons": 1
+  }
+]

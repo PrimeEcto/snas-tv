@@ -1,0 +1,2 @@
+PASS final release: Home, About logo, saved title, simulated player seek/exit and Continue Watching.
+PASS final release: terminate/normal relaunch preserves saved Interstellar and actual preview progress. Initial assertion expected In My List; corrected to the actual Saved label.

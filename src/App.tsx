@@ -1,0 +1,58 @@
+import React,{useState,useMemo,useEffect,useCallback} from 'react';
+import {View,Text,Pressable,StyleSheet,useWindowDimensions,BackHandler,Image} from 'react-native';
+import backend from './backend.json';
+import {Catalog,demoTitles} from './catalog/service';
+import type {Title,Episode} from './catalog/types';
+import {useLibrary} from './state/useLibrary';
+import {continueWatching,type Progress} from './state/library';
+import {progressKey,type PlaybackState} from './state/playback';
+import {HomeScreen,BrowseScreen,MyListScreen} from './ui/CatalogScreen';
+import {SearchScreen} from './ui/SearchScreen';
+import {DetailsScreen} from './ui/DetailsScreen';
+import {PlayerScreen} from './ui/PlayerScreen';
+import {FocusScope,useFocusNode} from './ui/focus';
+import {Button} from './ui/controls';
+import {C,direction} from './ui/theme';
+type Tab='Home'|'Movies'|'Series'|'Search'|'My List'|'About';
+type Player={title:Title;episode?:Episode;position:number;serial:number};
+function NavItem({name,active,onPress}:{name:Tab;active:boolean;onPress:()=>void}){
+ const [focused,setFocused]=useState(false);const node=useFocusNode(`nav-${name}`);
+ return <Pressable ref={node.ref as never} testID={`nav-${name}`} accessibilityRole="tab" accessibilityLabel={name} accessibilityState={{selected:active}} onFocus={()=>{setFocused(true);node.remember();}} onBlur={()=>setFocused(false)} onPress={onPress} style={{paddingHorizontal:15,paddingVertical:11,borderRadius:0,backgroundColor:focused?C.text:'transparent',borderWidth:2,borderColor:focused?C.accent:'transparent'}}><Text style={{fontSize:17,fontWeight:active||focused?'600':'400',color:focused?C.bg:active?C.text:C.muted}}>{name}</Text>{active&&!focused&&<View style={{position:'absolute',bottom:2,left:15,right:15,height:2,backgroundColor:C.accent}}/>}</Pressable>;
+}
+function AboutScreen({catalog,onDemo,onLive}:{catalog:Catalog;onDemo:()=>void;onLive:()=>void}){
+ return <View style={{padding:56,flex:1}}><Text style={{color:C.text,fontSize:44,fontWeight:'600',marginBottom:22}}>A good story. A great evening.</Text><Text style={{color:C.muted,fontSize:21,lineHeight:31,maxWidth:850,marginBottom:28}}>SNAS is a native Vega OS streaming concept. Browse real films and series, build your collection, and explore an interactive player with simulated progress. No movie or episode stream is playing.</Text><Image source={require('../assets/tmdb.png')} resizeMode="contain" style={{width:145,height:22}}/><Text style={{color:C.muted,fontSize:18,lineHeight:27,maxWidth:850,marginTop:20,marginBottom:20}}>This product uses the TMDB API but is not endorsed or certified by TMDB.</Text><Text style={{color:C.dim,fontSize:17,lineHeight:26,maxWidth:850}}>Metadata and artwork: The Movie Database · themoviedb.org. Ratings in live mode are TMDB vote averages. This is a noncommercial demonstration, with no claim to streaming rights or commercial licensing.</Text><Text style={{color:C.accent,fontSize:18,marginTop:25,marginBottom:15}}>Catalog: {catalog.mode==='demo'?'genuine sample records':'live TMDB discovery'}</Text><View style={{flexDirection:'row',gap:12}}><Button id="about-demo" label="Use sample catalog" primary={catalog.mode==='demo'} onPress={onDemo}/><Button id="about-live" label="Use live TMDB catalog" primary={catalog.mode==='live'} onPress={onLive}/></View><Text style={{color:C.dim,fontSize:15,marginTop:22}}>Remote: arrows to move · Select to choose · Back to return. The catalogue is served by the SNAS backend, which holds the TMDB credential so no key ships in the app.</Text></View>;
+}
+// Direction contract retained in source and bundled via the branded About experience.
+// Native Operate surface: cinematic art, restrained ink/sand system, restored remote focus.
+// Catalogue data comes from the SNAS backend in src/backend.json, which keeps the TMDB
+// credential server-side; the sample catalog stays available as an offline fallback.
+export function App(){
+ const {width,height}=useWindowDimensions();const scale=Math.min(width/1280,height/720);const [tab,setTab]=useState<Tab>('Home');const [visited,setVisited]=useState<Tab[]>(['Home']);const [details,setDetails]=useState<Title[]>([]);const [player,setPlayer]=useState<Player|null>(null);const [sample,setSample]=useState(false);const catalog=useMemo(()=>new Catalog(sample?'':backend.tmdbProxy),[sample]);const store=useLibrary();
+ const open=(t:Title)=>setDetails(old=>old.length&&old[old.length-1].id===t.id&&old[old.length-1].kind===t.kind?old:[...old,t]);
+ const play=(t:Title,e?:Episode)=>{
+ const saved=store.library.progress[progressKey(t,e)];
+ setPlayer(old=>({title:t,episode:e,position:saved?.position||0,serial:(old?.serial||0)+1}));
+ };
+ const playFromHome=(title:Title)=>{const last=continueWatching(store.library).find(p=>p.title.id===title.id&&p.title.kind===title.kind);if(last){resume(last);return;}if(title.kind==='tv')catalog.detail(title).then(d=>play(d,d.episodes[0])).catch(()=>open(title));else play(title);};
+ const resume=(p:Progress)=>setPlayer(old=>({title:p.title,episode:p.episode,position:p.position,serial:(old?.serial||0)+1}));
+ const exit=useCallback((state:PlaybackState)=>{store.save(state);setPlayer(null);},[store.save]);
+ const back=useCallback(()=>{if(player)return false;if(details.length){setDetails(old=>old.slice(0,-1));return true;}if(tab!=='Home'){setTab('Home');return true;}return false;},[player,details.length,tab]);
+ useEffect(()=>{const sub=BackHandler.addEventListener('hardwareBackPress',back);return()=>sub.remove();},[back]);
+ const changeTab=(next:Tab)=>{setVisited(old=>old.includes(next)?old:[...old,next]);setTab(next);setDetails([]);};const onDemo=()=>setSample(true);const onLive=()=>setSample(false);
+ const props={catalog,library:store.library,onOpen:open,onPlay:playFromHome,onResume:resume,onToggle:store.toggle,onExplore:()=>changeTab('Movies'),onDemo};
+ return <View style={{flex:1,backgroundColor:C.bg}}><View style={{width:1280,height:720,position:'absolute',left:(width-1280)/2,top:(height-720)/2,transform:[{scale}],backgroundColor:C.bg}}>
+ {player&&<View style={{position:'absolute',left:0,right:0,top:0,bottom:0,zIndex:10}}><PlayerScreen key={`${player.serial}-${progressKey(player.title,player.episode)}`} {...player} catalog={catalog} preferences={store.library.preferences} onSave={store.save} onExit={exit} onEpisode={e=>play(player.title,e)}/></View>}<View style={{flex:1,display:player?'none':'flex'}} pointerEvents={player?'none':'auto'} accessibilityElementsHidden={!!player}>
+ <View style={{height:74,backgroundColor:C.bg,paddingHorizontal:56,flexDirection:'row',alignItems:'center',borderBottomWidth:1,borderBottomColor:'rgba(182,190,201,0.08)'}}><Text accessibilityLabel="SNAS" style={{fontSize:29,fontWeight:'800',letterSpacing:3,color:C.text,marginRight:56}}>SNAS</Text><View style={{flex:1}}><FocusScope active={!player} autoFocus={false} initial="nav-Home"><View style={{flex:1,flexDirection:'row',alignItems:'center',gap:7}}>{(['Home','Movies','Series','Search','My List','About'] as Tab[]).map(name=><NavItem key={name} name={name} active={!player&&tab===name} onPress={()=>changeTab(name)}/>)}</View></FocusScope></View><Text style={{color:C.dim,fontSize:13}}>{catalog.mode==='demo'?'SAMPLE CATALOG':'LIVE CATALOG'}</Text></View>
+ {!store.ready?<View style={{flex:1,justifyContent:'center',alignItems:'center'}}><Text style={{fontSize:26,color:C.muted}}>Opening your library…</Text></View>:<View style={{flex:1}}>
+ <FocusScope active={!player&&tab==='Home'&&!details.length} initial="home-play"><HomeScreen {...props}/></FocusScope>
+ {visited.includes('Movies')&&<FocusScope active={!player&&tab==='Movies'&&!details.length} initial="genre"><BrowseScreen {...props} kind="movie"/></FocusScope>}
+ {visited.includes('Series')&&<FocusScope active={!player&&tab==='Series'&&!details.length} initial="genre"><BrowseScreen {...props} kind="tv"/></FocusScope>}
+ {visited.includes('Search')&&<FocusScope active={!player&&tab==='Search'&&!details.length} initial="key-A"><SearchScreen catalog={catalog} onOpen={open} onDemo={onDemo}/></FocusScope>}
+ {visited.includes('My List')&&<FocusScope active={!player&&tab==='My List'&&!details.length} initial="list-saved"><MyListScreen {...props}/></FocusScope>}
+ {visited.includes('About')&&<FocusScope active={!player&&tab==='About'&&!details.length} initial="about-demo"><AboutScreen catalog={catalog} onDemo={onDemo} onLive={onLive}/></FocusScope>}
+ {details.map((t,i)=><FocusScope key={`${i}-${t.kind}-${t.id}`} active={!player&&i===details.length-1} initial="details-play"><DetailsScreen catalog={catalog} title={t} library={store.library} onPlay={play} onToggle={store.toggle} onBack={()=>setDetails(old=>old.slice(0,-1))} onOpen={open} onDemo={onDemo}/></FocusScope>)}
+ </View>}
+ {store.error&&<View style={{position:'absolute',bottom:15,left:56,right:56,backgroundColor:C.surface,padding:14,borderRadius:0}}><Text style={{color:C.error,fontSize:17}}>{store.error}</Text></View>}
+ </View>
+ </View></View>;
+}
