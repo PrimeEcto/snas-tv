@@ -1,6 +1,6 @@
 {
   "name": "@amazon-devices/snas",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "files": [
     "dist"
@@ -21,6 +21,8 @@
     "secrets:push": "supabase secrets set --env-file .env",
     "functions:deploy": "supabase functions deploy tmdb --no-verify-jwt --use-api && supabase functions deploy movy-relay --no-verify-jwt --use-api",
     "release:app": "node scripts/release-app.mjs",
+    "device:update": "node scripts/device-watch.mjs",
+    "device:update:once": "node scripts/device-watch.mjs --once",
     "worker:dev": "npm --prefix worker run dev",
     "worker:deploy": "npm --prefix worker run deploy",
     "worker:typecheck": "npm --prefix worker run typecheck",

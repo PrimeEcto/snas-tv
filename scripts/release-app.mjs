@@ -4,9 +4,12 @@
  *
  * The Vega SDK is local-only, so this runs on the developer machine rather than in CI:
  *
- *   node scripts/release-app.mjs 0.2.0              # build, tag, release
- *   node scripts/release-app.mjs 0.2.0 --skip-build  # release an existing dist/snas_x86_64.vpkg
- *   node scripts/release-app.mjs 0.2.0 --dry-run     # show what would happen
+ *   node scripts/release-app.mjs                   # build, tag and release package.json's version
+ *   node scripts/release-app.mjs --skip-build      # release the existing dist/snas_x86_64.vpkg
+ *   node scripts/release-app.mjs --dry-run         # show what would happen
+ *
+ * The version comes from package.json, which is also what the app reports at runtime, so
+ * the tag and the running build can never disagree.
  *
  * The release carries the package plus a `version.json` manifest with its SHA-256, and
  * the backend's /v1/app/latest endpoint serves it to the device from the private
@@ -24,13 +27,25 @@ const MANIFEST_PATH = join(ROOT, 'dist', 'version.json');
 const PLATFORM = 'x86_64';
 
 const args = process.argv.slice(2);
-const version = (args.find((arg) => !arg.startsWith('-')) ?? '').replace(/^v/, '');
+const requested = (args.find((arg) => !arg.startsWith('-')) ?? '').replace(/^v/, '');
 const skipBuild = args.includes('--skip-build');
 const dryRun = args.includes('--dry-run');
 
+// package.json is the single source of truth: the app reports that version at runtime for
+// its own update check (src/update.ts), so a tag that disagreed with it would make the
+// device believe a build it is already running is still pending.
+const declared = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8')).version;
+const version = requested || declared;
+
 if (!/^\d+\.\d+\.\d+(-[\w.]+)?$/.test(version)) {
-  console.error('Usage: node scripts/release-app.mjs <version> [--skip-build] [--dry-run]');
-  console.error('Example: node scripts/release-app.mjs 0.2.0');
+  console.error('Usage: node scripts/release-app.mjs [version] [--skip-build] [--dry-run]');
+  console.error(`package.json declares "${declared}"; bump it to change the version.`);
+  process.exit(2);
+}
+
+if (requested && requested !== declared) {
+  console.error(`Refusing to release ${requested}: package.json declares ${declared}.`);
+  console.error('Bump the version in package.json (and rebuild) so the app reports what it runs.');
   process.exit(2);
 }
 

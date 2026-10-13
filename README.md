@@ -42,6 +42,31 @@ npm run device:stop
 
 The device runs in a user service with 150% CPU quota, 4 GB maximum RAM, low scheduling priority, and no foreground window. Initial service discovery may take longer than the CLI's early “ready” response. Wait until `vega device info` reports the TV profile, x86_64 architecture and developer mode before installation. Do not raise resource limits while the user is working.
 
+## Releases and updates on the device
+
+A Vega app cannot replace its own package: installing a build is a host-side action
+(`vega run-app`). The app therefore only *reports* an update (`src/update.ts` asks
+`/v1/app/latest` on launch and shows a line when a newer build exists), and the installing
+half runs on this machine:
+
+```bash
+npm run device:update        # watch the backend and install new releases as they appear
+npm run device:update:once    # a single check (add --dry-run to download and verify only)
+```
+
+The watcher downloads through the Worker — the GitHub repository is private, so the device
+holds no token — verifies the release's SHA-256 from its `version.json`, and then installs
+with `vega run-app`. Leave it running while testing and a pushed release reaches the device
+without a manual package copy.
+
+To publish one, bump `version` in `package.json` (the app reports that same value, so the tag
+and the running build cannot disagree) and release it:
+
+```bash
+npm run release:app          # builds, tags v<version>, uploads the vpkg + version.json
+npm run release:app -- --skip-build
+```
+
 ## TMDB catalogue
 
 SNAS needs no credential of any kind, and there is no field to enter one. The catalogue is served by the SNAS backend; the committed, non-secret `src/backend.json` holds the endpoints the app builds against:

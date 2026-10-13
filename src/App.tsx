@@ -1,6 +1,8 @@
 import React,{useState,useMemo,useEffect,useCallback} from 'react';
 import {View,Text,Pressable,StyleSheet,useWindowDimensions,BackHandler,Image} from 'react-native';
 import backend from './backend.json';
+import {version as appVersion} from '../package.json';
+import {checkForUpdate,updateMessage,type UpdateCheck} from './update';
 import {Catalog,demoTitles} from './catalog/service';
 import type {Title,Episode} from './catalog/types';
 import {useLibrary} from './state/useLibrary';
@@ -27,7 +29,11 @@ function AboutScreen({catalog,onDemo,onLive}:{catalog:Catalog;onDemo:()=>void;on
 // Catalogue data comes from the SNAS backend in src/backend.json, which keeps the TMDB
 // credential server-side; the sample catalog stays available as an offline fallback.
 export function App(){
- const {width,height}=useWindowDimensions();const scale=Math.min(width/1280,height/720);const [tab,setTab]=useState<Tab>('Home');const [visited,setVisited]=useState<Tab[]>(['Home']);const [details,setDetails]=useState<Title[]>([]);const [player,setPlayer]=useState<Player|null>(null);const [sample,setSample]=useState(false);const catalog=useMemo(()=>new Catalog(sample?'':backend.tmdbProxy),[sample]);const store=useLibrary();
+ const {width,height}=useWindowDimensions();const scale=Math.min(width/1280,height/720);const [tab,setTab]=useState<Tab>('Home');const [visited,setVisited]=useState<Tab[]>(['Home']);const [details,setDetails]=useState<Title[]>([]);const [player,setPlayer]=useState<Player|null>(null);const [sample,setSample]=useState(false);const catalog=useMemo(()=>new Catalog(sample?'':backend.tmdbProxy),[sample]);const store=useLibrary();const [update,setUpdate]=useState<UpdateCheck|null>(null);
+ // A newer release is only ever reported here: installing one is a host-side action
+ // (see scripts/device-watch.mjs), so this never interrupts playback or focus.
+ useEffect(()=>{let alive=true;checkForUpdate(backend.workerBase,appVersion).then(result=>{if(alive&&result.updateAvailable)setUpdate(result);}).catch(()=>{});return()=>{alive=false;};},[]);
+ const updateNote=update?updateMessage(update):undefined;
  const open=(t:Title)=>setDetails(old=>old.length&&old[old.length-1].id===t.id&&old[old.length-1].kind===t.kind?old:[...old,t]);
  const play=(t:Title,e?:Episode)=>{
  const saved=store.library.progress[progressKey(t,e)];
@@ -52,6 +58,7 @@ export function App(){
  {visited.includes('About')&&<FocusScope active={!player&&tab==='About'&&!details.length} initial="about-demo"><AboutScreen catalog={catalog} onDemo={onDemo} onLive={onLive}/></FocusScope>}
  {details.map((t,i)=><FocusScope key={`${i}-${t.kind}-${t.id}`} active={!player&&i===details.length-1} initial="details-play"><DetailsScreen catalog={catalog} title={t} library={store.library} onPlay={play} onToggle={store.toggle} onBack={()=>setDetails(old=>old.slice(0,-1))} onOpen={open} onDemo={onDemo}/></FocusScope>)}
  </View>}
+ {updateNote&&<View testID="update-banner" style={{position:'absolute',bottom:store.error?62:15,left:56,right:56,backgroundColor:C.surface,padding:14,borderRadius:0}}><Text accessibilityLabel="Update available" style={{color:C.accent,fontSize:17}}>{updateNote}</Text></View>}
  {store.error&&<View style={{position:'absolute',bottom:15,left:56,right:56,backgroundColor:C.surface,padding:14,borderRadius:0}}><Text style={{color:C.error,fontSize:17}}>{store.error}</Text></View>}
  </View>
  </View></View>;
