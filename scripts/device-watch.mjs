@@ -27,7 +27,7 @@ const FIRE_APP_ID = 'com.snas.tv';
 const FIRE_ACTIVITY = `${FIRE_APP_ID}/.MainActivity`;
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -58,8 +58,31 @@ if (!base) {
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const stamp = () => new Date().toISOString().replace('T', ' ').slice(0, 19);
 
+/**
+ * A device selector that is not the Vega device is an adb serial, which means Fire OS: the
+ * package to install is the APK. The same value asks the backend for that kind of release, so a
+ * release the device could never install is not offered in the first place.
+ */
+const fireTv = device !== '' && !device.includes('VirtualDevice');
+const format = fireTv ? 'apk' : 'vpkg';
+
+/**
+ * `adb` is not on PATH in a plain shell on this machine, so the SDK's own copy is used when it
+ * is there — the same default the device scripts use.
+ */
+function adbBinary() {
+  const candidates = [process.env.ADB, join(process.env.ANDROID_HOME || '/opt/android-sdk', 'platform-tools', 'adb'), 'adb'];
+  for (const candidate of candidates) {
+    if (!candidate) continue;
+    if (candidate === 'adb' || existsSync(candidate)) return candidate;
+  }
+  return 'adb';
+}
+
 async function check() {
-  const response = await fetch(`${base}/v1/app/latest?currentVersion=${encodeURIComponent(currentVersion)}`);
+  const response = await fetch(
+    `${base}/v1/app/latest?currentVersion=${encodeURIComponent(currentVersion)}&format=${format}`,
+  );
   if (!response.ok) throw new Error(`update check failed (HTTP ${response.status})`);
   return response.json();
 }
@@ -81,7 +104,7 @@ async function download(path, destination) {
  */
 function install(packagePath) {
   if (/\.apk$/i.test(packagePath)) {
-    const adb = process.env.ADB || 'adb';
+    const adb = adbBinary();
     const target = device ? ['-s', device] : [];
     execFileSync(adb, [...target, 'install', '-r', packagePath], { cwd: ROOT, stdio: 'inherit' });
     execFileSync(adb, [...target, 'shell', 'am', 'start', '-n', FIRE_ACTIVITY], { cwd: ROOT, stdio: 'inherit' });
@@ -114,10 +137,17 @@ async function update(check_) {
       const raw = await download(checksumAsset.path, checksumPath);
       const expected = JSON.parse(raw.toString('utf8'));
       const actual = createHash('sha256').update(bytes).digest('hex');
-      if (expected.sha256 && expected.sha256 !== actual) {
-        throw new Error(`SHA-256 mismatch: expected ${expected.sha256.slice(0, 16)}…, got ${actual.slice(0, 16)}…`);
+      // A release that carries both kinds keeps its digests in `artifacts`, one per file, so the
+      // digest for the package actually being installed is the one to check — the top-level
+      // `sha256` only describes the Vega package of a Vega-only release.
+      const wanted =
+        expected.artifacts?.find((artifact) => artifact?.name === asset.name)?.sha256 ??
+        (expected.package === asset.name || expected.apk === asset.name ? expected.sha256 : undefined) ??
+        (expected.artifacts?.length ? undefined : expected.sha256);
+      if (wanted && wanted !== actual) {
+        throw new Error(`SHA-256 mismatch: expected ${wanted.slice(0, 16)}…, got ${actual.slice(0, 16)}…`);
       }
-      verified = Boolean(expected.sha256);
+      verified = Boolean(wanted);
     } catch (error) {
       console.error(`${stamp()}  ${error instanceof Error ? error.message : 'checksum step failed'}`);
       return;

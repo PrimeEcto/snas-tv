@@ -74,6 +74,26 @@ Playback evidence, logged while the player was open:
   hidden, **518** one arrow press later, and 0 again after the auto-hide. An earlier "controls never
   come back" reading was the harness's own dump taking longer than the six-second auto-hide.
 
+## The update path, end to end
+
+A release that the Fire TV picks up on its own was the point of the backend, so it was exercised
+rather than assumed. `v0.0.1` is published on the private repository carrying `snas-0.0.1.apk`, and
+the published bytes were checked through the backend the device uses:
+
+- `GET /v1/app/latest?currentVersion=0.0.1&format=apk` → `updateAvailable: false`, latest `0.0.1`
+  with `snas-0.0.1.apk` — the device is told it is current, not sold its own build.
+- `GET /v1/app/latest?currentVersion=0.0.0&format=apk` → `updateAvailable: true`, latest `0.0.1`.
+- `GET /v1/app/asset/snas-0.0.1.apk` → HTTP 200, `application/vnd.android.package-archive`,
+  43,494,875 bytes, and the SHA-256 of the download matches the released digest
+  (`2398151aa4192ec8…`) — the private release streamed to a device that holds no token.
+- On the emulator, a build reporting `0.0.0` was installed and launched; Home painted with
+  **Update available: SNAS 0.0.1 · 41.5 MB · you have 0.0.0** in the bottom bar
+  (`research/android/update-banner.xml`, `update-banner.png`).
+- `npm run device:update:once -- --device emulator-5556` then downloaded that release through the
+  backend, reported **SHA-256 verified**, installed it over adb and relaunched the app; the device
+  reports `versionName=0.0.1` afterwards and the banner is gone
+  (`research/android/update-current.xml`). No package was copied by hand.
+
 ## Defects found and corrected in this build
 
 1. **The app died at startup** with `TypeError: Cannot read property 'useState' of null` inside
@@ -105,7 +125,14 @@ Playback evidence, logged while the player was open:
    `KEYCODE_DPAD_*`); a fixed number of presses cannot walk a geometric focus search, so tab and
    control navigation now observes focus at every step; a generic `PORT` in the environment was
    being handed to the emulator, which refuses to start.
-6. **Passes that meant nothing**, which is the more dangerous failure, so each assertion now needs
+6. **The host-side installer could not find `adb`, and skipped verification for an APK.** With
+   `adb` absent from `PATH` the Fire TV half of the updater failed at the install step
+   (`spawnSync adb ENOENT`), and an APK-only release keeps its digest in `version.json`'s
+   `artifacts` list rather than the top-level `sha256` a Vega-only release uses, so the download was
+   installed as "no checksum published". It now resolves the SDK's own `adb` the way the device
+   scripts do and reads the digest of the file it actually downloaded; a run against the real
+   release reports `SHA-256 verified`.
+7. **Passes that meant nothing**, which is the more dangerous failure, so each assertion now needs
    its own evidence rather than a screen that merely rendered: Search recorded a pass for a query
    that was never typed, "My List is empty" passed with two titles left over from an earlier run, and
    the playback exit accepted anything showing "Play preview" — a detail page shows one too. The
