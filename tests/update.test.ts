@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {checkForUpdate, compareVersions, findPackageAsset, parseVersion, setPackageFormat, updateMessage} from '../src/update.ts';
+import {checkForUpdate, compareVersions, findPackageAsset, packageFormat, parseVersion, setPackageFormat, updateMessage} from '../src/update.ts';
 import type {ReleaseManifest} from '../src/update.ts';
 
 const WORKER = 'https://snas-movy.example.workers.dev';
@@ -142,7 +142,25 @@ test('a newer release is reported and nothing else is disturbed', async () => {
   });
   assert.equal(check.updateAvailable, true);
   assert.equal(check.latest?.version, '0.2.0');
-  assert.equal(calls[0], `${WORKER}/v1/app/latest?currentVersion=0.1.0`);
+  // The format this build can install travels with the check, so the backend answers with the
+  // newest APK release rather than the newest release of any kind.
+  assert.equal(calls[0], `${WORKER}/v1/app/latest?currentVersion=0.1.0&format=${packageFormat}`);
+});
+
+test('a Vega build asks for Vega packages', async () => {
+  const calls: string[] = [];
+  setPackageFormat('vpkg');
+  try {
+    await checkForUpdate(WORKER, '0.2.0', {
+      fetchImpl: async (url) => {
+        calls.push(url);
+        return response({updateAvailable: true, currentVersion: '0.2.0', latest: {version: '0.3.0'}});
+      },
+    });
+  } finally {
+    setPackageFormat('apk');
+  }
+  assert.equal(calls[0], `${WORKER}/v1/app/latest?currentVersion=0.2.0&format=vpkg`);
 });
 
 test('an unconfigured backend is not contacted at all', async () => {

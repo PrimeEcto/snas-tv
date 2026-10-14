@@ -129,16 +129,37 @@ export function toManifest(release: GithubRelease): ReleaseManifest {
   };
 }
 
+/** `apk` for Fire OS, `vpkg` for the Vega virtual device. */
+export type PackageFormat = 'apk' | 'vpkg';
+
+/** Does this release carry a package a device of `format` could install? */
+function releaseCarries(release: GithubRelease, format: PackageFormat): boolean {
+  return (release.assets ?? []).some(
+    (asset) => typeof asset?.name === 'string' && asset.name.toLowerCase().endsWith(`.${format}`),
+  );
+}
+
 /**
  * Latest release for the repository. `channel: 'beta'` accepts prereleases;
  * the default `stable` channel skips them.
+ *
+ * `format` asks for the newest release that carries a package of that kind, which is not the
+ * same as the newest release overall: a Fire TV APK and a Vega `.vpkg` are released separately,
+ * and reporting whichever happened to be published last would tell a Vega device that a Fire TV
+ * release — one it cannot install — is the newest thing available, hiding the package it can.
+ * Without `format` the newest release is returned, which is what the host-side installers want.
  */
 export async function fetchLatestRelease(
   env: ReleaseEnv,
-  options: { channel?: 'stable' | 'beta'; fetchImpl?: FetchLike; timeoutMs?: number } = {},
+  options: {
+    channel?: 'stable' | 'beta';
+    format?: PackageFormat;
+    fetchImpl?: FetchLike;
+    timeoutMs?: number;
+  } = {},
 ): Promise<ReleaseManifest | null> {
   const releases = await fetchReleaseList(env, options);
-  const latest = selectRelease(releases, options.channel ?? 'stable');
+  const latest = selectRelease(releases, options.channel ?? 'stable', options.format);
   return latest ? toManifest(latest) : null;
 }
 
@@ -162,18 +183,31 @@ async function fetchReleaseList(
   return Array.isArray(releases) ? releases : [];
 }
 
-/** Newest published release, honouring the channel; drafts are never eligible. */
+/** Published releases eligible for the channel, most recently published first. */
+function usableReleases(releases: GithubRelease[], channel: 'stable' | 'beta'): GithubRelease[] {
+  return releases
+    .filter(
+      (release) =>
+        !release.draft &&
+        !release.tag_name?.startsWith('untagged-') &&
+        (channel === 'beta' || !release.prerelease),
+    )
+    .sort((a, b) => (b.published_at ?? '').localeCompare(a.published_at ?? ''));
+}
+
+/**
+ * Newest published release, honouring the channel; drafts are never eligible. When `format` is
+ * given, releases that carry nothing of that kind are skipped, so the answer is the newest build
+ * the asking device could actually install.
+ */
 function selectRelease(
   releases: GithubRelease[],
   channel: 'stable' | 'beta',
+  format?: PackageFormat,
 ): GithubRelease | null {
-  const usable = releases.filter(
-    (release) => !release.draft && !release.tag_name?.startsWith('untagged-') && (channel === 'beta' || !release.prerelease),
-  );
-  if (usable.length === 0) return null;
-  // Most recently published first; GitHub's list endpoint is newest-first already.
-  usable.sort((a, b) => (b.published_at ?? '').localeCompare(a.published_at ?? ''));
-  return usable[0];
+  const usable = usableReleases(releases, channel);
+  const wanted = format ? usable.filter((release) => releaseCarries(release, format)) : usable;
+  return wanted[0] ?? null;
 }
 
 /** Compare the device's build against the latest release. */
@@ -229,7 +263,11 @@ export async function downloadReleaseAsset(
     return jsonError(502, 'github releases unavailable');
   }
 
-  const release = selectRelease(releases, options.channel ?? 'stable');
+  // Searched across releases rather than only the newest one: an APK release published after a Vega
+  // package must not make that package undownloadable from the host that is installing it.
+  const release = usableReleases(releases, options.channel ?? 'stable').find((candidate) =>
+    candidate.assets?.some((asset) => asset?.name === assetName && Boolean(asset.url)),
+  );
   const asset = release?.assets?.find(
     (candidate): candidate is GithubAsset & { url: string } =>
       candidate?.name === assetName && Boolean(candidate.url),

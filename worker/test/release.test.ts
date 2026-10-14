@@ -60,6 +60,48 @@ test('the stable channel skips prereleases and beta accepts them', async () => {
   assert.equal(beta?.version, '0.3.0-rc.1');
 });
 
+test('a release is chosen by the package the device can install, not by date alone', async () => {
+  const vegaPackage = { ...release, tag_name: 'v0.4.0', published_at: '2026-10-15T12:00:00Z' };
+  const fireTvApk = {
+    ...release,
+    tag_name: 'v0.5.0',
+    published_at: '2026-10-16T12:00:00Z',
+    assets: [{ name: 'snas-0.5.0.apk', size: 41943040, content_type: 'application/octet-stream', url: 'https://api.github.com/asset/9' }],
+  };
+  const page = [fireTvApk, vegaPackage];
+  const env = { GITHUB_REPO: 'owner/repo', GITHUB_TOKEN: 't' };
+  const fetchImpl: FetchLike = async () => new Response(JSON.stringify(page), { status: 200 });
+
+  // Without a format the newest release wins, which is what the host-side installers ask for.
+  assert.equal((await fetchLatestRelease(env, { fetchImpl }))?.version, '0.5.0');
+  assert.equal((await fetchLatestRelease(env, { fetchImpl, format: 'apk' }))?.version, '0.5.0');
+  // A Vega device must still be told about its own package rather than about the newer APK.
+  assert.equal((await fetchLatestRelease(env, { fetchImpl, format: 'vpkg' }))?.version, '0.4.0');
+  // And a request for a package nothing carries is an empty answer, not the wrong one.
+  const onlyApk = [fireTvApk];
+  const apkOnly: FetchLike = async () => new Response(JSON.stringify(onlyApk), { status: 200 });
+  assert.equal(await fetchLatestRelease(env, { fetchImpl: apkOnly, format: 'vpkg' }), null);
+});
+
+test('a package stays downloadable after a release of the other kind is published', async () => {
+  const vegaPackage = { ...release, tag_name: 'v0.4.0', published_at: '2026-10-15T12:00:00Z' };
+  const fireTvApk = {
+    ...release,
+    tag_name: 'v0.5.0',
+    published_at: '2026-10-16T12:00:00Z',
+    assets: [{ name: 'snas-0.5.0.apk', size: 41943040, content_type: 'application/octet-stream', url: 'https://api.github.com/asset/9' }],
+  };
+  const env = { GITHUB_REPO: 'owner/repo', GITHUB_TOKEN: 't' };
+  const fetchImpl: FetchLike = async (url) => {
+    if (url.includes('/releases?')) return new Response(JSON.stringify([fireTvApk, vegaPackage]), { status: 200 });
+    return new Response('package-bytes', { status: 200 });
+  };
+
+  const response = await downloadReleaseAsset(env, 'snas_x86_64.vpkg', { fetchImpl });
+  assert.equal(response.status, 200);
+  assert.equal(await response.text(), 'package-bytes');
+});
+
 test('an unconfigured repository yields no manifest rather than an error', async () => {
   assert.equal(await fetchLatestRelease({}, { fetchImpl: async () => { throw new Error('should not be called'); } }), null);
 });

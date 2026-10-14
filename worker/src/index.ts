@@ -9,7 +9,7 @@
  *   GET /v1/subtitles?tmdbId=...&season=1&episode=2       OpenSubtitles menu, grouped
  *   GET /v1/subtitle/<id>.vtt?tmdbId=...                  one track, SRT converted to WebVTT
  *   GET /v1/providers                                     mirror list for a server picker
- *   GET /v1/app/latest?currentVersion=0.1.0               update manifest (private repo)
+ *   GET /v1/app/latest?currentVersion=0.1.0&format=apk     update manifest (private repo)
  *   GET /v1/app/asset/<name>                              release asset, proxied
  *
  * Upstream is aggressively rate-limited, so every expensive answer is cached in
@@ -472,8 +472,12 @@ export function createHandler(env: Env, deps: HandlerDeps = {}) {
       }
 
       if (path === '/v1/app/latest') {
+        // `format=apk|vpkg` is what the asking device can install; without it the newest release is
+        // returned, which is what the host-side installers want.
+        const format = params.get('format')?.trim().toLowerCase();
         const manifest = await fetchLatestRelease(env, {
           channel: params.get('channel') === 'beta' ? 'beta' : 'stable',
+          ...(format === 'apk' || format === 'vpkg' ? { format } : {}),
           fetchImpl,
         });
         const check = checkForUpdate(manifest, params.get('currentVersion')?.trim() || undefined);

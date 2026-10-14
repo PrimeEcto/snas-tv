@@ -176,8 +176,12 @@ export async function checkForUpdate(
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), options.timeoutMs ?? 8000);
   try {
+    // `format` asks the backend for the newest release carrying a package this build can install:
+    // a Fire TV APK and a Vega `.vpkg` are released separately, and without it the newest release of
+    // the other kind would be reported here and then discarded by `findPackageAsset`, hiding a
+    // build the device could have had.
     const response = await fetchImpl(
-      `${base}/v1/app/latest?currentVersion=${encodeURIComponent(currentVersion.trim())}`,
+      `${base}/v1/app/latest?currentVersion=${encodeURIComponent(currentVersion.trim())}&format=${packageFormat}`,
       {headers: {Accept: 'application/json'}, signal: controller.signal},
     );
     if (!response.ok) return none;
