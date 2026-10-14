@@ -180,6 +180,35 @@ pre-existing hook-dependency complaints in `App.tsx`, `CatalogScreen.tsx`, `Deta
 `TextTrackType` and `ISO639_1` there); the file is unchanged by this work and the APK build does
 not run `tsc` at all.
 
+## Release 0.0.2 — built, published, and checked the way a device sees it (2026-10-14)
+
+The changes above were published rather than left in a working tree, and the release was verified
+through the backend the device actually calls.
+
+- **Built** from commit `217200f` on `main` (pushed), by `bash firetv/scripts/build-apk.sh`, into
+  `dist/snas-0.0.2.apk` — 43,501,951 bytes, SHA-256
+  `9d061bd63978ef5d3f3beed644334b38e99676821f06610da812d2db1d07722d`. Gradle now reads its version
+  from `firetv/package.json`, so `aapt2 dump badging` reports `versionCode='2' versionName='0.0.2'`
+  where a literal in `build.gradle` would have shipped 0.0.1's version inside 0.0.2's release;
+  targetSdk 35, native code `arm64-v8a armeabi-v7a x86_64`.
+- **The shipped JavaScript is this work, not the previous build**: `assets/index.android.bundle`
+  inside the APK contains the launch screen's label, `player-buffering`, `player-aspect`, and both
+  aspect notes. A successful build on its own would not have shown that.
+- **Published** as `v0.0.2`, `Latest` on the private repository, carrying `snas-0.0.2.apk` and a
+  `version.json` with the same digest.
+- **Through the backend, as a device would**: `GET /v1/app/latest?currentVersion=0.0.1&format=apk`
+  → `updateAvailable: true`, latest `0.0.2`; the same request as `currentVersion=0.0.2` →
+  `updateAvailable: false`, so a current device is not sold its own build.
+  `GET /v1/app/asset/snas-0.0.2.apk` answered HTTP 200, `application/vnd.android.package-archive`,
+  43,501,951 bytes, and the downloaded file's SHA-256 matched — `cmp` reports the served bytes are
+  identical to the built artifact, through a backend that holds the token for a private repository.
+- **Unit tests for the shipped code**: `npm test` 45 passed, 0 failed at this version; the Fire TV
+  Metro bundle builds for the Android target (exit 0).
+- **Not installed anywhere**: no emulator or stick was attached while this release was made, so the
+  launch screen, the fill mode and the buffering spinner have still not been *seen* on a screen. The
+  13 journeys recorded above are against 0.0.1. `npm run device:update:once -- --device <serial>`
+  installs this release onto whatever is attached.
+
 ## Not verified here, and why
 
 - **No physical Fire TV was available.** Both Fire TV Stick generations named in the brief — the
