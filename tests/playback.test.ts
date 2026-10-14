@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createPlayback, playbackReducer, progressKey, formatTime } from '../src/state/playback.ts';
+import { ASPECT_LABELS, ASPECT_MODES, createPlayback, playbackReducer, progressKey, formatTime, resizeModeFor, validAspect, type PlaybackAction } from '../src/state/playback.ts';
 import { emptyLibrary, parseLibrary, toggleSaved, saveProgress, continueWatching } from '../src/state/library.ts';
 import type { Title, Episode } from '../src/catalog/types.ts';
 
@@ -89,6 +89,29 @@ test('a media surface owns time once it reports, and reports it safely', () => {
   assert.equal(playbackReducer(state, { type: 'media', position: -40, duration: 7200 }).position, 0);
 });
 
+test('screen fit is remembered per viewer and maps onto the media layer resize modes', () => {
+  let state = createPlayback(movie);
+  // These streams are cinemascope, so the default is the one that uses the whole panel.
+  assert.equal(state.aspect, 'fill');
+  state = playbackReducer(state, { type: 'aspect', value: 'fit' });
+  assert.equal(state.aspect, 'fit');
+  assert.equal(playbackReducer(state, { type: 'tick', seconds: 5 }).position, 5);
+  // A mode the player does not offer cannot be set, and cannot disturb the rest of the state.
+  const bad = { type: 'aspect', value: 'zoom' } as unknown as PlaybackAction;
+  assert.equal(playbackReducer(state, bad).aspect, 'fit');
+  // The three choices are exactly the three modes a player surface accepts, in that order.
+  assert.deepEqual(ASPECT_MODES.map(resizeModeFor), ['cover', 'contain', 'stretch']);
+  assert.deepEqual(ASPECT_MODES, ['fill', 'fit', 'stretch']);
+  assert.equal(ASPECT_MODES.every(mode => ASPECT_LABELS[mode].length > 0), true);
+  for (const value of ASPECT_MODES) assert.equal(validAspect(value), true);
+  for (const value of ['Fill', '', null, undefined, 1, {}, []]) assert.equal(validAspect(value), false);
+  // A preference, so it is written into the library and read back on the next launch.
+  const kept = parseLibrary(JSON.stringify({ ...emptyLibrary(), preferences: { audio: 'English', subtitles: 'Off', speed: 1, aspect: 'fit' } }));
+  assert.equal(kept.preferences.aspect, 'fit');
+  const dropped = parseLibrary(JSON.stringify({ ...emptyLibrary(), preferences: { audio: 'English', subtitles: 'Off', speed: 1, aspect: 'zoom' } }));
+  assert.equal(dropped.preferences.aspect, 'fill');
+});
+
 test('time formatting handles hours, negative, and nonfinite values', () => {
   assert.equal(formatTime(65), '1:05');
   assert.equal(formatTime(3661), '1:01:01');
@@ -137,7 +160,7 @@ test('library parsing rejects broken schemas without crashing and roundtrips val
   }
   let library = toggleSaved(emptyLibrary(), movie);
   library = saveProgress(library, createPlayback(show, episode, 100), 200);
-  library.preferences = { audio: 'Spanish', subtitles: 'English', speed: 1.5 };
+  library.preferences = { audio: 'Spanish', subtitles: 'English', speed: 1.5, aspect: 'fit' };
   assert.deepEqual(parseLibrary(JSON.stringify(library)), library);
 });
 
@@ -146,7 +169,7 @@ test('library parsing drops corrupt entries and validates preferences and canoni
   const parsed = parseLibrary(JSON.stringify({
     watchlist: [movie, { ...movie, id: 'bad' }, { ...movie, runtime: 'bad' }, movie],
     progress: { wrongKey: valid, bad: { ...valid, position: null }, worse: { ...valid, duration: 0 } },
-    preferences: { audio: 42, subtitles: null, speed: -2 },
+    preferences: { audio: 42, subtitles: null, speed: -2, aspect: 'zoom' },
   }));
   assert.equal(parsed.watchlist.length, 1);
   assert.equal(Object.keys(parsed.progress).length, 1);

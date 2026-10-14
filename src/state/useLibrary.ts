@@ -9,6 +9,6 @@ export function useLibrary(){
  useEffect(()=>{let alive=true;AsyncStorage.getItem(KEY).then(value=>{if(alive)setLibrary(parseLibrary(value));}).catch(()=>{if(alive)setError('Your saved library could not be loaded. Try restarting SNAS.');}).finally(()=>{if(alive)setReady(true);});return()=>{alive=false;};},[]);
  useEffect(()=>{if(!ready)return;writes.current=writes.current.catch(()=>{}).then(()=>AsyncStorage.setItem(KEY,JSON.stringify(library))).catch(()=>setError('Changes could not be saved on this device.'));},[library,ready]);
  const toggle=useCallback((title:Title)=>setLibrary(l=>toggleSaved(l,title)),[]);
- const save=useCallback((state:PlaybackState)=>setLibrary(l=>({...saveProgress(l,state),preferences:{audio:state.audio,subtitles:state.subtitles,speed:state.speed}})),[]);
+ const save=useCallback((state:PlaybackState)=>setLibrary(l=>({...saveProgress(l,state),preferences:{audio:state.audio,subtitles:state.subtitles,speed:state.speed,aspect:state.aspect}})),[]);
  return {library,ready,error,toggle,save};
 }

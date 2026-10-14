@@ -1,6 +1,6 @@
 import type { Episode, Title } from '../catalog/types';
-import { progressKey, validSpeed } from './playback.ts';
-import type { PlaybackState } from './playback';
+import { progressKey, validSpeed, validAspect } from './playback.ts';
+import type { AspectMode, PlaybackState } from './playback';
 
 export interface Progress {
   title: Title;
@@ -13,11 +13,11 @@ export interface Progress {
 export interface Library {
   watchlist: Title[];
   progress: Record<string, Progress>;
-  preferences: { audio: string; subtitles: string; speed: number };
+  preferences: { audio: string; subtitles: string; speed: number; aspect: AspectMode };
 }
 
 export function emptyLibrary(): Library {
-  return { watchlist: [], progress: {}, preferences: { audio: 'English', subtitles: 'Off', speed: 1 } };
+  return { watchlist: [], progress: {}, preferences: { audio: 'English', subtitles: 'Off', speed: 1, aspect: 'fill' } };
 }
 
 const object = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
@@ -67,6 +67,7 @@ export function parseLibrary(json: string | null): Library {
     if (typeof value.preferences.audio === 'string') library.preferences.audio = value.preferences.audio;
     if (typeof value.preferences.subtitles === 'string') library.preferences.subtitles = value.preferences.subtitles;
     if (finite(value.preferences.speed) && validSpeed(value.preferences.speed)) library.preferences.speed = value.preferences.speed;
+    if (validAspect(value.preferences.aspect)) library.preferences.aspect = value.preferences.aspect;
     return library;
   } catch {
     return emptyLibrary();

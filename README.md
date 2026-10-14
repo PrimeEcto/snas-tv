@@ -74,7 +74,7 @@ bundles the same `src/**` the Vega build does, so the two cannot drift apart. It
 ExoPlayer (AndroidX Media3) and takes its catalogue, streams and subtitles from the same backend.
 
 ```bash
-bash firetv/scripts/build-apk.sh                  # capped build, no Gradle daemon; writes dist/snas-0.0.1.apk
+bash firetv/scripts/build-apk.sh                  # capped build, no Gradle daemon; writes dist/snas-<version>.apk
 bash scripts/android-device-start.sh              # headless TV-profile emulator on port 5556
 ANDROID_SERIAL=emulator-5556 bash scripts/android-journey.sh   # installs, then journeys every tab
 ANDROID_SERIAL=emulator-5556 bash scripts/android-journey.sh --no-install
@@ -129,7 +129,11 @@ This product uses the TMDB API but is not endorsed or certified by TMDB.
 
 ## Remote controls
 
-Arrows move focus; Select activates; Back returns. Search has an on-screen keyboard accessible entirely by D-pad. Player controls support pause/play, ±10-second seeks, audio/subtitle demonstrations, speed, episode selection and next episode. Back closes a menu, then hides controls, then exits. Dedicated Exit returns immediately. Continue Watching uses real simulated progress, with completed entries removed at 95%.
+Arrows move focus; Select activates; Back returns. Search has an on-screen keyboard accessible entirely by D-pad. Player controls support pause/play, ±10-second seeks, audio/subtitle choices, screen fit, speed, episode selection and next episode. Back closes a menu, then hides controls, then exits. Dedicated Exit returns immediately. Continue Watching uses real simulated progress, with completed entries removed at 95%.
+
+Screen fit exists because these streams are wider than the television: the backend's HLS ladder is cinemascope (2592×1080 at 1080p, 3840×1600 at 2160p), so a fit that preserves the picture leaves bars above and below it on a 16:9 panel. **Fill** is the default and uses the whole screen, trimming the sides; **Original** keeps the film's own shape with bars; **Stretch** distorts it to fit. The choice is remembered with the other preferences, and while a stream is still being opened the player shows a spinner rather than a timeline that has not started yet.
+
+SNAS opens on a launch screen before anything else mounts. `src/catalog/preload.ts` collects the artwork home is about to paint — the hero backdrop first, then every poster and wide-thumbnail — and fetches it five at a time, so the first screen appears with its images already cached instead of asking for a hundred and thirty-five in one burst as the rails mount. The wave is bounded (a 30-second budget, 15 seconds per image) and a failure or a slow network ends it rather than holding the launch.
 
 Watchlist, progress per episode, and preferences use the Vega-supported AsyncStorage port. Destinations mount on first visit, then stay mounted behind details and playback so queries and browsing state return to their previous position.
 

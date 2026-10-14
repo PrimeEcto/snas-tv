@@ -17,7 +17,7 @@ A runnable, premium streaming concept with genuine entertainment metadata and ar
 Develop and test in the official Vega Virtual Device at television resolution. No licensed movie or episode playback; the player advances a simulated timeline. The catalogue credential is held server-side by the SNAS backend (a Supabase edge function environment), never by the app, and an unreachable backend must preserve a usable genuine sample catalog.
 
 ## Capabilities and Constraints
-Home, Movies, Series, Search, My List, Continue Watching, title details, seasons and episodes, related content, focus restoration, audio/subtitle/settings menus, seeking and episode progression. Never fabricate ratings, catalog records, emulator results, licensing, or compatibility. Keep every credential in a server-side environment or a git-ignored local file; nothing sensitive ships in the app package or the repository.
+Home, Movies, Series, Search, My List, Continue Watching, title details, seasons and episodes, related content, focus restoration, audio/subtitle/settings menus, screen fit for streams wider than the panel, a launch screen that loads home's artwork before it mounts, seeking and episode progression. Never fabricate ratings, catalog records, emulator results, licensing, or compatibility. Keep every credential in a server-side environment or a git-ignored local file; nothing sensitive ships in the app package or the repository.
 
 ## Brand Commitments
 SNAS. Cinematic, understated, content-first; Apple TV as a craft reference, with an original identity. Restrained gradients for legibility, consistent focus cues, readable typography, calm transitions.

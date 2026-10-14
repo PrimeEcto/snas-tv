@@ -144,6 +144,42 @@ the published bytes were checked through the backend the device uses:
    `uiautomator dump` waits for the screen to go idle and its dump outlasts the six seconds the
    control bar stays up.
 
+## Added after this run: launch preloading, and screen fit (2026-10-14)
+
+The journey above was recorded before these two changes, so its screenshots and accessibility trees
+do not cover them. What is covered, and how:
+
+- **The launch screen** (`src/ui/BootScreen.tsx` with `src/catalog/preload.ts`). `App` now mounts
+  nothing else until the artwork home is about to paint is in the platform image cache, and the
+  screen reports the wave's progress while that happens. 13 unit tests cover the artwork list (hero
+  backdrop first, the one wide rail and Continue Watching use backdrops, a title without artwork is
+  skipped, duplicates collapse) and the wave's contract (each URL fetched once, concurrency bounded,
+  progress monotonic, a rejecting or synchronously throwing image counted as done rather than
+  failing the launch, a hanging image abandoned, the budget stopping the wave, an unreachable
+  catalogue ending it).
+- **What that wait costs**, measured on this host against the live backend with the real module:
+  `rails=8 items=160 artwork=135`, catalogue 398 ms, wave **1818 ms**, peak 5 in flight, 0 failures,
+  3.43 MB. The behaviour being replaced asked for those ~135 images in one burst as the rails
+  mounted; this asks for at most five at a time, and caps itself at 30 s overall and 15 s per image.
+- **Screen fit** (`ASPECT_MODES`, `resizeModeFor` and the `player-aspect` menu). The streams are
+  cinemascope, so a fit that preserves the picture letterboxes on a 16:9 panel; the default is now
+  `fill` (`cover`, which ExoPlayer renders as `RESIZE_MODE_ZOOM`), with `Original` and `Stretch`
+  beside it and the choice persisted with the other preferences. Unit tests cover the state action,
+  the three-way mapping and its round trip through the library. **The pixels on an ExoPlayer surface
+  were not observed** — no device was attached for this change.
+- **The player no longer shows a running timeline before the stream starts**: while a source is
+  being opened the timeline is replaced by a spinner, and the preview clock is held back so it
+  cannot climb and then snap back when the surface reports its own position. This is source-level
+  reasoning plus the state tests; it was not watched on a device.
+
+Checks run for these changes: `npm test` **45 passed, 0 failed** (13 new launch-wave tests and one
+screen-fit test); `npm run typecheck` (Vega `src`) passed; `npm run lint` reports 9 errors, all
+pre-existing hook-dependency complaints in `App.tsx`, `CatalogScreen.tsx`, `DetailsScreen.tsx`,
+`SearchScreen.tsx` and `focus.tsx`. `npm --prefix firetv run typecheck` reports one pre-existing
+`textTracks` typing error in `firetv/player/android.tsx` (react-native-video wants its own
+`TextTrackType` and `ISO639_1` there); the file is unchanged by this work and the APK build does
+not run `tsc` at all.
+
 ## Not verified here, and why
 
 - **No physical Fire TV was available.** Both Fire TV Stick generations named in the brief — the

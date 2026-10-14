@@ -10,7 +10,31 @@ export interface PlaybackState {
   audio: string;
   subtitles: string;
   speed: number;
+  aspect: AspectMode;
   completed: boolean;
+}
+
+/**
+ * How a stream is fitted to the panel.
+ *
+ * This exists because these streams are not shaped like the television: the catalogue's HLS ladder
+ * is cinemascope (2592x1080, and 3840x1600 at the top), so a fit that preserves the picture leaves
+ * bars above and below it on a 16:9 screen. The choice is part of the playback state so it is
+ * remembered per viewer rather than re-decided on every title.
+ */
+export type AspectMode = 'fill' | 'fit' | 'stretch';
+/** In the order the player menu lists them: use the whole panel first, then the film's own shape. */
+export const ASPECT_MODES: AspectMode[] = ['fill', 'fit', 'stretch'];
+export const ASPECT_LABELS: Record<AspectMode, string> = { fill: 'Fill', fit: 'Original', stretch: 'Stretch' };
+export const ASPECT_NOTES: Record<AspectMode, string> = {
+  fill: 'whole screen, sides trimmed',
+  fit: 'the film’s own shape',
+  stretch: 'the picture stretched',
+};
+export const validAspect = (value: unknown): value is AspectMode => value === 'fill' || value === 'fit' || value === 'stretch';
+/** The media layer's own word for each choice, which is what a player surface is handed. */
+export function resizeModeFor(aspect: AspectMode): 'contain' | 'cover' | 'stretch' {
+  return aspect === 'fill' ? 'cover' : aspect === 'stretch' ? 'stretch' : 'contain';
 }
 
 export type PlaybackAction =
@@ -22,7 +46,8 @@ export type PlaybackAction =
   | { type: 'seekTo'; position: number }
   | { type: 'controls'; visible: boolean }
   | { type: 'audio' | 'subtitles'; value: string }
-  | { type: 'speed'; value: number };
+  | { type: 'speed'; value: number }
+  | { type: 'aspect'; value: AspectMode };
 
 export const validSpeed = (value: number): boolean => Number.isFinite(value) && value >= 0.25 && value <= 4;
 
@@ -33,7 +58,7 @@ export function createPlayback(title: Title, episode?: Episode, savedPosition = 
     : (title.kind === 'movie' ? 110 : 45) * 60;
   const position = Number.isFinite(savedPosition) ? Math.min(duration, Math.max(0, savedPosition)) : 0;
   const completed = position >= duration;
-  return { title, episode, position, duration, completed, playing: !completed, controls: true, audio: 'English', subtitles: 'Off', speed: 1 };
+  return { title, episode, position, duration, completed, playing: !completed, controls: true, audio: 'English', subtitles: 'Off', speed: 1, aspect: 'fill' };
 }
 
 function moveTo(state: PlaybackState, position: number): PlaybackState {
@@ -66,6 +91,7 @@ export function playbackReducer(state: PlaybackState, action: PlaybackAction): P
     case 'audio': return { ...state, audio: action.value };
     case 'subtitles': return { ...state, subtitles: action.value };
     case 'speed': return validSpeed(action.value) ? { ...state, speed: action.value } : state;
+    case 'aspect': return validAspect(action.value) ? { ...state, aspect: action.value } : state;
   }
 }
 
