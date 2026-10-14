@@ -72,6 +72,15 @@ def enableProguardInReleaseBuilds = false
  */
 def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
 
+/**
+ * The version this APK carries is read from this project's package.json — the same file the release
+ * script checks against the tag, and the value Android writes into the installed package. A literal
+ * here drifts the moment the version is bumped, and then the APK reports a version that shipped in
+ * a different release.
+ */
+def snasVersion = new groovy.json.JsonSlurper().parseText(file("../../package.json").text).version as String
+def snasParts = snasVersion.tokenize("-")[0].tokenize(".").collect { it as int }
+
 android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
@@ -81,8 +90,9 @@ android {
         applicationId "com.snas.tv"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "0.0.1"
+        // 0.0.2 → 2, so every release is a newer build to Android as well as to the app.
+        versionCode snasParts[0] * 10000 + snasParts[1] * 100 + snasParts[2]
+        versionName snasVersion
     }
     signingConfigs {
         debug {

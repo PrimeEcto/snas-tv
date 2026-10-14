@@ -7,7 +7,7 @@
 # Two kinds of evidence are captured per journey: a native screenshot (`screencap`) and the
 # accessibility tree (`uiautomator dump`), which is what the assertions read.
 #
-#   bash scripts/android-journey.sh                       # install dist/snas-0.0.1.apk, then journey
+#   bash scripts/android-journey.sh                       # install dist/snas-<version>.apk, then journey
 #   bash scripts/android-journey.sh --no-install          # journey against whatever is installed
 #   ANDROID_SERIAL=emulator-5556 bash scripts/android-journey.sh path/to/app.apk
 #
@@ -28,7 +28,9 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 OUT="$ROOT/research/android"
 ADB_BIN="${ADB:-/opt/android-sdk/platform-tools/adb}"
 
-APK=dist/snas-0.0.1.apk
+# The default is this project's declared version, so bumping the version cannot leave the journey
+# installing the APK of an older release.
+APK="$ROOT/dist/snas-$(node -p "require('$ROOT/firetv/package.json').version").apk"
 INSTALL=1
 for arg in "$@"; do
   case "$arg" in
