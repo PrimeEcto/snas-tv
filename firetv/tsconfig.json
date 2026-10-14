@@ -1,0 +1,16 @@
+{
+  "extends": "@react-native/typescript-config",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "snas-player": ["player/android.tsx"],
+      "snas-tv": ["tv/android.ts"],
+      "snas-focus": ["focus/android.ts"],
+      "react-native-linear-gradient": ["shims/linear-gradient"]
+    }
+  },
+  "include": ["index.js", "player/**/*", "tv/android.ts", "focus/android.ts", "shims/**/*", "../src/**/*"]
+}

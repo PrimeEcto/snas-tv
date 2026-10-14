@@ -11,12 +11,20 @@
  *   node scripts/device-watch.mjs --once              # a single check
  *   node scripts/device-watch.mjs --dry-run           # download and verify, do not install
  *   node scripts/device-watch.mjs --once --current-version 0.2.0 --dry-run
- *   node scripts/device-watch.mjs --device <serial>   # pass a device to `vega run-app`
+ *   node scripts/device-watch.mjs --device <serial>   # a Vega device, or an adb serial for Fire TV
+ *   node scripts/device-watch.mjs --once --device emulator-5556   # install the Fire TV APK
  *
  * It reads the backend from src/backend.json and the installed version from package.json,
  * downloads through the Worker (the repository is private, so the device never holds a
- * token), verifies the release's SHA-256, and then runs `vega run-app`.
+ * token), verifies the release's SHA-256, and then installs with the platform's own tool:
+ * `adb install` for the Fire OS APK, `vega run-app` for the Vega package. Neither platform
+ * lets an app replace itself, so this host-side half is what makes a pushed release reach a
+ * device without anyone copying a package onto it by hand.
  */
+
+/** Fire OS application id and launch activity; must match firetv/android/app/build.gradle. */
+const FIRE_APP_ID = 'com.snas.tv';
+const FIRE_ACTIVITY = `${FIRE_APP_ID}/.MainActivity`;
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -64,8 +72,21 @@ async function download(path, destination) {
   return bytes;
 }
 
-/** Install with the SDK's own host-side command; relays its output untouched. */
+/**
+ * Install with the platform's own host-side command; relays its output untouched.
+ *
+ * The APK goes on over adb and is launched again straight away, so a Fire TV returns to the
+ * app rather than to its home screen. `--device` is the adb serial in that case and the Vega
+ * device selector otherwise.
+ */
 function install(packagePath) {
+  if (/\.apk$/i.test(packagePath)) {
+    const adb = process.env.ADB || 'adb';
+    const target = device ? ['-s', device] : [];
+    execFileSync(adb, [...target, 'install', '-r', packagePath], { cwd: ROOT, stdio: 'inherit' });
+    execFileSync(adb, [...target, 'shell', 'am', 'start', '-n', FIRE_ACTIVITY], { cwd: ROOT, stdio: 'inherit' });
+    return;
+  }
   const command = ['run-app', packagePath, APP_ID];
   if (device) command.push('--device', device);
   execFileSync('vega', command, { cwd: ROOT, stdio: 'inherit' });
@@ -105,10 +126,10 @@ async function update(check_) {
   console.log(`${stamp()}  package ${packagePath} (${verified ? 'SHA-256 verified' : 'no checksum published'})`);
 
   if (dryRun) {
-    console.log(`${stamp()}  dry run: skipping vega run-app`);
+    console.log(`${stamp()}  dry run: skipping the install`);
     return;
   }
-  console.log(`${stamp()}  installing and launching ${APP_ID}`);
+  console.log(`${stamp()}  installing and launching ${/\.apk$/i.test(asset.name) ? FIRE_APP_ID : APP_ID}`);
   install(packagePath);
   currentVersion = release.version;
   console.log(`${stamp()}  now running ${currentVersion}`);

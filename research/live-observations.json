@@ -1,0 +1,21 @@
+{
+  "homeTrending": 8,
+  "homeBadge": "LIVE CATALOG",
+  "detailsSynopsisLength": 384,
+  "myListEmpty": false,
+  "myListSaved": 1,
+  "moviesTitles": 20,
+  "moviesAfterPage": 13,
+  "player-audio": "control absent",
+  "player-subtitles": "control absent",
+  "player-settings": "control absent",
+  "searchHits": 11,
+  "searchEmptyState": "absent",
+  "aboutTexts": [
+    "SNAS",
+    "SNAS is a native Vega OS streaming concept. Browse real films and series, build your collection, and explore an interactive player with simulated progress. No movie or episode stream is playing.",
+    "Remote: arrows to move &#xB7; Select to choose &#xB7; Back to return. The catalogue is served by the SNAS backend, which holds the TMDB credential so no key ships in the app.",
+    "SNAS"
+  ],
+  "continueWatching": "present"
+}

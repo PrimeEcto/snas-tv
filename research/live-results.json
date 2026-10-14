@@ -1,0 +1,75 @@
+[
+  {
+    "name": "Home renders the live catalogue and trending rails",
+    "result": "PASS"
+  },
+  {
+    "name": "Hero opens a live detail page with real metadata",
+    "result": "PASS"
+  },
+  {
+    "name": "My List starts empty and the watchlist button is reachable",
+    "result": "PASS"
+  },
+  {
+    "name": "Saving from details puts the title in My List",
+    "result": "PASS"
+  },
+  {
+    "name": "Movies tab lists a live browse catalogue",
+    "result": "PASS"
+  },
+  {
+    "name": "Movies genre filter applies and restores",
+    "result": "FAIL",
+    "error": "genre menu exposed no options"
+  },
+  {
+    "name": "Movies pagination loads more titles",
+    "result": "FAIL",
+    "error": "pagination removed titles instead of adding them"
+  },
+  {
+    "name": "Series tab opens a live series detail page",
+    "result": "FAIL",
+    "error": "no series rendered"
+  },
+  {
+    "name": "A series episode opens the episode player",
+    "result": "FAIL",
+    "error": "remote could not reach undefined"
+  },
+  {
+    "name": "Episode player: next episode and exit",
+    "result": "FAIL",
+    "error": "{\"error\":\"unknown error\",\"message\":\"An unknown server-side error occurred while processing the command. Original error: No element found using the selector xpath and the arguments //*[@test_id=\\\"player-next\\\"]\",\"stacktrace\":\"UnknownError: An unknown server-side error occurred while processing the command. Original error: No element found using the selector xpath and the arguments //*[@test_id=\\\"player-next\\\"]\\n    at getResponseForW3CError (/data/SNAS/research/automation/node_modules/@appium/base-driver/lib/protocol/errors.js:1143:9)\\n    at asyncHandler (/data/SNAS/research/automation/node_modules/@appium/base-driver/lib/protocol/protocol.js:487:57)\"}"
+  },
+  {
+    "name": "Movie player opens from the hero, with transport controls",
+    "result": "FAIL",
+    "error": "Timed out waiting for player-toggle"
+  },
+  {
+    "name": "Movie player: pause holds the clock and seek moves it",
+    "result": "FAIL",
+    "error": "{\"error\":\"unknown error\",\"message\":\"An unknown server-side error occurred while processing the command. Original error: No element found using the selector xpath and the arguments //*[@test_id=\\\"player-toggle\\\"]\",\"stacktrace\":\"UnknownError: An unknown server-side error occurred while processing the command. Original error: No element found using the selector xpath and the arguments //*[@test_id=\\\"player-toggle\\\"]\\n    at getResponseForW3CError (/data/SNAS/research/automation/node_modules/@appium/base-driver/lib/protocol/errors.js:1143:9)\\n    at asyncHandler (/data/SNAS/research/automation/node_modules/@appium/base-driver/lib/protocol/protocol.js:487:57)\"}"
+  },
+  {
+    "name": "Movie player: audio, subtitle and speed menus open and close",
+    "result": "FAIL",
+    "error": "{\"error\":\"unknown error\",\"message\":\"An unknown server-side error occurred while processing the command. Original error: No element found using the selector xpath and the arguments //*[@test_id=\\\"player-exit\\\"]\",\"stacktrace\":\"UnknownError: An unknown server-side error occurred while processing the command. Original error: No element found using the selector xpath and the arguments //*[@test_id=\\\"player-exit\\\"]\\n    at getResponseForW3CError (/data/SNAS/research/automation/node_modules/@appium/base-driver/lib/protocol/errors.js:1143:9)\\n    at asyncHandler (/data/SNAS/research/automation/node_modules/@appium/base-driver/lib/protocol/protocol.js:487:57)\"}"
+  },
+  {
+    "name": "Search returns live results and a genuine empty state",
+    "result": "FAIL",
+    "error": "no empty state for a query with no matches"
+  },
+  {
+    "name": "About reports the running version and its backend",
+    "result": "PASS"
+  },
+  {
+    "name": "Progress from the played title joins Continue Watching",
+    "result": "PASS"
+  }
+]

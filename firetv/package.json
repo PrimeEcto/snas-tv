@@ -1,0 +1,29 @@
+{
+  "name": "snas-firetv",
+  "version": "0.0.1",
+  "private": true,
+  "description": "SNAS for Fire OS (Android) Fire TV devices: the same React Native UI with ExoPlayer (AndroidX Media3) playback.",
+  "scripts": {
+    "apk": "bash scripts/build-apk.sh",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "^2.2.0",
+    "react": "19.2.0",
+    "react-native": "0.83.0",
+    "react-native-linear-gradient": "file:./shims/linear-gradient",
+    "react-native-svg": "^15.12.0",
+    "react-native-video": "^6.16.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/runtime": "^7.25.0",
+    "@react-native-community/cli": "20.0.0",
+    "@react-native/babel-preset": "0.83.0",
+    "@react-native/metro-config": "0.83.0",
+    "@react-native/typescript-config": "0.83.0",
+    "@types/react": "^19.2.0",
+    "typescript": "5.8.3"
+  }
+}

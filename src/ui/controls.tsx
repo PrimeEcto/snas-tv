@@ -1,12 +1,19 @@
 import React,{useState,useRef,useEffect} from 'react';
 import {Pressable,View,Text,Image,StyleSheet,Animated,FlatList} from 'react-native';
-import LinearGradient from '@amazon-devices/react-linear-gradient';
+import NativeLinearGradient from 'react-native-linear-gradient';
 import {C} from './theme';
 import {Icon,type IconName} from './icons';
 import {useFocusNode} from './focus';
 import type {Title} from '../catalog/types';
 import {imageUrl} from '../catalog/service';
-export {LinearGradient};
+type GradientProps={colors:string[];locations?:number[];start?:{x:number;y:number};end?:{x:number;y:number};style?:any};
+// The native gradient module rejects a colour list with fewer than two stops and a
+// locations array whose length disagrees with it, so both are normalised here instead.
+export function LinearGradient({colors,locations,start,end,style}:GradientProps){
+ const stops=Array.isArray(colors)&&colors.length>=2?colors:['transparent','transparent'];
+ const offsets=Array.isArray(locations)&&locations.length===stops.length?locations:undefined;
+ return <NativeLinearGradient colors={stops} {...(offsets?{locations:offsets}:{})} {...(start?{start}:{})} {...(end?{end}:{})} style={style}/>;
+}
 export function Button({id,label,icon,onPress,primary=false,compact=false,disabled=false,onFocus}:{id:string;label:string;icon?:IconName;onPress:()=>void;primary?:boolean;compact?:boolean;disabled?:boolean;onFocus?:()=>void}){
  const [focused,setFocused]=useState(false);const node=useFocusNode(id);
  return <Pressable ref={node.ref as never} testID={id} accessibilityLabel={label} accessibilityRole="button" focusable={!disabled} disabled={disabled}

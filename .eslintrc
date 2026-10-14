@@ -5,12 +5,16 @@
     "eslint:recommended",
     "plugin:@amazon-devices/eslint-plugin-kepler/kepler"
   ],
+  "globals": {
+    "AbortController": "readonly",
+    "AbortSignal": "readonly"
+  },
   "overrides": [
     {
       "files": ["**/*.ts", "**/*.tsx"],
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
-        "project": "./tsconfig.json"
+        "project": ["./tsconfig.json", "./tsconfig.eslint.json"]
       }
     },
     {

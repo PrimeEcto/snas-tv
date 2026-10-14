@@ -15,6 +15,8 @@ export interface PlaybackState {
 
 export type PlaybackAction =
   | { type: 'tick'; seconds: number }
+  /** A real media surface reporting where it is, so duration comes from the file and not the metadata. */
+  | { type: 'media'; position: number; duration: number }
   | { type: 'toggle' | 'play' | 'pause' }
   | { type: 'seek'; delta: number }
   | { type: 'seekTo'; position: number }
@@ -46,6 +48,14 @@ export function playbackReducer(state: PlaybackState, action: PlaybackAction): P
     case 'tick':
       return state.playing && Number.isFinite(action.seconds) && action.seconds > 0
         ? moveTo(state, state.position + action.seconds * state.speed) : state;
+    case 'media': {
+      if (!Number.isFinite(action.position)) return state;
+      // Before a player has read the container it reports a zero duration; keep the estimate then.
+      const duration = Number.isFinite(action.duration) && action.duration > 0 ? action.duration : state.duration;
+      const position = Math.max(0, Math.min(duration, action.position));
+      const completed = duration > 0 && position >= duration;
+      return { ...state, duration, position, completed, playing: completed ? false : state.playing };
+    }
     case 'seek':
       return Number.isFinite(action.delta) ? moveTo(state, state.position + action.delta) : state;
     case 'seekTo': return moveTo(state, action.position);

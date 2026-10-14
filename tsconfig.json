@@ -3,7 +3,13 @@
   "compilerOptions": {
     "types": [
       "@amazon-devices/react-native-kepler"
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "snas-tv": ["firetv/tv/vega.ts"],
+      "snas-focus": ["firetv/focus/vega.ts"],
+      "snas-player": ["firetv/player/vega.tsx"]
+    }
   },
   "include": [
     "src/**/*.ts",

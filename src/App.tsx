@@ -1,9 +1,9 @@
 import React,{useState,useMemo,useEffect,useCallback} from 'react';
-import {View,Text,Pressable,StyleSheet,useWindowDimensions,BackHandler,Image} from 'react-native';
+import {View,Text,Pressable,useWindowDimensions,BackHandler,Image} from 'react-native';
 import backend from './backend.json';
 import {version as appVersion} from '../package.json';
 import {checkForUpdate,updateMessage,type UpdateCheck} from './update';
-import {Catalog,demoTitles} from './catalog/service';
+import {Catalog} from './catalog/service';
 import type {Title,Episode} from './catalog/types';
 import {useLibrary} from './state/useLibrary';
 import {continueWatching,type Progress} from './state/library';
@@ -14,7 +14,7 @@ import {DetailsScreen} from './ui/DetailsScreen';
 import {PlayerScreen} from './ui/PlayerScreen';
 import {FocusScope,useFocusNode} from './ui/focus';
 import {Button} from './ui/controls';
-import {C,direction} from './ui/theme';
+import {C} from './ui/theme';
 type Tab='Home'|'Movies'|'Series'|'Search'|'My List'|'About';
 type Player={title:Title;episode?:Episode;position:number;serial:number};
 function NavItem({name,active,onPress}:{name:Tab;active:boolean;onPress:()=>void}){

@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useRef} from 'react';
-import {View,Text,FlatList,ScrollView} from 'react-native';
+import {View,Text,FlatList} from 'react-native';
 import {Catalog} from '../catalog/service';
 import type {Title} from '../catalog/types';
 import {Button,Card} from './controls';

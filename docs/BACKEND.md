@@ -47,8 +47,9 @@ enter one; the Worker calls that same proxy when it has to resolve a title.
 | GET | `/v1/sources` | same as `/v1/watch` | sources only: `provider`, `note`, `sources[]`, `headers`, `attempts[]`, `cached` | 600 |
 | GET | `/v1/subtitles` | `tmdbId`, and `title` unless `TMDB_PROXY_URL` is set | `groups[]` of `SubtitleRecord`, `count`, `cached` | 21600 |
 | GET | `/v1/subtitle/<id>.vtt` | `tmdbId` plus the same title rule | one track as `text/vtt`, SRT converted to WebVTT | 86400 |
-| GET | `/v1/app/latest` | none | `updateAvailable`, `currentVersion`, `latest` release manifest | none (HTTP `max-age=300`) |
+| GET | `/v1/app/latest` | none (`currentVersion` for the device's own build) | `updateAvailable`, `currentVersion`, `latest` release manifest, APK asset first | none (HTTP `max-age=300`) |
 | GET | `/v1/app/asset/<name>` | none | release asset bytes proxied from the private repository | none |
+| GET | `/v1/app/latest?channel=beta` | none | same, but prereleases are eligible | none (HTTP `max-age=300`) |
 
 Shared query parameters:
 
@@ -137,6 +138,35 @@ Every response that carries sources therefore carries the headers to send with t
 `/v1/watch` and `/v1/sources`. The player attaches them to the master playlist, to every
 variant playlist and to every segment request.
 
+## Releases and the update check
+
+The repository is private, so the device cannot read GitHub and must not carry a token. The
+Worker holds a fine-grained `Contents: read` token and exposes only two things: the latest
+release manifest and the asset bytes, streamed through. `src/update.ts` on the device asks
+`/v1/app/latest?currentVersion=<running>` once per launch and only ever *reports* a newer
+build; installing it is a host-side action.
+
+A release is cut from this machine (both toolchains are local), which is what
+`scripts/release-app.mjs` does. The artifact names are a contract, because the manifest the
+device reads and the upload have to agree:
+
+| Asset | Target | Notes |
+| --- | --- | --- |
+| `snas-<version>.apk` | Fire OS / Fire TV | Built by `firetv/scripts/build-apk.sh`; installed with `adb install -r`. Listed **first** in the manifest. |
+| `snas_<arch>.vpkg` | Vega virtual device | Built by `npm run build:tv`. |
+| `version.json` | — | Sizes and SHA-256 digests of everything above. |
+
+The tag is `v<version>` and `scripts/release-app.mjs` refuses to release when the version in
+`package.json` (what the app reports at runtime) or `firetv/package.json` (what Android writes
+into the APK) disagrees with it, so a running build can never be told a different version
+exists. `--apk-only` and `--vpkg-only` narrow a release to one artifact.
+
+```bash
+node scripts/release-app.mjs --dry-run     # what would be built and uploaded
+node scripts/release-app.mjs               # build, tag v<version>, upload, publish
+node scripts/release-app.mjs --skip-build  # release what is already in dist/
+```
+
 ## Configuration
 
 `.env` at the repository root (git-ignored, written with mode 600) is the single source of
@@ -152,6 +182,7 @@ dashboard. None of them belong in the repository, and `CloudflareCredentials/` a
 | --- | --- | --- |
 | `SUPABASE_URL` | Supabase project URL for the durable cache (`worker/src/cache.ts`) | no for caching; the API works without it |
 | `SUPABASE_SERVICE_ROLE_KEY` | Service role key used over PostgREST | no for caching; the API works without it |
+| `SUPABASE_DB_PASSWORD` | Read only by the Supabase CLI, for `supabase db push` | yes; nothing at runtime reads it |
 | `GITHUB_REPO` | `owner/name` of the private repository used by `/v1/app/latest` | yes; without it the endpoint returns `latest: null` |
 | `GITHUB_TOKEN` | Fine-grained PAT with `Contents: read` on that repository | yes; the repo is private, so it is required for real releases |
 | `TMDB_PROXY_URL` | The `tmdb` function's URL, so the device may send only `tmdbId` | yes |
@@ -176,10 +207,18 @@ and a foreign origin is `403`.
 
 ## Supabase
 
+The project is dedicated to SNAS: `public` holds the four tables below and nothing else, and
+the only deployed functions are `tmdb` and `movy-relay`. Applying this directory's single
+migration is the whole setup — the CLI needs `SUPABASE_DB_PASSWORD` for it, and a shell that
+sources `.env` must not expand `$` characters inside that password, or the CLI reports
+`password authentication failed for user "postgres"` while the password itself is correct.
+
 Caching is best-effort by design: with `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
 unset, `createCache` returns a no-op handle, so reads always miss and writes are dropped
-without a network call, and a request never fails because the cache did. The Worker reaches
-Supabase over PostgREST (no SQL driver) with keys namespaced as `movy:<key>`.
+without a network call, and a request never fails because the cache did. Both are set in
+production, so caching is live: a repeated `/v1/watch` answers `cached: true` and came back
+in ~330 ms against ~1150 ms for the upstream round trip. The Worker reaches Supabase over
+PostgREST (no SQL driver) with keys namespaced as `movy:<key>`.
 
 The same project hosts both edge functions: `tmdb` needs `TMDB_API_KEY` (or
 `TMDB_READ_TOKEN`) and `movy-relay` needs `RELAY_SECRET`. Both are declared with JWT

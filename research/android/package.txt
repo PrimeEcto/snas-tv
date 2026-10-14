@@ -1,0 +1,3 @@
+    primaryCpuAbi=x86_64
+    versionCode=1 minSdk=24 targetSdk=35
+    versionName=0.0.1

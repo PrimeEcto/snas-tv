@@ -9,7 +9,23 @@
  *
  * Nothing here may throw into the UI: a device with no network, or a backend that is
  * down, must launch exactly as it does today.
+ *
+ * The Fire OS (Fire TV) build ships as an APK and the Vega build as a `.vpkg`; a release
+ * may carry either or both, so `findPackageAsset` picks the one this build can install.
  */
+export type PackageFormat = 'apk' | 'vpkg';
+
+/**
+ * The package format of the running build.
+ *
+ * Set once by each entry point: the Fire OS umbrella (`firetv/index.js`) leaves the
+ * default, and a Vega entry calls `setPackageFormat('vpkg')`. Tests flip it directly.
+ */
+export let packageFormat: PackageFormat = 'apk';
+
+export function setPackageFormat(format: PackageFormat): void {
+  packageFormat = format;
+}
 export interface ReleaseAsset {
   name: string;
   size: number;
@@ -65,18 +81,80 @@ export function compareVersions(a: string, b: string): number {
   return left.prerelease.localeCompare(right.prerelease);
 }
 
-/** The installable package inside a release, if it carries one. */
-export function findPackageAsset(manifest: ReleaseManifest | null): ReleaseAsset | undefined {
-  return manifest?.assets.find(asset => /\.(vpkg|apk)$/i.test(asset.name));
+/**
+ * The installable package inside a release, if it carries one.
+ *
+ * A release can hold an APK (Fire TV), one or more arch-specific `.vpkg` files (Vega),
+ * a `version.json` and notes. Only the running build's own format counts: a Vega package
+ * cannot be installed on Fire OS (or the reverse), so offering the other one would announce
+ * an update the device could never apply. For a `.vpkg`, an arch-matching build wins.
+ */
+export function findPackageAsset(
+  manifest: ReleaseManifest | null,
+  options: {prefer?: PackageFormat; arch?: string} = {},
+): ReleaseAsset | undefined {
+  const installable = (manifest?.assets ?? []).filter(asset => /\.(vpkg|apk)$/i.test(asset.name));
+  if (installable.length === 0) return undefined;
+
+  const prefer = options.prefer ?? packageFormat;
+  const preferred = installable.filter(asset => asset.name.toLowerCase().endsWith(`.${prefer}`));
+  if (preferred.length === 0) return undefined;
+
+  const arch = options.arch?.trim().toLowerCase();
+  if (prefer === 'vpkg' && arch && preferred.length > 1) {
+    const exact = preferred.find(asset => asset.name.toLowerCase().includes(`_${arch}.`));
+    if (exact) return exact;
+  }
+  return preferred[0];
 }
 
-/** One line a couch viewer can read, or undefined when there is nothing to say. */
+/**
+ * One line a couch viewer can read, or undefined when there is nothing to say.
+ *
+ * "Nothing to say" includes a release this build cannot install. A Vega `.vpkg` cannot be
+ * installed on Fire OS, so announcing it there would leave a banner the viewer can never act
+ * on — a standing claim of an update that does not exist for their device.
+ */
 export function updateMessage(check: UpdateCheck): string | undefined {
   if (!check.updateAvailable || !check.latest) return undefined;
   const package_ = findPackageAsset(check.latest);
-  const size = package_ ? ` · ${(package_.size / 1048576).toFixed(1)} MB` : '';
+  if (!package_) return undefined;
+  const size = ` · ${(package_.size / 1048576).toFixed(1)} MB`;
   const have = check.currentVersion ? ` · you have ${check.currentVersion}` : '';
   return `Update available: SNAS ${check.latest.version}${size}${have}`;
+}
+
+/**
+ * Keep only well-formed fields, so a bad release payload cannot break the banner.
+ *
+ * The Worker is ours, but a manifest is still remote input: an asset without a name or
+ * a size would otherwise reach `findPackageAsset` and produce `NaN MB` on screen.
+ */
+function normalizeManifest(value: unknown): ReleaseManifest | null {
+  if (!value || typeof value !== 'object') return null;
+  const raw = value as Partial<ReleaseManifest>;
+  if (typeof raw.version !== 'string' || !raw.version.trim()) return null;
+
+  const assets: ReleaseAsset[] = Array.isArray(raw.assets)
+    ? raw.assets
+        .filter((asset): asset is ReleaseAsset => Boolean(asset) && typeof asset.name === 'string' && asset.name.length > 0)
+        .map(asset => ({
+          name: asset.name,
+          size: typeof asset.size === 'number' && Number.isFinite(asset.size) ? asset.size : 0,
+          ...(typeof asset.contentType === 'string' ? {contentType: asset.contentType} : {}),
+          path: typeof asset.path === 'string' ? asset.path : '',
+        }))
+    : [];
+
+  return {
+    version: raw.version.trim(),
+    tag: typeof raw.tag === 'string' ? raw.tag : `v${raw.version.trim()}`,
+    name: typeof raw.name === 'string' ? raw.name : `SNAS ${raw.version.trim()}`,
+    publishedAt: typeof raw.publishedAt === 'string' ? raw.publishedAt : '',
+    prerelease: raw.prerelease === true,
+    notes: typeof raw.notes === 'string' ? raw.notes : '',
+    assets,
+  };
 }
 
 /**
@@ -108,7 +186,7 @@ export async function checkForUpdate(
     return {
       updateAvailable: body.updateAvailable,
       currentVersion: typeof body.currentVersion === 'string' ? body.currentVersion : currentVersion,
-      latest: (body.latest as ReleaseManifest | null) ?? null,
+      latest: normalizeManifest(body.latest),
     };
   } catch {
     return none;

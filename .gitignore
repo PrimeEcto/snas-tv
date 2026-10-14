@@ -1,9 +1,23 @@
 node_modules/
 build/
 dist/
+
+# Gradle's and Kotlin's own state inside the Fire TV project. The wrapper, the sources and the
+# checked-in Gradle files are what a build needs; caches and session files are not.
+.gradle/
+.kotlin/
+.cxx/
+local.properties
 research/automation*/
 research/*.html
 research/*.ppm
+
+# Screenshots from the device-journey harnesses: the dump, the JSON result and the logcat
+# extract next to them are the evidence that gets committed, and they are reproducible.
+research/android/*.png
+
+# ESLint plugin scratch state written by the Kepler lint plugin at runtime.
+generated/
 src/config.local.json
 .env*
 !.env.example
@@ -37,3 +51,6 @@ research/*-journal/
 research/*.qcow2*
 research/*.so
 research/*.so.*
+
+# Emulator bookkeeping written by scripts/android-device-start.sh while the harness runs.
+research/*.pid

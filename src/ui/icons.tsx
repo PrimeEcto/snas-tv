@@ -1,5 +1,5 @@
 import React from 'react';
-import Svg, {Path,Rect,Circle,Line} from 'react-native-svg';
+import Svg, {Path,Circle,Line} from 'react-native-svg';
 export type IconName='play'|'pause'|'plus'|'check'|'back'|'search'|'list'|'rewind'|'forward'|'audio'|'subtitles'|'settings'|'next'|'close';
 export function Icon({name,size=22,color='#F5F4F0'}:{name:IconName;size?:number;color?:string}){
  const common={stroke:color,strokeWidth:1.8,strokeLinecap:'round' as const,strokeLinejoin:'round' as const,fill:'none'};

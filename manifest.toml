@@ -2,7 +2,7 @@ schema-version = 1
 
 [package]
 title = "SNAS"
-version = "0.1.0"
+version = "0.0.1"
 id = "com.snas.tv"
 
 [os.version]

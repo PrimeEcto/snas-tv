@@ -5,6 +5,10 @@
  * carry a GitHub token. This Worker holds a fine-grained read-only token and exposes
  * only what the updater needs: the latest release manifest and the release assets,
  * streamed through so the token never leaves the server.
+ *
+ * A release carries the Fire TV app as `snas-<version>.apk` and/or the Vega virtual
+ * device package as `snas_<arch>.vpkg`; the manifest lists both, with the APK first so
+ * a client that prefers it does not have to reorder anything.
  */
 import type { FetchLike } from './movy.ts';
 
@@ -93,6 +97,15 @@ function githubHeaders(env: ReleaseEnv): Record<string, string> {
   };
 }
 
+/** Installable packages come before manifests and notes, APK before Vega packages. */
+function assetRank(name: string): number {
+  const lower = name.toLowerCase();
+  if (lower.endsWith('.apk')) return 0;
+  if (lower.endsWith('.vpkg')) return 1;
+  if (lower === 'version.json') return 2;
+  return 3;
+}
+
 /** Convert a raw GitHub release into the manifest shape the device consumes. */
 export function toManifest(release: GithubRelease): ReleaseManifest {
   const tag = release.tag_name ?? '';
@@ -109,8 +122,10 @@ export function toManifest(release: GithubRelease): ReleaseManifest {
         name: asset.name,
         size: asset.size ?? 0,
         ...(asset.content_type ? { contentType: asset.content_type } : {}),
+        // Proxied, so the manifest never carries a GitHub URL or the token.
         path: `/v1/app/asset/${encodeURIComponent(asset.name)}`,
-      })),
+      }))
+      .sort((a, b) => assetRank(a.name) - assetRank(b.name) || a.name.localeCompare(b.name)),
   };
 }
 
@@ -122,10 +137,19 @@ export async function fetchLatestRelease(
   env: ReleaseEnv,
   options: { channel?: 'stable' | 'beta'; fetchImpl?: FetchLike; timeoutMs?: number } = {},
 ): Promise<ReleaseManifest | null> {
+  const releases = await fetchReleaseList(env, options);
+  const latest = selectRelease(releases, options.channel ?? 'stable');
+  return latest ? toManifest(latest) : null;
+}
+
+/** The raw release list, one request, shared by the manifest and the asset download. */
+async function fetchReleaseList(
+  env: ReleaseEnv,
+  options: { fetchImpl?: FetchLike; timeoutMs?: number } = {},
+): Promise<GithubRelease[]> {
   const repo = env.GITHUB_REPO?.trim();
-  if (!repo) return null;
+  if (!repo) return [];
   const fetchImpl = options.fetchImpl ?? fetch;
-  const channel = options.channel ?? 'stable';
 
   const response = await fetchImpl(`${GITHUB_API}/repos/${repo}/releases?per_page=20`, {
     headers: githubHeaders(env),
@@ -135,15 +159,21 @@ export async function fetchLatestRelease(
     throw new Error(`github releases request failed (HTTP ${response.status})`);
   }
   const releases = (await response.json()) as GithubRelease[];
-  if (!Array.isArray(releases)) return null;
+  return Array.isArray(releases) ? releases : [];
+}
 
+/** Newest published release, honouring the channel; drafts are never eligible. */
+function selectRelease(
+  releases: GithubRelease[],
+  channel: 'stable' | 'beta',
+): GithubRelease | null {
   const usable = releases.filter(
-    (release) => !release.draft && (channel === 'beta' || !release.prerelease),
+    (release) => !release.draft && !release.tag_name?.startsWith('untagged-') && (channel === 'beta' || !release.prerelease),
   );
   if (usable.length === 0) return null;
   // Most recently published first; GitHub's list endpoint is newest-first already.
   usable.sort((a, b) => (b.published_at ?? '').localeCompare(a.published_at ?? ''));
-  return toManifest(usable[0]);
+  return usable[0];
 }
 
 /** Compare the device's build against the latest release. */
@@ -159,60 +189,65 @@ export function checkForUpdate(manifest: ReleaseManifest | null, currentVersion?
   };
 }
 
-/** Resolve and stream one release asset, so the device never sees the token. */
+/**
+ * The bytes a viewer downloads should carry a truthful type. GitHub reports a generic
+ * octet-stream for some uploads, and an APK served as octet-stream is treated as an opaque blob
+ * by the system installer, so the extension decides whenever the reported type says nothing.
+ */
+function assetContentType(reported: string | null | undefined, name: string): string {
+  const cleaned = (reported ?? '').trim().toLowerCase();
+  if (cleaned && cleaned !== 'application/octet-stream') return cleaned;
+  if (/\.apk$/i.test(name)) return 'application/vnd.android.package-archive';
+  if (/\.json$/i.test(name)) return 'application/json; charset=utf-8';
+  return 'application/octet-stream';
+}
+
+/**
+ * Resolve and stream one release asset, so the device never sees the token.
+ *
+ * One release-list request is enough: the asset's own API URL is used for the download
+ * with `Accept: application/octet-stream`, which GitHub answers with the bytes.
+ */
 export async function downloadReleaseAsset(
   env: ReleaseEnv,
   assetName: string,
   options: { channel?: 'stable' | 'beta'; fetchImpl?: FetchLike; timeoutMs?: number } = {},
 ): Promise<Response> {
-  const repo = env.GITHUB_REPO?.trim();
-  if (!repo) throw new Error('github repository is not configured');
+  const jsonError = (status: number, error: string) =>
+    new Response(JSON.stringify({ error }), {
+      status,
+      headers: { 'content-type': 'application/json; charset=utf-8' },
+    });
+
+  if (!env.GITHUB_REPO?.trim()) return jsonError(404, 'asset not found');
+
   const fetchImpl = options.fetchImpl ?? fetch;
-  const release = await fetchLatestRelease(env, options);
-  const asset = release?.assets.find((candidate) => candidate.name === assetName);
-  if (!release || !asset) {
-    return new Response(JSON.stringify({ error: 'asset not found' }), {
-      status: 404,
-      headers: { 'content-type': 'application/json; charset=utf-8' },
-    });
+  let releases: GithubRelease[];
+  try {
+    releases = await fetchReleaseList(env, options);
+  } catch {
+    return jsonError(502, 'github releases unavailable');
   }
 
-  // The manifest only carries a proxied path, so ask GitHub for the asset directly.
-  const listResponse = await fetchImpl(`${GITHUB_API}/repos/${repo}/releases?per_page=20`, {
-    headers: githubHeaders(env),
-    signal: AbortSignal.timeout(options.timeoutMs ?? 8000),
-  });
-  if (!listResponse.ok) {
-    return new Response(JSON.stringify({ error: 'github releases unavailable' }), {
-      status: 502,
-      headers: { 'content-type': 'application/json; charset=utf-8' },
-    });
-  }
-  const releases = (await listResponse.json()) as (GithubRelease & { assets?: GithubAsset[] })[];
-  const target = (Array.isArray(releases) ? releases : [])
-    .flatMap((entry) => entry.assets ?? [])
-    .find((candidate) => candidate.name === assetName && candidate.url);
-  if (!target?.url) {
-    return new Response(JSON.stringify({ error: 'asset not found' }), {
-      status: 404,
-      headers: { 'content-type': 'application/json; charset=utf-8' },
-    });
-  }
+  const release = selectRelease(releases, options.channel ?? 'stable');
+  const asset = release?.assets?.find(
+    (candidate): candidate is GithubAsset & { url: string } =>
+      candidate?.name === assetName && Boolean(candidate.url),
+  );
+  if (!asset) return jsonError(404, 'asset not found');
 
-  const download = await fetchImpl(target.url, {
+  const download = await fetchImpl(asset.url, {
     headers: { ...githubHeaders(env), accept: 'application/octet-stream' },
     signal: AbortSignal.timeout(options.timeoutMs ?? 60000),
   });
   if (!download.ok || !download.body) {
-    return new Response(JSON.stringify({ error: `asset download failed (HTTP ${download.status})` }), {
-      status: 502,
-      headers: { 'content-type': 'application/json; charset=utf-8' },
-    });
+    return jsonError(502, `asset download failed (HTTP ${download.status})`);
   }
 
   const headers = new Headers();
-  headers.set('content-type', target.content_type ?? 'application/octet-stream');
-  headers.set('content-length', `${target.size ?? download.headers.get('content-length') ?? ''}`);
+  headers.set('content-type', assetContentType(asset.content_type, assetName));
+  const length = asset.size ?? Number(download.headers.get('content-length'));
+  if (Number.isFinite(length) && length > 0) headers.set('content-length', `${length}`);
   headers.set('cache-control', 'private, max-age=300');
   headers.set('content-disposition', `attachment; filename="${assetName.replace(/[^\w.-]/g, '_')}"`);
   return new Response(download.body, { status: 200, headers });

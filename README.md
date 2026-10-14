@@ -67,6 +67,51 @@ npm run release:app          # builds, tags v<version>, uploads the vpkg + versi
 npm run release:app -- --skip-build
 ```
 
+## Fire OS / Fire TV (APK)
+
+The Fire TV build is an Android app that shares this project's screens: Metro in `firetv/`
+bundles the same `src/**` the Vega build does, so the two cannot drift apart. It plays through
+ExoPlayer (AndroidX Media3) and takes its catalogue, streams and subtitles from the same backend.
+
+```bash
+bash firetv/scripts/build-apk.sh                  # capped build, no Gradle daemon; writes dist/snas-0.0.1.apk
+bash scripts/android-device-start.sh              # headless TV-profile emulator on port 5556
+ANDROID_SERIAL=emulator-5556 bash scripts/android-journey.sh   # installs, then journeys every tab
+ANDROID_SERIAL=emulator-5556 bash scripts/android-journey.sh --no-install
+bash scripts/android-device-stop.sh               # when finished
+```
+
+The emulator is started with the AVD's touchscreen removed, headless, and with its own memory and
+core limits rather than the host's. A real Fire TV has no touchscreen and is never in Android's
+touch mode, and the app is written for that device: an emulator that keeps a touchscreen silently
+refuses the app's focus requests and looks like an app that never focuses anything. What was
+observed, and what could not be observed without physical hardware, is in `TESTING.md`; results,
+screenshots and accessibility trees land in `research/android/`.
+
+Updates work the same way as on Vega. The APK asks `/v1/app/latest` on launch, and the host-side
+installer pushes a release onto a device without anyone copying a package by hand:
+
+```bash
+npm run device:update:once -- --device emulator-5556   # an adb serial installs the APK with adb
+npm run device:update -- --device VirtualDevice        # the Vega device installs with vega run-app
+```
+
+A release carrying no APK says nothing to a Fire TV, and a release carrying no `.vpkg` says nothing
+to a Vega device: the check only reports a build the device could actually install.
+
+Publishing the APK works the same way as the Vega package — bump `version` in `package.json` and in
+`firetv/package.json` (Android writes that one into the APK, and the script refuses a release whose
+tag disagrees with it), build, then release:
+
+```bash
+bash firetv/scripts/build-apk.sh
+npm run release:app -- --skip-build --apk-only
+npm run release:app -- --skip-build                 # APK and Vega package together
+```
+
+One release can carry both artifacts, which is what `--skip-build` without `--apk-only` does once
+`dist/` holds both builds.
+
 ## TMDB catalogue
 
 SNAS needs no credential of any kind, and there is no field to enter one. The catalogue is served by the SNAS backend; the committed, non-secret `src/backend.json` holds the endpoints the app builds against:

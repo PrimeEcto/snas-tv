@@ -1,5 +1,141 @@
 # SNAS testing record
 
+Two builds have been tested on real running devices: the Fire OS APK (the Fire TV build) on a
+headless Android emulator, and the Vega package on Amazon's official virtual device. Actual
+observations only; implementation is not counted as a device pass.
+
+---
+
+# Fire OS / Fire TV APK — 2026-10-14
+
+APK `dist/snas-0.0.1.apk` (43,494,875 bytes, `com.snas.tv`, versionName 0.0.1, native `x86_64`,
+targetSdk 35) built from this tree and installed on an emulator started by
+`scripts/android-device-start.sh`.
+
+## Environment and method
+
+- Pop!_OS 24.04 x86_64 on the i9-11900KF / 32GB / RTX 4070 Super workstation; headless
+  throughout — no emulator window, no host mouse or keyboard injection.
+- AVD `firestick_sim`: the `tv_1080p` TV profile (1080p, `hw.dPad=yes`, no hardware keyboard) on
+  the Google APIs `android-35` x86_64 system image, started with `-no-window -no-audio
+  -no-boot-anim -no-snapshot -gpu swiftshader_indirect -memory 2048 -cores 2`, detached so it
+  cannot die with the shell that started it and bounded by those flags rather than by the host.
+- The emulator was made to behave like the hardware: `hw.screen` is rewritten to `no-touch` and one
+  D-pad key is sent after boot, because a device with a touchscreen sits in Android's *touch mode*
+  where a view's `requestFocus()` is silently refused. A real Fire TV has no touchscreen and is
+  never in touch mode, so without this the app looks like it never focuses anything — an artefact
+  that sent an earlier round of testing after a focus bug the app did not have.
+- Everything is driven with adb remote key events (`input keyevent KEYCODE_DPAD_*`), read back from
+  the accessibility tree (`uiautomator dump`) and native screenshots (`screencap`).
+  `scripts/android-journey.sh` is the harness; results land in `research/android/results.json`
+  with every screenshot and tree beside it.
+- The run starts from a freshly installed app (`pm clear`), so "My List is empty" means an install
+  nobody has used, exactly as a first launch on a Fire TV does, and it ends by stopping and starting
+  the app to check that the collection survived the process.
+- Final run: **13 journeys, 13 passed, 0 failed** (`research/android/results.json`).
+
+## Observed on the device
+
+| Journey | Observed result |
+|---|---|
+| Launch | Home paints with the **LIVE CATALOG** badge: the device reaches the deployed backend |
+| Home | Hero (Spider-Man: Brand New Day, TMDB 8.5, real synopsis) with Play preview / View details / My List, and rails of real 2026 titles |
+| Movies | Genre and Sort filters, populated poster grid |
+| Series | Genre and Sort filters, populated grid |
+| Search | On-screen keyboard and query field render, and the tab opens with the first letter key focused: one Select types a letter and the live backend answers — **20 results for “A”**, 20 real cards |
+| My List | Empty on a fresh install, and genuinely so: the empty-state copy with `My List (0)` and `Continue watching (0)`, then `My List (1)` once a title is saved |
+| About | TMDB attribution and the live/sample catalog switch |
+| Details | Synopsis (374-character description on the title checked), season and episode records (`S1 · E1 — Episode 1`), and Play preview / Resume preview beside Add to My List |
+| Save | Select on Add to My List flips the control to **Remove from My List**, and the count rises (0 → 1) with the title listed on My List |
+| Relaunch | The app is stopped and started again, and the saved title is still there (`My List (1)`): the collection is on disk, not just in memory |
+| Movie playback | Real decoding, not a UI timer — see below |
+| Series playback | A series episode decodes too: `Law & Order` → Play episode preview → `SNAS · LIVE · 1080p`, with the same ExoPlayer/HLS/H.264 evidence |
+| No source available | A title the upstream has no stream for (`The Tonight Show Starring Johnny Carson`, 1962) keeps the screen usable and says *No playable source came back for this title* instead of hanging or crashing |
+| Player controls | One arrow key brings the chrome back after it auto-hides; the remote's play/pause button too |
+| Update check | Asked on launch; silent, because no release carries a package this build can install |
+| Guest resources | `research/android/meminfo.txt`, `cpuinfo.txt`, `top.txt`, `package.txt` |
+
+Playback evidence, logged while the player was open:
+
+- `ExoPlayerImpl: Init … [AndroidXMedia3/1.8.0]` — the player is AndroidX Media3/ExoPlayer, as
+  asked, not a hand-rolled surface.
+- `HlsMediaPlaylist … parseMediaPlaylist` — ExoPlayer parsed the HLS playlist the backend returned.
+- `CCodec: allocate(c2.goldfish.h264.decoder)` … `read media type: video/avc` and
+  `CCodec: allocate(c2.android.aac.decoder)` — real H.264 video and AAC audio decoding.
+- The player reads `SNAS · LIVE · 1080p` with a progress bar at `3:49` and `1:22:39 remaining`,
+  i.e. a genuine container duration, and the clock restarts from the saved position when a title
+  is resumed from Continue watching.
+- The position advanced while the stream was playing, read from the player's own `player-position`
+  node: `0:03` and then `0:16` after twelve seconds of playback, with the remote's play/pause button
+  doing the pausing. Two readings of the media's own clock, not of a UI timer.
+- The video area's pixels keep changing between screenshots (mean 11.0 then 3.2 of 255 across two
+  four-second windows); a frozen frame measures ~0.
+- The chrome itself was measured rather than eyeballed: 0 accent-coloured pixels with the bar
+  hidden, **518** one arrow press later, and 0 again after the auto-hide. An earlier "controls never
+  come back" reading was the harness's own dump taking longer than the six-second auto-hide.
+
+## Defects found and corrected in this build
+
+1. **The app died at startup** with `TypeError: Cannot read property 'useState' of null` inside
+   React Native's own `useWindowDimensions`. The bundle contained two copies of React: the shared
+   `src/**` screens resolved React from the parent project while React Native used the Fire OS
+   project's copy, so hooks read a null dispatcher. `firetv/metro.config.js` now resolves React,
+   React Native and every `react-native-*` specifier for the whole graph from one place; the bundle
+   went from 1348 to 684 modules and the app launches.
+2. **The Fire TV build could not place focus itself.** React Native gates `ref.focus()` on an
+   Android feature flag that is off by default (`enableImperativeFocus`), so every focus request the
+   shared screens make was a silent no-op: nothing was focused when a screen opened and Android's
+   geometric focus search chose instead. That is why the Search tab kept the highlight on its tab and
+   sent the next Down press to the results list rather than the letter grid. `MainApplication` now
+   installs that one flag — after `loadReactNative`, keeping React Native's own release values for
+   every other flag — and the same build focuses the hero's Play control on launch, before a key is
+   pressed at all.
+3. **The Fire TV build was offered a Vega package.** The launch update check reported
+   `Update available: SNAS 0.1.0 · 0.3 MB` — a 0.3 MB `.vpkg`, which Fire OS cannot install. The
+   check is now format-aware (an APK build looks for an APK), and a release with nothing this build
+   can install produces no banner at all instead of a standing claim the viewer can never act on.
+4. **Android never delivered a single remote key to JavaScript.** The `snas-tv` adapter for Fire OS
+   was written for a native key-event module that did not exist, so the remote's play/pause,
+   rewind and fast-forward buttons did nothing, and once the player's chrome auto-hid after six
+   seconds nothing could bring it back — the screen had no way to hear a key. `MainActivity` now
+   reports every key to the device event emitter (`RemoteKeys.kt`) and the adapter maps the D-pad
+   and media key codes onto the event names the shared screens already switch on.
+4. Harness defects that produced false failures, fixed rather than worked around: `KEYCODE_UP` and
+   `KEYCODE_CENTER` are not Android key codes and are accepted silently as nothing (they are
+   `KEYCODE_DPAD_*`); a fixed number of presses cannot walk a geometric focus search, so tab and
+   control navigation now observes focus at every step; a generic `PORT` in the environment was
+   being handed to the emulator, which refuses to start.
+6. **Passes that meant nothing**, which is the more dangerous failure, so each assertion now needs
+   its own evidence rather than a screen that merely rendered: Search recorded a pass for a query
+   that was never typed, "My List is empty" passed with two titles left over from an earlier run, and
+   the playback exit accepted anything showing "Play preview" — a detail page shows one too. The
+   journey now installs a freshly cleared app so the empty state means something, checks the typed
+   letter *and* the backend's answer, checks the saved title after a relaunch, and checks that the
+   player is gone and Home's hero is on screen. The clock is read from the player's
+   `player-position` node (the chrome also shows a "remaining" count, and reading that one made a
+   playing stream look frozen) and with the picture paused, because while the video decodes
+   `uiautomator dump` waits for the screen to go idle and its dump outlasts the six seconds the
+   control bar stays up.
+
+## Not verified here, and why
+
+- **No physical Fire TV was available.** Both Fire TV Stick generations named in the brief — the
+  1st-gen 4K stick and the 4K Fire TV — are the target, and neither could be attached to this
+  environment. The emulator is an x86_64 Android 15 image with a TV profile, and it decodes in
+  software, so its frame timing says nothing about a stick's hardware decoder. Decode speed, memory
+  headroom, startup time and 4K behaviour on those devices remain unverified.
+- The journey types a single letter over the on-screen keyboard; typing a whole word with a remote
+  was not exercised.
+- Playback depends on the movy.sx backend returning a source for the chosen title, and the backend
+  is reached from Cloudflare's egress. Status of the streaming path, its rate limits and the relay
+  that works around them are recorded in `docs/BACKEND.md`, not here.
+- The Fire OS build has no dedicated D-pad-only pass over every rail; the harness walks focus
+  observed-step by observed-step, which is stronger than a fixed script but not exhaustive.
+
+---
+
+# Vega OS package — 2026-10-13
+
 Test date: 2026-10-13. Actual observations only; implementation is not counted as a device pass.
 
 ## Environment and build

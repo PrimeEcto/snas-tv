@@ -84,3 +84,61 @@ test('a missing release asset is reported as 404', async () => {
   const response = await downloadReleaseAsset({ GITHUB_REPO: 'owner/repo', GITHUB_TOKEN: 't' }, 'nope.bin', { fetchImpl });
   assert.equal(response.status, 404);
 });
+
+// The first Fire TV release ships as an APK; the Vega package rides along when present.
+const withBoth = {
+  ...release,
+  tag_name: 'v0.3.0',
+  assets: [
+    { name: 'version.json', size: 210, content_type: 'application/json', url: 'https://api.github.com/asset/1' },
+    { name: 'snas_x86_64.vpkg', size: 151440, content_type: 'application/octet-stream', url: 'https://api.github.com/asset/2' },
+    { name: 'snas-0.3.0.apk', size: 41943040, content_type: 'application/octet-stream', url: 'https://api.github.com/asset/3' },
+  ],
+};
+
+test('the APK is listed first, with its exact name and size', () => {
+  const manifest = toManifest(withBoth);
+  assert.equal(manifest.version, '0.3.0');
+  assert.deepEqual(
+    manifest.assets.map((asset) => asset.name),
+    ['snas-0.3.0.apk', 'snas_x86_64.vpkg', 'version.json'],
+  );
+  assert.equal(manifest.assets[0].size, 41943040);
+  assert.equal(manifest.assets[0].path, '/v1/app/asset/snas-0.3.0.apk');
+  assert.ok(!JSON.stringify(manifest).includes('api.github.com'));
+  assert.ok(!JSON.stringify(manifest).includes('owner/repo'));
+});
+
+test('the APK is streamed through the Worker without exposing the token', async () => {
+  const seen: { url: string; headers: Record<string, string> }[] = [];
+  const fetchImpl: FetchLike = async (input, init) => {
+    seen.push({ url: input, headers: (init?.headers ?? {}) as Record<string, string> });
+    if (input.includes('/releases')) return new Response(JSON.stringify([withBoth]), { status: 200 });
+    return new Response('PK-BYTES', { status: 200, headers: { 'content-type': 'application/vnd.android.package-archive' } });
+  };
+
+  const response = await downloadReleaseAsset(
+    { GITHUB_REPO: 'owner/repo', GITHUB_TOKEN: 'secret-token' },
+    'snas-0.3.0.apk',
+    { fetchImpl },
+  );
+  assert.equal(response.status, 200);
+  assert.equal(await response.text(), 'PK-BYTES');
+  assert.equal(response.headers.get('content-type'), 'application/vnd.android.package-archive');
+  assert.equal(response.headers.get('content-length'), '41943040');
+  assert.match(response.headers.get('content-disposition') ?? '', /snas-0\.3\.0\.apk/);
+  assert.equal(seen.length, 2, 'one release-list request, one asset request');
+  assert.ok(seen[1].url.endsWith('/asset/3'), 'the asset URL from the release is used');
+  assert.equal(seen[1].headers.authorization, 'Bearer secret-token');
+  assert.equal(seen[1].headers.accept, 'application/octet-stream');
+  for (const [, value] of response.headers) assert.ok(!value.includes('secret-token'));
+});
+
+test('an unreachable GitHub is reported as 502 and an unconfigured repo as 404', async () => {
+  const broken: FetchLike = async () => new Response('nope', { status: 500 });
+  const unavailable = await downloadReleaseAsset({ GITHUB_REPO: 'owner/repo', GITHUB_TOKEN: 't' }, 'snas-0.3.0.apk', { fetchImpl: broken });
+  assert.equal(unavailable.status, 502);
+
+  const unconfigured = await downloadReleaseAsset({}, 'snas-0.3.0.apk', { fetchImpl: broken });
+  assert.equal(unconfigured.status, 404);
+});

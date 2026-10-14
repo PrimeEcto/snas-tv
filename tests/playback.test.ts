@@ -64,6 +64,31 @@ test('settings and controls can change independently of play position', () => {
   assert.equal(state.position, 0);
 });
 
+test('a media surface owns time once it reports, and reports it safely', () => {
+  const state = createPlayback(movie);
+  // The real file is longer than the metadata runtime said, and its clock wins from then on.
+  const loaded = playbackReducer(state, { type: 'media', position: 12, duration: 7200 });
+  assert.equal(loaded.duration, 7200);
+  assert.equal(loaded.position, 12);
+  assert.equal(loaded.completed, false);
+  assert.equal(loaded.playing, true);
+  // A player that has not read the container yet reports zero duration; the estimate must survive.
+  const estimate = playbackReducer(state, { type: 'media', position: 3, duration: 0 });
+  assert.equal(estimate.duration, state.duration);
+  assert.equal(estimate.position, 3);
+  // Positions beyond the reported end are clamped, and reaching it ends playback.
+  assert.equal(playbackReducer(state, { type: 'media', position: 99999, duration: 7200 }).position, 7200);
+  const ended = playbackReducer(state, { type: 'media', position: 7200, duration: 7200 });
+  assert.equal(ended.completed, true);
+  assert.equal(ended.playing, false);
+  // Nonsense reports cannot move the clock or poison the duration.
+  for (const bad of [NaN, Infinity, -Infinity]) {
+    assert.equal(playbackReducer(state, { type: 'media', position: bad, duration: bad }).position, 0);
+    assert.equal(playbackReducer(state, { type: 'media', position: bad, duration: bad }).duration, state.duration);
+  }
+  assert.equal(playbackReducer(state, { type: 'media', position: -40, duration: 7200 }).position, 0);
+});
+
 test('time formatting handles hours, negative, and nonfinite values', () => {
   assert.equal(formatTime(65), '1:05');
   assert.equal(formatTime(3661), '1:01:01');
