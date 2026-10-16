@@ -378,6 +378,78 @@ test('a native error reveals recovery after playback controls have hidden', asyn
   expect(button('player-retry')).toBeDefined();
 });
 
+/** The ladder a cinemascope title comes back with: the top two rungs are ultrawide H.264. */
+const ladder = {
+  ...watch,
+  sources: [
+    {quality: '2160p', url: 'https://example.test/2160.m3u8'},
+    {quality: '1080p', url: 'https://example.test/a.m3u8'},
+    {quality: '720p', url: 'https://example.test/b.m3u8'},
+    {quality: '480p', url: 'https://example.test/c.m3u8'},
+  ],
+};
+
+test('a rendition this device cannot decode steps down the ladder instead of ending playback', async () => {
+  jest.mocked(loadWatch).mockResolvedValue(ladder as never);
+  await act(async () => {
+    mounted = create(component());
+  });
+  await act(async () =>
+    surface().props.onProgress({position: 600, duration: 7200}),
+  );
+  await act(async () =>
+    surface().props.onProgress({position: 2400, duration: 7200}),
+  );
+  expect(surface().props.uri).toBe('https://example.test/a.m3u8');
+  await act(async () => surface().props.onError('Codec reported err 0xfffffff4'));
+  expect(mounted.root.findAllByProps({testID: 'player-error'})).toHaveLength(0);
+  expect(surface().props.uri).toBe('https://example.test/b.m3u8');
+  // The viewer picks up where the failed rendition left them, not at the start.
+  await act(async () =>
+    surface().props.onProgress({position: 0, duration: 7200}),
+  );
+  expect(surface().props.seekTo).toBe(2400);
+  expect(
+    mounted.root.findByProps({testID: 'player-seek-feedback'}).props.children,
+  ).toContain('720p');
+});
+
+test('the ladder is walked to the bottom before playback is unavailable, and Try again starts over', async () => {
+  jest.mocked(loadWatch).mockResolvedValue(ladder as never);
+  await act(async () => {
+    mounted = create(component());
+  });
+  await act(async () =>
+    surface().props.onProgress({position: 600, duration: 7200}),
+  );
+  await act(async () => surface().props.onError('Codec reported err'));
+  expect(surface().props.uri).toBe('https://example.test/b.m3u8');
+  await act(async () => surface().props.onError('Codec reported err'));
+  expect(surface().props.uri).toBe('https://example.test/c.m3u8');
+  await act(async () => surface().props.onError('Codec reported err'));
+  expect(
+    mounted.root.findByProps({testID: 'player-error'}).props.children,
+  ).toBe('This title couldn’t play. Try again to reconnect.');
+  expect(mounted.root.findAllByType('PlayerSurface' as never)).toHaveLength(0);
+  await act(async () => button('player-retry').props.onPress());
+  expect(surface().props.uri).toBe('https://example.test/a.m3u8');
+});
+
+test('a ladder with no 1080p rung starts below the top rather than on the tallest rendition', async () => {
+  jest.mocked(loadWatch).mockResolvedValue({
+    ...watch,
+    sources: [
+      {quality: '2160p', url: 'https://example.test/2160.m3u8'},
+      {quality: '720p', url: 'https://example.test/b.m3u8'},
+      {quality: '480p', url: 'https://example.test/c.m3u8'},
+    ],
+  } as never);
+  await act(async () => {
+    mounted = create(component());
+  });
+  expect(surface().props.uri).toBe('https://example.test/b.m3u8');
+});
+
 test('browse retry requests the failed page and preserves earlier pages', async () => {
   const first = {...demoTitles[0], id: 1001};
   const second = {...demoTitles[0], id: 1002};

@@ -58,12 +58,19 @@ function byQuality(sources: WatchResult['sources']) {
       (Number.parseInt(a.quality, 10) || 0),
   );
 }
+function pixels(quality: string) {
+  return Number.parseInt(quality, 10) || 0;
+}
 function defaultQuality(sources: WatchResult['sources']) {
   const sorted = byQuality(sources);
+  // With no 1080p rung the best rung *below* it is the default, never the tallest. The top of a
+  // ladder is the rendition a constrained decoder is least able to open, and a viewer who wants it
+  // can still choose it from the quality menu.
   return (
-    (sorted.find((s) => s.quality === DEFAULT_QUALITY) ?? sorted[0])?.quality ??
-    ''
-  );
+    sorted.find((s) => s.quality === DEFAULT_QUALITY) ??
+    sorted.find((s) => pixels(s.quality) < 1080) ??
+    sorted[sorted.length - 1]
+  )?.quality ?? '';
 }
 export function PlayerScreen({
   title,
@@ -104,9 +111,18 @@ export function PlayerScreen({
   );
   const [live, setLive] = useState(false);
   const [slow, setSlow] = useState(false);
+  const [fallback, setFallback] = useState('');
   const [retry, setRetry] = useState(0);
   const [preview, setPreview] = useState(!supportsPlayback);
   const canSave = useRef(false);
+  // A decoder that refuses a rendition is not a dead end: the ladder is walked downwards from the
+  // rung that failed until one this device can open plays. `failed` remembers the rungs this
+  // session has already lost, so a repeated error cannot walk the same rung twice.
+  const failed = useRef<Set<string>>(new Set());
+  const mediaRef = useRef<WatchResult | null>(null);
+  const qualityRef = useRef('');
+  mediaRef.current = media;
+  qualityRef.current = quality;
   const lastInteraction = useRef(Date.now());
   const latest = useRef(state);
   latest.current = state;
@@ -140,6 +156,9 @@ export function PlayerScreen({
     setLive(false);
     setQuality('');
     setSubtitleId('');
+    // Every fresh attempt starts at the top of the ladder again.
+    failed.current.clear();
+    setFallback('');
     resumed.current = false;
     loadWatch(
       {id: titleId, kind: titleKind, title: titleName, year: titleYear},
@@ -241,7 +260,35 @@ export function PlayerScreen({
       }),
     [],
   );
+  // A rendition this device cannot open is stepped over rather than ending the session. The stream
+  // the backend labels "1080p" is ultrawide H.264 (2584x1080, High L5.0), and a 1st-gen Fire TV
+  // Stick 4K cannot allocate decoder output buffers for it: MediaTek fails the port reconfiguration
+  // with ENOMEM and reports a fatal codec error, which the surface hands back here as a playback
+  // error. The rungs below it are Main profile at 1724x720 and 852x480, which that decoder does
+  // open, so the failure walks down instead of leaving the viewer with nothing to watch.
   const onStreamError = useCallback((message: string) => {
+    const sources = mediaRef.current?.sources ?? [];
+    const ladder = byQuality(sources);
+    const current = qualityRef.current || defaultQuality(sources);
+    const at = ladder.findIndex((s) => s.quality === current);
+    if (at >= 0) failed.current.add(current);
+    const lower =
+      at >= 0
+        ? ladder.slice(at + 1).find((s) => !failed.current.has(s.quality))
+        : undefined;
+    if (lower) {
+      resumeAt.current = latest.current.position;
+      resumed.current = false;
+      setSeek(null);
+      setSlow(false);
+      setLive(false);
+      setStreamError('');
+      setFallback(
+        `This device couldn’t play ${current}. Switched to ${lower.quality}.`,
+      );
+      setQuality(lower.quality);
+      return;
+    }
     setStreamError(message);
     setLive(false);
     setMedia(null);
@@ -615,6 +662,7 @@ export function PlayerScreen({
                 accessibilityLiveRegion="polite"
                 style={styles.seekFeedback}>
                 {seekFeedback ||
+                  fallback ||
                   (state.completed ? 'Ready to watch again' : '')}
               </Text>
               <View style={styles.transportButtons}>

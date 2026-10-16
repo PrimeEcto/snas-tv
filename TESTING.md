@@ -4,6 +4,15 @@
 
 See [the 0.0.3 QA record](docs/QA_0.0.3.md) for the current package, second redesign, regression tests and native TV evidence. Tests use the headless Android 35 x86_64 emulator with a TV profile and adb D-pad input. Physical Fire TV and Vega runtime testing were not repeated for this release.
 
+Playback on the 1st-gen Fire TV Stick 4K was investigated after a report that it dies the moment
+playback starts there while the same title plays on a newer Fire TV. The stream declarations it rests
+on, the documented failure on that exact model (AFTMM, Fire OS 6) and what remains unconfirmed are in
+[docs/FIRETV_STICK_PLAYBACK.md](docs/FIRETV_STICK_PLAYBACK.md). The player now steps down the quality
+ladder when the decoder refuses a rendition and never defaults to the tallest rung: `npm run
+test:player` 19 passed, `npm run test:unit` 52 passed, `npm run typecheck` clean, eslint on the changed
+files 0 errors. No physical stick was attached, so that device's own log is still outstanding and the
+step-down has not been watched on it.
+
 The dated records below are historical and retain the wording and observations of those builds.
 
 The historical records cover the Fire OS APK on a headless Android emulator and the Vega package on Amazon’s official virtual device. These are emulator observations, not physical Fire TV certification; implementation alone is not counted as a runtime pass.
