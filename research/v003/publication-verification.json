@@ -1,0 +1,26 @@
+{
+  "result": "PASS",
+  "release": "https://github.com/PrimeEcto/snas-tv/releases/tag/v0.0.3",
+  "tag": "v0.0.3",
+  "commit": "21c2799acdc02ee2200030d4d5bb414960101194",
+  "publishedAt": "2026-10-16T21:27:26Z",
+  "downloadedApkBytes": 43534923,
+  "downloadedApkSha256": "84b23e60baa913df845c1fde8231d4318d772a3da4e8c8991b6375393ed0c318",
+  "assets": [
+    {
+      "name": "SHA256SUMS.txt",
+      "size": 81,
+      "url": "https://github.com/PrimeEcto/snas-tv/releases/download/v0.0.3/SHA256SUMS.txt"
+    },
+    {
+      "name": "snas-0.0.3.apk",
+      "size": 43534923,
+      "url": "https://github.com/PrimeEcto/snas-tv/releases/download/v0.0.3/snas-0.0.3.apk"
+    },
+    {
+      "name": "version.json",
+      "size": 389,
+      "url": "https://github.com/PrimeEcto/snas-tv/releases/download/v0.0.3/version.json"
+    }
+  ]
+}

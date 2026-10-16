@@ -1,0 +1,22 @@
+$ gh auth status
+github.com
+  ✓ Logged in to github.com account PrimeEcto (keyring)
+  - Active account: true
+  - Git operations protocol: https
+  - Token: gho_************************************
+  - Token scopes: 'gist', 'read:org', 'repo', 'workflow'
+$ gh repo view PrimeEcto/snas-tv --json nameWithOwner
+{"nameWithOwner":"PrimeEcto/snas-tv"}
+
+snas-0.0.3.apk: 43534923 bytes, sha256 84b23e60baa913df…
+$ git push origin HEAD:refs/heads/codex/snas-tv-0.0.3
+remote: 
+remote: Create a pull request for 'codex/snas-tv-0.0.3' on GitHub by visiting:        
+remote:      https://github.com/PrimeEcto/snas-tv/pull/new/codex/snas-tv-0.0.3        
+remote: 
+To https://github.com/PrimeEcto/snas-tv.git
+ * [new branch]      HEAD -> codex/snas-tv-0.0.3
+$ gh release create v0.0.3 /data/SNAS/dist/snas-0.0.3.apk /data/SNAS/dist/version.json /data/SNAS/dist/SHA256SUMS.txt --repo PrimeEcto/snas-tv --target 21c2799acdc02ee2200030d4d5bb414960101194 --title SNAS TV 0.0.3 --notes-file /data/SNAS/dist/release-notes.md --latest
+https://github.com/PrimeEcto/snas-tv/releases/tag/v0.0.3
+
+Published v0.0.3. The app will see it through /v1/app/latest.

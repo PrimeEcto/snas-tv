@@ -44,4 +44,10 @@ The Release APK is signed with the repository's Android **debug certificate**, S
 
 No physical Fire TV was connected. Hardware decoding, real-stick memory headroom, 4K, HDMI/CEC, screen-reader output and long-duration playback remain unverified. Vega shared-source TypeScript compatibility passed; a new Vega runtime/package test was not performed for this Android release. The existing backend and source availability remain external dependencies.
 
-GitHub CLI is installed but has no authenticated account. Remote tag/release availability cannot be established until authentication is available. The clean-tree publication command `node scripts/release-app.mjs --apk-only --skip-build` failed at `gh auth status` with “You are not logged into any GitHub hosts.” The attempt is retained in `research/v003/publication.log`; no push, tag or upload occurred. APK, version manifest, release notes and checksum files are available locally in `dist/`. After local GH authentication is available, the same command performs conflict checks and publishes the prepared artifact. A successful local build is not a published release.
+## Published release
+
+[SNAS TV 0.0.3](https://github.com/PrimeEcto/snas-tv/releases/tag/v0.0.3) was published on 2026-10-16 at 21:27:26 UTC, with the APK, `version.json` and `SHA256SUMS.txt` attached. Tag `v0.0.3` points to source commit `21c2799acdc02ee2200030d4d5bb414960101194`; the release manifest records that same commit. The source branch `codex/snas-tv-0.0.3` was pushed without modifying the default branch.
+
+All three assets were downloaded again through GH. The downloaded manifest and checksum file match the local files byte for byte. The downloaded APK is 43,534,923 bytes with SHA-256 `84b23e60baa913df845c1fde8231d4318d772a3da4e8c8991b6375393ed0c318`, matching the tested APK. The release is published, not a draft or prerelease. Evidence: `research/v003/publication-authenticated.log` and `publication-verification.json`.
+
+The initial unauthenticated attempt is retained in `research/v003/publication.log` as historical evidence. After the user signed in locally, this process used `/home/primeecto/.config/gh` and GH's credential helper for the push, resolving the separate environment configuration and Git credential-helper issues. No private tokens were printed or committed. Publication is no longer blocked.
