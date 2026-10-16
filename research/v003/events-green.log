@@ -1,0 +1,9 @@
+npm notice run @amazon-devices/snas@0.0.3 test:player
+npm notice run jest --config jest.player.config.cjs --runInBand --silent
+PASS tests/player-events.spec.tsx
+PASS tests/focus-restoration.spec.tsx
+
+Test Suites: 2 passed, 2 total
+Tests:       11 passed, 11 total
+Snapshots:   0 total
+Time:        0.761 s, estimated 1 s

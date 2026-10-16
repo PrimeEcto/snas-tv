@@ -1,0 +1,2 @@
+Local and installed APK SHA-256 match
+84b23e60baa913df845c1fde8231d4318d772a3da4e8c8991b6375393ed0c318  /data/app/~~h4pSxXUbN93nzG4sE-4Vbg==/com.snas.tv-uTKLGOcgmsXNCoIiKi6P3A==/base.apk

@@ -1,0 +1,55 @@
+npm notice run @amazon-devices/snas@0.0.2 test
+npm notice run node --import tsx --test tests/*.test.ts
+✔ no configured backend produces a populated, searchable, paginated sample catalog (1.78674ms)
+✔ an unavailable backend and network failures never silently become demo results (1.209182ms)
+✔ live search omits people and malformed records and preserves missing metadata (0.599925ms)
+✔ cache deduplicates requests while page and query remain independent (0.567181ms)
+✔ discover sends kind, genre, sort and clamped pagination through documented query parameters (0.256548ms)
+✔ live details and season endpoints retain actual episode identity and credits (0.424071ms)
+✔ paused playback freezes time and resumed ticks honor playback speed (0.969752ms)
+✔ seeks clamp at both ends and completion stops playback (0.166288ms)
+✔ nonfinite timing and unsupported speeds cannot poison playback (0.320748ms)
+✔ episodes use their runtime and movie, show, and episode keys never collide (0.13835ms)
+✔ settings and controls can change independently of play position (0.136721ms)
+✔ a media surface owns time once it reports, and reports it safely (0.151796ms)
+✔ screen fit is remembered per viewer and maps onto the media layer resize modes (0.90543ms)
+✔ time formatting handles hours, negative, and nonfinite values (0.168491ms)
+✔ watchlist toggles immutably and distinguishes movie and television ids (0.320538ms)
+✔ progress saves episodes separately and removes a title at the 95 percent boundary (0.433526ms)
+✔ continue watching sorts newest first and displays only the latest episode per title (0.309276ms)
+✔ library parsing rejects broken schemas without crashing and roundtrips valid progress (0.38005ms)
+✔ library parsing drops corrupt entries and validates preferences and canonical keys (0.21987ms)
+✔ real catalog string years and missing artwork survive library persistence (0.194872ms)
+✔ episode progress with no thumbnail survives a restart (0.137071ms)
+✔ the featured backdrop leads the home artwork and other rails contribute their posters (1.313675ms)
+✔ without the featured id the first item of the first rail is used, and an empty catalogue falls back to the sample record (0.171272ms)
+✔ continue watching and the wide rail contribute backdrops while titles without a path are skipped (0.128011ms)
+✔ the same artwork is never listed twice, whatever rail it arrives from (0.10641ms)
+✔ an empty list resolves immediately and never calls prefetch (0.447756ms)
+✔ every url is fetched exactly once and progress rises monotonically to the total (0.53288ms)
+✔ no more images are in flight at once than the concurrency allows (10.902006ms)
+✔ concurrency is clamped to the number of images actually waiting (2.73284ms)
+✔ images that reject or throw synchronously are counted as done instead of failing the launch (0.492529ms)
+✔ an image that never settles is abandoned after its own timeout (4.895473ms)
+✔ the budget stops the wave from starting further images, counting the rest as done (0.391011ms)
+✔ home preloading fetches the artwork the catalogue rails describe (0.343757ms)
+✔ an unreachable catalogue ends the launch wave instead of failing it (0.193659ms)
+✔ versions compare numerically, and a release outranks its own prerelease (6.993306ms)
+✔ only a package this build could actually install is offered (0.288942ms)
+✔ the reported line names the version, its size and the installed build (0.214988ms)
+✔ the Fire TV build installs the APK, the Vega build the package (0.137423ms)
+✔ the running build's own format is the one it asks for (0.137134ms)
+✔ a package for the running architecture beats one for another (0.128592ms)
+✔ a malformed manifest resolves to "no update known" rather than a broken banner (0.554173ms)
+✔ a newer release is reported and nothing else is disturbed (0.240998ms)
+✔ a Vega build asks for Vega packages (0.246166ms)
+✔ an unconfigured backend is not contacted at all (0.187931ms)
+✔ failures resolve to "no update known" instead of breaking a launch (0.29635ms)
+ℹ tests 45
+ℹ suites 0
+ℹ pass 45
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 212.644961

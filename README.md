@@ -1,6 +1,27 @@
 # SNAS
 
-A native Amazon Vega OS streaming concept, built from the official React Native 0.83 template. Genuine movie/series metadata and artwork, discovery, remote search, saved titles, episodic details, and an interactive simulated player. No copyrighted video is played.
+A native television streaming application with shared React Native screens for Android-based Fire TV and Amazon Vega. Includes movie/series discovery, remote search, saved titles, episodic details and playback through the existing source backend. Android uses ExoPlayer; Vega provides an interactive player concept.
+
+## Version 0.0.3 — Android Fire TV
+
+The current release work targets `dist/snas-0.0.3.apk` (`com.snas.tv`, version code 3). The interface includes native genre/sort sheets, cinematic title pages, a remote keyboard beside results, a centered transport and seek timeline, and structured settings. See [release notes](docs/RELEASE_0.0.3.md), [audit](docs/UI_UX_AUDIT.md) and [QA record](docs/QA_0.0.3.md).
+
+```bash
+npm ci
+npm --prefix firetv ci
+npm test
+npm run typecheck
+npm --prefix firetv run typecheck
+bash firetv/scripts/build-apk.sh
+ANDROID_SERIAL=emulator-5556 bash scripts/android-journey.sh dist/snas-0.0.3.apk
+ANDROID_SERIAL=emulator-5556 python3 scripts/android-extended.py
+```
+
+The Release variant is signed with the repository's Android debug certificate for development sideloading. It is not an Amazon Appstore production-signed artifact. Physical Fire TV hardware has not been tested. Streaming depends on the configured backend and source availability.
+
+Publishing uses `node scripts/release-app.mjs --apk-only --skip-build` from a clean committed tree and requires an authenticated `gh` account with repository access. It refuses an existing tag or release. The local APK and QA evidence do not imply that a GitHub release has been published.
+
+The Vega instructions below describe the separate original target; its VPKG is not the Android 0.0.3 release artifact.
 
 ## Installed environment
 

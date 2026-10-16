@@ -1,0 +1,63 @@
+npm notice run @amazon-devices/snas@0.0.3 worker:test
+npm notice run npm --prefix worker test
+npm notice run @amazon-devices/snas-worker@1.0.0 test
+npm notice run node --import tsx --test test/*.test.ts
+✔ the service root advertises its endpoints (44.088789ms)
+✔ the provider list matches the site mirrors and marks a default order (3.087054ms)
+✔ /v1/watch returns playable sources and a multi-language subtitle menu (16.989962ms)
+✔ /v1/sources serves only sources, with the headers a player must send (1.8542ms)
+✔ /v1/subtitles groups tracks by language (1.305803ms)
+✔ the subtitle proxy converts SRT to WebVTT and refuses untranslatable formats (5.190457ms)
+✔ bad requests are rejected with actionable errors (1.418693ms)
+✔ unknown paths, wrong methods and preflight behave (0.594429ms)
+✔ a title resolves through the catalogue proxy, which is the only holder of the TMDB key (2.301014ms)
+✔ the release endpoint reports no update when the repo is unconfigured (0.653509ms)
+✔ cacheKey drops empty parts and stays query-string safe (1.216491ms)
+✔ with no Supabase credentials the cache is a silent no-op (0.402689ms)
+✔ a stored row is returned while it is unexpired (36.282491ms)
+✔ expired rows, empty results and failures are all treated as misses (5.489954ms)
+✔ writes are an upsert and never reject (1.1755ms)
+✔ version comparison handles prefixes, gaps and prereleases (16.011557ms)
+✔ manifest exposes proxied asset paths instead of GitHub URLs (1.235273ms)
+✔ update checks only fire when the device is behind (1.168664ms)
+✔ the stable channel skips prereleases and beta accepts them (31.312497ms)
+✔ a release is chosen by the package the device can install, not by date alone (2.443424ms)
+✔ a package stays downloadable after a release of the other kind is published (2.821897ms)
+✔ an unconfigured repository yields no manifest rather than an error (0.191044ms)
+✔ the token is sent to GitHub but never appears in the manifest (1.697062ms)
+✔ a missing release asset is reported as 404 (2.107962ms)
+✔ the APK is listed first, with its exact name and size (0.772205ms)
+✔ the APK is streamed through the Worker without exposing the token (2.484721ms)
+✔ an unreachable GitHub is reported as 502 and an unconfigured repo as 404 (0.574813ms)
+✔ fixtures are real captured payloads (3.140941ms)
+✔ decrypts every captured payload byte-for-byte (5.845868ms)
+✔ decrypted payload is the documented source shape (3.691233ms)
+✔ a wrong seed is rejected instead of returning garbage (5.421385ms)
+✔ a missing media id is refused (0.277479ms)
+✔ quoted JSON bodies and unpadded base64url are accepted (0.677986ms)
+✔ the keystream is deterministic and length-exact (3.276027ms)
+✔ base64url decoding matches the site decoding (0.332751ms)
+✔ srtToVtt emits one WEBVTT header, dotted timestamps and no cue counters (1.726972ms)
+✔ srtToVtt keeps cue text that happens to be a number (0.406697ms)
+✔ srtToVtt normalises text that is already WebVTT (0.258164ms)
+✔ only SRT and VTT can be served to the player (0.252896ms)
+✔ groups are per language, alphabetical, and best release first (12.706783ms)
+✔ the direct transport returns status and raw body (28.0107ms)
+✔ the direct transport passes the upstream status through unchanged (0.615171ms)
+✔ the relay transport posts the target URL with the shared secret (1.051191ms)
+✔ a transport never throws: relay problems become status 0 (1.162079ms)
+✔ the relay is used only when configured (0.455953ms)
+✔ a 429 seed is reported as a rate limit, not a generic failure (1.225055ms)
+✔ the relay transport asks for the seed and its target in one invocation (0.771154ms)
+✔ failover through a relay transport decrypts a real payload end to end (2.607535ms)
+✔ a stale seed is refreshed once and the retry decrypts with the new seed (2.716268ms)
+✔ when every mirror is rate limited the error carries 429 (1.066158ms)
+✔ a failing mirror falls through to the next provider and records why (2.869824ms)
+ℹ tests 51
+ℹ suites 0
+ℹ pass 51
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 265.231855

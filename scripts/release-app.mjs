@@ -19,7 +19,7 @@
  * backend's /v1/app/latest endpoint serves them from the private repository: the device
  * never holds a GitHub token.
  */
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -30,6 +30,9 @@ const VPKG_PATH = join(ROOT, 'dist', 'snas_x86_64.vpkg');
 const MANIFEST_PATH = join(ROOT, 'dist', 'version.json');
 const APK_BUILD_SCRIPT = join(ROOT, 'firetv', 'scripts', 'build-apk.sh');
 const PLATFORM = 'x86_64';
+const REPOSITORY = 'PrimeEcto/snas-tv';
+const head = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: ROOT, encoding: 'utf8'}).trim();
+const branch = execFileSync('git', ['branch', '--show-current'], {cwd: ROOT, encoding: 'utf8'}).trim();
 
 const args = process.argv.slice(2);
 const requested = (args.find((arg) => !arg.startsWith('-')) ?? '').replace(/^v/, '');
@@ -96,6 +99,28 @@ if (!dryRun) {
   }
 }
 
+// A release tag must never silently reuse another commit or a pre-existing published release.
+if (!dryRun) {
+  run('gh', ['auth', 'status']);
+  run('gh', ['repo', 'view', REPOSITORY, '--json', 'nameWithOwner']);
+  for (const path of [`repos/${REPOSITORY}/releases/tags/${tag}`, `repos/${REPOSITORY}/git/ref/tags/${tag}`]) {
+    const probe = spawnSync('gh', ['api', path, '--silent'], {cwd:ROOT, encoding:'utf8'});
+    if (probe.status === 0) {
+      console.error(`Refusing to overwrite existing ${tag}: ${path}. Inspect it before publishing.`);
+      process.exit(1);
+    }
+    if (!/HTTP 404/.test(probe.stderr ?? '')) {
+      console.error('Could not establish release/tag availability; nothing was published.');
+      console.error(probe.stderr || probe.error?.message || 'GitHub request failed');
+      process.exit(1);
+    }
+  }
+  if (!branch) {
+    console.error('Create a branch before publishing so the source commit can be pushed.');
+    process.exit(1);
+  }
+}
+
 if (wantApk && !skipBuild) {
   if (existsSync(APK_BUILD_SCRIPT)) {
     // Capped build: the Fire OS APK is produced outside this script's own means.
@@ -148,6 +173,7 @@ if (artifacts.length === 0) {
 const manifest = {
   version,
   tag,
+  commit: head,
   ...(wantVpkg
     ? { platform: PLATFORM, package: 'snas_x86_64.vpkg', size: artifacts.find((a) => a.kind === 'vpkg')?.size ?? 0, sha256: artifacts.find((a) => a.kind === 'vpkg')?.sha256 ?? '' }
     : {}),
@@ -175,12 +201,23 @@ const notes = [
   .filter((line) => line !== null)
   .join('\n');
 
-// `gh release create` creates and pushes the tag when it does not exist yet.
+const releaseBody = join(ROOT, 'docs', `RELEASE_${version}.md`);
+const notesPath = join(ROOT, 'dist', 'release-notes.md');
+if (!dryRun) writeFileSync(notesPath, `${existsSync(releaseBody) ? readFileSync(releaseBody, 'utf8') : ''}\n${notes}\n`);
+if (!dryRun) {
+  const sumsPath = join(ROOT, 'dist', 'SHA256SUMS.txt');
+  writeFileSync(sumsPath, artifacts.map(artifact => `${artifact.sha256}  ${artifact.name}`).join('\n') + '\n');
+  uploads.push(sumsPath);
+}
+// Push only this source branch, then bind the new tag to its exact commit.
+run('git', ['push', 'origin', `HEAD:refs/heads/${branch}`]);
 run('gh', [
   'release', 'create', tag,
   ...uploads,
-  '--title', `SNAS ${version}`,
-  '--notes', notes,
+  '--repo', REPOSITORY,
+  '--target', head,
+  '--title', `SNAS TV ${version}`,
+  '--notes-file', notesPath,
   '--latest',
 ]);
 

@@ -1,0 +1,10 @@
+PASS Series expanded genre choices D-pad reached genuine genre rows: Kids, News, Reality, Soap, Talk, War & Politics, Western
+PASS Series Western remote reach All choices fit without scrolling; reached Westerns with D-pad focus
+PASS Series Western selection Selecting Western committed the Westerns filter and restored its trigger
+PASS Series Western real results Live Western discovery returned actual catalog card browse-tv-73586
+PASS Series Western metadata The opened title displays its genuine Western genre metadata; no metadata was manufactured
+PASS Series Western selected state The canonical Western choice is checked when reopening the sheet
+PASS Series Western Back restoration Back closed the native genre sheet, preserved Westerns and restored the opener
+PASS Series All genres restored Restored All genres before leaving the section
+PASS Cast actor and role columns Episode 1 focus reveals three cast columns with individual actor and role Text values from actual sample metadata
+PASS Live Home restored after cast capture Restored checked live catalog and Home Play focus for the following playback journey

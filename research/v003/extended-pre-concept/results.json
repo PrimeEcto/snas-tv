@@ -1,0 +1,250 @@
+[
+  {
+    "journey": "Genre sheet opens",
+    "result": "PASS",
+    "detail": "Native genre sheet owns focus and exposes selectable genre rows",
+    "evidence": [
+      "genre-open.xml"
+    ]
+  },
+  {
+    "journey": "Genre selection commits",
+    "result": "PASS",
+    "detail": "Selecting Drama dismissed the sheet and restored its genre trigger",
+    "evidence": [
+      "genre-chosen.xml"
+    ]
+  },
+  {
+    "journey": "Genre selected state",
+    "result": "PASS",
+    "detail": "Reopening the genre sheet marks Drama as selected independently of focus",
+    "evidence": [
+      "genre-reopened.xml"
+    ]
+  },
+  {
+    "journey": "Genre Back scope",
+    "result": "PASS",
+    "detail": "Back discarded the focused All choice, kept Movies open and restored the Drama trigger",
+    "evidence": [
+      "genre-closed.xml"
+    ]
+  },
+  {
+    "journey": "Sort sheet opens",
+    "result": "PASS",
+    "detail": "Sort options live in their own native sheet",
+    "evidence": [
+      "sort-open.xml"
+    ]
+  },
+  {
+    "journey": "Sort selection commits",
+    "result": "PASS",
+    "detail": "Title A\u2013Z committed and restored the Sort trigger",
+    "evidence": [
+      "sort-chosen.xml"
+    ]
+  },
+  {
+    "journey": "Sort selected state",
+    "result": "PASS",
+    "detail": "The committed sort remains visibly selected on reopening",
+    "evidence": [
+      "sort-reopened.xml"
+    ]
+  },
+  {
+    "journey": "Full-word remote search",
+    "result": "PASS",
+    "detail": "DUNE typed with individual on-screen keys; real movie results returned",
+    "evidence": [
+      "full-word-search.xml"
+    ]
+  },
+  {
+    "journey": "No search results",
+    "result": "PASS",
+    "detail": "A real unmatched query shows concise editing guidance",
+    "evidence": [
+      "search-empty.xml"
+    ]
+  },
+  {
+    "journey": "Settings catalog section",
+    "result": "PASS",
+    "detail": "Catalog section exposes both real catalog choices",
+    "evidence": [
+      "settings-catalog.xml"
+    ]
+  },
+  {
+    "journey": "Live catalog selected",
+    "result": "PASS",
+    "detail": "Live choice is checked while the sample choice remains unchecked",
+    "evidence": [
+      "settings-live.xml"
+    ]
+  },
+  {
+    "journey": "Settings remote section",
+    "result": "PASS",
+    "detail": "Remote guidance has its own section rather than sharing the catalog action surface",
+    "evidence": [
+      "settings-remote.xml"
+    ]
+  },
+  {
+    "journey": "Settings attribution section",
+    "result": "PASS",
+    "detail": "About shows the app version, Android playback capability, TMDB logo label and required attribution",
+    "evidence": [
+      "settings-about.xml"
+    ]
+  },
+  {
+    "journey": "Sample catalog selected",
+    "result": "PASS",
+    "detail": "Sample choice is actually checked after changing catalogs",
+    "evidence": [
+      "sample-selected.xml"
+    ]
+  },
+  {
+    "journey": "Season sheet opens",
+    "result": "PASS",
+    "detail": "Genuine sample series exposes its two bundled seasons in a native chooser",
+    "evidence": [
+      "season-open.xml"
+    ]
+  },
+  {
+    "journey": "Reselect current season",
+    "result": "PASS",
+    "detail": "Reselecting the checked season dismisses the sheet and restores its trigger",
+    "evidence": [
+      "season-reselected.xml"
+    ]
+  },
+  {
+    "journey": "Reselected season remains playable",
+    "result": "PASS",
+    "detail": "Reselecting the current season leaves Play enabled",
+    "evidence": [
+      "state.xml"
+    ]
+  },
+  {
+    "journey": "Episode remote focus",
+    "result": "PASS",
+    "detail": "D-pad reached genuine episode card episode-1-1",
+    "evidence": [
+      "episode-focus.xml"
+    ]
+  },
+  {
+    "journey": "Detail focus restoration",
+    "result": "PASS",
+    "detail": "Back restored the series card that opened Details",
+    "evidence": [
+      "series-detail-closed.xml"
+    ]
+  },
+  {
+    "journey": "Hero focus restoration",
+    "result": "PASS",
+    "detail": "Back restored Details on the Home feature",
+    "evidence": [
+      "hero-detail-closed.xml"
+    ]
+  },
+  {
+    "journey": "Offline catalog recovery",
+    "result": "PASS",
+    "detail": "A fresh offline query exposes Try again and Use sample catalog",
+    "evidence": [
+      "offline-search.xml"
+    ]
+  },
+  {
+    "journey": "Unavailable stream",
+    "result": "PASS",
+    "detail": "Failed native playback shows recovery actions without a transport or simulated clock",
+    "evidence": [
+      "unavailable-stream.xml"
+    ]
+  },
+  {
+    "journey": "Explicit preview",
+    "result": "PASS",
+    "detail": "Simulation and its clock start only after selecting Simulated preview",
+    "evidence": [
+      "explicit-preview.xml"
+    ]
+  },
+  {
+    "journey": "Player settings hierarchy",
+    "result": "PASS",
+    "detail": "Native Settings sheet exposes quality, screen fit and speed; focus=player-quality",
+    "evidence": [
+      "player-settings-open.xml"
+    ]
+  },
+  {
+    "journey": "Nested aspect menu",
+    "result": "PASS",
+    "detail": "Screen fit opens its own Fill, Original and Stretch choices",
+    "evidence": [
+      "aspect-menu.xml"
+    ]
+  },
+  {
+    "journey": "Aspect Back hierarchy",
+    "result": "PASS",
+    "detail": "Back returns to Settings with a valid focused setting row; focus=player-quality",
+    "evidence": [
+      "aspect-back-parent.xml"
+    ]
+  },
+  {
+    "journey": "Aspect selection commits",
+    "result": "PASS",
+    "detail": "Selecting Original updates its parent setting value; focus=player-quality",
+    "evidence": [
+      "aspect-selected-parent.xml"
+    ]
+  },
+  {
+    "journey": "Nested speed menu",
+    "result": "PASS",
+    "detail": "Playback speed exposes 0.5\u00d7, 1\u00d7, 1.5\u00d7 and 2\u00d7 in its nested sheet",
+    "evidence": [
+      "speed-menu.xml"
+    ]
+  },
+  {
+    "journey": "Speed selection commits",
+    "result": "PASS",
+    "detail": "Selecting 1.5\u00d7 updates its parent setting value; focus=player-quality",
+    "evidence": [
+      "speed-selected-parent.xml"
+    ]
+  },
+  {
+    "journey": "Speed Back hierarchy",
+    "result": "PASS",
+    "detail": "Back returns to Settings with valid focus; focus=player-quality",
+    "evidence": [
+      "speed-back-parent.xml"
+    ]
+  },
+  {
+    "journey": "Player menu focus restoration",
+    "result": "PASS",
+    "detail": "Closing Settings restores its opening player-settings control",
+    "evidence": [
+      "settings-closed.xml"
+    ]
+  }
+]

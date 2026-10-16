@@ -1,0 +1,83 @@
+[
+  {
+    "kind": "movie",
+    "count": 20,
+    "totalPages": 96,
+    "examples": [
+      {
+        "id": 68718,
+        "title": "Django Unchained",
+        "genres": [
+          "Drama",
+          "Western"
+        ]
+      },
+      {
+        "id": 273248,
+        "title": "The Hateful Eight",
+        "genres": [
+          "Drama",
+          "Mystery",
+          "Western"
+        ]
+      },
+      {
+        "id": 1241983,
+        "title": "Train Dreams",
+        "genres": [
+          "Drama",
+          "Western"
+        ]
+      },
+      {
+        "id": 33,
+        "title": "Unforgiven",
+        "genres": [
+          "Western"
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "tv",
+    "count": 20,
+    "totalPages": 7,
+    "examples": [
+      {
+        "id": 73586,
+        "title": "Yellowstone",
+        "genres": [
+          "Western",
+          "Drama"
+        ]
+      },
+      {
+        "id": 63247,
+        "title": "Westworld",
+        "genres": [
+          "Sci-Fi & Fantasy",
+          "Western"
+        ]
+      },
+      {
+        "id": 1018,
+        "title": "Bonanza",
+        "genres": [
+          "Western",
+          "Action & Adventure",
+          "Drama",
+          "Family"
+        ]
+      },
+      {
+        "id": 1781,
+        "title": "Little House on the Prairie",
+        "genres": [
+          "Western",
+          "Drama",
+          "Family"
+        ]
+      }
+    ]
+  }
+]

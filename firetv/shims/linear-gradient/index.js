@@ -14,6 +14,7 @@ let sequence = 0;
 /** Accept #rgb/#rrggbb/#rrggbbaa/rgb()/rgba() and split colour from alpha for SVG. */
 function parseColor(value) {
   if (typeof value !== 'string') return {color: '#000000', opacity: 1};
+  if (value.trim().toLowerCase() === 'transparent') return {color: '#000000', opacity: 0};
   const match = value.trim().match(/^rgba?\(([^)]+)\)$/i);
   if (match) {
     const parts = match[1].split(',').map(part => Number.parseFloat(part.trim()));

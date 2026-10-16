@@ -1,6 +1,6 @@
 {
   "name": "@amazon-devices/snas",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "private": true,
   "files": [
     "dist"
@@ -8,7 +8,7 @@
   "scripts": {
     "clean": "rm -rf node_modules buildinfo.json dist build",
     "start": "react-native start",
-    "test": "node --import tsx --test tests/*.test.ts",
+    "test": "npm run test:unit && npm run test:player",
     "test:snapshot": "jest --colors --updateSnapshot",
     "lint": "eslint src tests package.json --ext .ts,.tsx",
     "lint:fix": "eslint src tests package.json --ext .ts,.tsx --fix",
@@ -30,7 +30,9 @@
     "worker:smoke": "npm --prefix worker run smoke",
     "device:start": "bash scripts/device-start.sh",
     "device:stop": "bash scripts/device-stop.sh",
-    "build:tv": "bash scripts/build.sh"
+    "build:tv": "bash scripts/build.sh",
+    "test:unit": "node --import tsx --test tests/*.test.ts",
+    "test:player": "jest --config jest.player.config.cjs --runInBand"
   },
   "dependencies": {
     "@amazon-devices/react-linear-gradient": "~2.0.9000000001",

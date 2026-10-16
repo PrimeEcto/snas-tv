@@ -1,0 +1,4 @@
+npm notice run @amazon-devices/snas@0.0.3 worker:typecheck
+npm notice run npm --prefix worker run typecheck
+npm notice run @amazon-devices/snas-worker@1.0.0 typecheck
+npm notice run tsc --noEmit && tsc -p tsconfig.test.json --noEmit

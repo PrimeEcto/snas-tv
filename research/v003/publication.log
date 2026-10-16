@@ -1,0 +1,25 @@
+$ gh auth status
+You are not logged into any GitHub hosts. To log in, run: gh auth login
+node:internal/errors:985
+  const err = new Error(message);
+              ^
+
+Error: Command failed: gh auth status
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at checkExecSyncError (node:child_process:925:11)
+    at execFileSync (node:child_process:961:15)
+    at run (file:///data/SNAS/scripts/release-app.mjs:87:10)
+    at file:///data/SNAS/scripts/release-app.mjs:104:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:633:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  status: 1,
+  signal: null,
+  output: [ null, null, null ],
+  pid: 345640,
+  stdout: null,
+  stderr: null
+}
+
+Node.js v24.17.0

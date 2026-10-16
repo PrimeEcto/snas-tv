@@ -1,0 +1,182 @@
+  console.error
+    react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+      31 |
+      32 | test('Retry restores the last native position instead of the session-entry position',async()=>{
+    > 33 |  await act(async()=>{mounted=create(component());});
+         |                                    ^
+      34 |  await act(async()=>surface().props.onProgress({position:600,duration:7200}));
+      35 |  await act(async()=>surface().props.onProgress({position:2400,duration:7200}));
+      36 |  await act(async()=>surface().props.onError('Source failed'));
+
+      at Object.<anonymous>.process.env.NODE_ENV.exports.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17337:17)
+      at tests/player-events.spec.tsx:33:36
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at Object.<anonymous> (tests/player-events.spec.tsx:33:11)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  console.error
+    react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+      41 |
+      42 | test('saving a changed subtitle preference does not refetch the active stream',async()=>{
+    > 43 |  await act(async()=>{mounted=create(component());});
+         |                                    ^
+      44 |  await act(async()=>surface().props.onProgress({position:600,duration:7200}));
+      45 |  await act(async()=>button('player-subtitles').props.onPress());
+      46 |  await act(async()=>button('option-en').props.onPress());
+
+      at Object.<anonymous>.process.env.NODE_ENV.exports.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17337:17)
+      at tests/player-events.spec.tsx:43:36
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at Object.<anonymous> (tests/player-events.spec.tsx:43:11)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  console.error
+    react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+      50 |
+      51 | test('a seek at the same position applies again when the media URI changes',async()=>{
+    > 52 |  await act(async()=>{mounted=create(<PlayerSurface uri="https://example.test/a" paused seekTo={600}/>);});
+         |                                    ^
+      53 |  expect(mockSeek).toHaveBeenCalledTimes(1);
+      54 |  await act(async()=>mounted.update(<PlayerSurface uri="https://example.test/a" paused seekTo={600}/>));
+      55 |  expect(mockSeek).toHaveBeenCalledTimes(1);
+
+      at Object.<anonymous>.process.env.NODE_ENV.exports.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17337:17)
+      at tests/player-events.spec.tsx:52:36
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at Object.<anonymous> (tests/player-events.spec.tsx:52:11)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  console.error
+    react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+      60 |
+      61 | test('attaching subtitles starts the replacement source at the last native position in milliseconds',async()=>{
+    > 62 |  await act(async()=>{mounted=create(<PlayerSurface uri="https://example.test/a" paused/>);});
+         |                                    ^
+      63 |  const video=()=>mounted.root.findByType('Video' as never);
+      64 |  await act(async()=>video().props.onProgress({currentTime:2400}));
+      65 |  await act(async()=>mounted.update(<PlayerSurface uri="https://example.test/a" paused subtitleUri="https://example.test/en.vtt"/>));
+
+      at Object.<anonymous>.process.env.NODE_ENV.exports.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17337:17)
+      at tests/player-events.spec.tsx:62:36
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at Object.<anonymous> (tests/player-events.spec.tsx:62:11)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+FAIL tests/player-events.spec.tsx
+  ✕ Retry restores the last native position instead of the session-entry position (33 ms)
+  ✕ saving a changed subtitle preference does not refetch the active stream (13 ms)
+  ✕ a seek at the same position applies again when the media URI changes (3 ms)
+  ✕ attaching subtitles starts the replacement source at the last native position in milliseconds (3 ms)
+
+  ● Retry restores the last native position instead of the session-entry position
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2400
+    Received: 600
+
+      37 |  await act(async()=>button('player-retry').props.onPress());
+      38 |  await act(async()=>surface().props.onProgress({position:0,duration:7200}));
+    > 39 |  expect(surface().props.seekTo).toBe(2400);
+         |                                 ^
+      40 | });
+      41 |
+      42 | test('saving a changed subtitle preference does not refetch the active stream',async()=>{
+
+      at Object.toBe (tests/player-events.spec.tsx:39:33)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● saving a changed subtitle preference does not refetch the active stream
+
+    expect(jest.fn()).toHaveBeenCalledTimes(expected)
+
+    Expected number of calls: 1
+    Received number of calls: 2
+
+      46 |  await act(async()=>button('option-en').props.onPress());
+      47 |  await act(async()=>{mounted.update(component({...emptyLibrary().preferences,subtitles:'en'}));});
+    > 48 |  expect(loadWatch).toHaveBeenCalledTimes(1);
+         |                    ^
+      49 | });
+      50 |
+      51 | test('a seek at the same position applies again when the media URI changes',async()=>{
+
+      at Object.toHaveBeenCalledTimes (tests/player-events.spec.tsx:48:20)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● a seek at the same position applies again when the media URI changes
+
+    expect(jest.fn()).toHaveBeenCalledTimes(expected)
+
+    Expected number of calls: 2
+    Received number of calls: 1
+
+      56 |  await act(async()=>mounted.update(<PlayerSurface uri="https://example.test/b" paused/>));
+      57 |  await act(async()=>mounted.update(<PlayerSurface uri="https://example.test/b" paused seekTo={600}/>));
+    > 58 |  expect(mockSeek).toHaveBeenCalledTimes(2);
+         |                   ^
+      59 | });
+      60 |
+      61 | test('attaching subtitles starts the replacement source at the last native position in milliseconds',async()=>{
+
+      at Object.toHaveBeenCalledTimes (tests/player-events.spec.tsx:58:19)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● attaching subtitles starts the replacement source at the last native position in milliseconds
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2400000
+    Received: undefined
+
+      64 |  await act(async()=>video().props.onProgress({currentTime:2400}));
+      65 |  await act(async()=>mounted.update(<PlayerSurface uri="https://example.test/a" paused subtitleUri="https://example.test/en.vtt"/>));
+    > 66 |  expect(video().props.source.startPosition).toBe(2400000);
+         |                                             ^
+      67 | });
+      68 |
+
+      at Object.toBe (tests/player-events.spec.tsx:66:45)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       4 failed, 4 total
+Snapshots:   0 total
+Time:        0.892 s, estimated 1 s
+Ran all test suites.

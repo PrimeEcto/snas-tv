@@ -54,3 +54,7 @@ research/*.so.*
 
 # Emulator bookkeeping written by scripts/android-device-start.sh while the harness runs.
 research/*.pid
+
+# Native audit screenshots stay local; text evidence and release checks are tracked.
+research/v003/**/*.png
+research/v003/*.png

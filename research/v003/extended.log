@@ -1,0 +1,25 @@
+PASS Genre menu opens Genre choices reached with Select
+PASS Genre Back scope Back dismissed the menu and kept Movies open
+PASS Full-word remote search DUNE typed using individual on-screen keys; real results returned
+PASS No search results A real unmatched query shows recovery copy
+PASS Series details Genuine sample series exposes season and episode controls
+Traceback (most recent call last):
+  File "/data/SNAS/scripts/android-extended.py", line 114, in <module>
+    play=next((n for n in nodes if ident(n)=='details-play'),None)
+  File "/data/SNAS/scripts/android-extended.py", line 70, in check
+    assert assertion, detail
+           ^^^^^^^^^
+AssertionError: Selecting the current season keeps Play available
+PASS Hero focus restoration Back restored View details on Home
+PASS Offline catalog recovery Network failure exposes Retry and sample-catalog actions
+PASS Unavailable stream No simulated clock appears after failed native streaming
+PASS Explicit preview Simulation starts only after selecting Play simulated preview
+PASS Aspect menu Fill, Original and Stretch remain available with visible focus
+Traceback (most recent call last):
+  File "/data/SNAS/scripts/android-extended.py", line 142, in <module>
+    check('Menu focus restoration',current(nodes)=='player-aspect','Closing the menu restored its opening control')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/SNAS/scripts/android-extended.py", line 70, in check
+    assert assertion, detail
+           ^^^^^^^^^
+AssertionError: Closing the menu restored its opening control

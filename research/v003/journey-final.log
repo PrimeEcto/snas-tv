@@ -1,0 +1,49 @@
+using ANDROID_SERIAL=emulator-5556
+
+== device
+device ready: sdk_gphone64_x86_64 / Android 35
+installed:     primaryCpuAbi=x86_64     versionCode=3 minSdk=24 targetSdk=35     versionName=0.0.3
+
+== install dist/snas-0.0.3.apk
+Performing Streamed Install
+Success
+installed:     primaryCpuAbi=x86_64     versionCode=3 minSdk=24 targetSdk=35     versionName=0.0.3
+
+== launch
+PASS launch         first paint: SNAS|Home|Movies|Series|My List|Search|Settings|Animals · installed:     primaryCpuAbi=x86_64     versionCode=3 minSdk=24 targetSdk=35     versionName=0.0.3
+PASS Home           visible: SNAS|Home|Movies|Series|My List|Search|Settings|Animals
+PASS Movies         heading and filters present (Genre / Sort) · visible: SNAS|Home|Movies|Series|My List|Search|Settings|Genre, All genres
+PASS Series         heading and filters present (Genre / Sort) · visible: SNAS|Home|Movies|Series|My List|Search|Settings|Genre, All genres
+PASS Search         one letter typed on the on-screen keyboard · query ran against the backend: 20 titles shown for “A” · visible: SNAS|Home|Movies|Series|My List|Search|Settings|Movies and series from TMDB
+PASS My List (empty) empty state on a fresh install · counts:
+PASS Details + save longest text block 295 chars (synopsis) · Play control present · save toggled on the detail page: Add to My List → Remove from My List
+PASS My List (saved) saved title listed:  · visible: SNAS|Home|Movies|Series|My List|Search|Settings|Saved, 1
+PASS Relaunch persistence the collection survived a relaunch:
+PASS About          TMDB attribution present · visible: SNAS|Home|Movies|Series|My List|Search|Settings|SNAS TV 0.0.3
+FAIL Playback       the player never reported a live stream; on screen: Show playback controls
+
+== guest resources
+PASS Guest resources  TOTAL PSS: 321891 TOTAL RSS: 442300 TOTAL SWAP PSS: 596 ·     primaryCpuAbi=x86_64     versionCode=3 minSdk=24 targetSdk=35     versionName=0.0.3
+--- meminfo ---
+  Native Heap   146506   146436       44       79   147388   177196   157057    15578
+  Dalvik Heap    82384    82276       32      181    83236    88922    64346    24576
+--
+ App Summary
+                       Pss(KB)                        Rss(KB)
+--
+           Java Heap:    86088                         105220
+         Native Heap:   146436                         147388
+                Code:    36512                         150892
+--
+           TOTAL PSS:   321891            TOTAL RSS:   442300       TOTAL SWAP PSS:      596
+
+--- top (app rows) ---
+  PID USER         PR  NI VIRT  RES  SHR S[%CPU] %MEM     TIME+ ARGS
+17185 u0_a210      10 -10  35G 421M 151M S 11.1  17.0   0:18.97 com.snas.tv
+--- package ---
+    primaryCpuAbi=x86_64
+    versionCode=3 minSdk=24 targetSdk=35
+    versionName=0.0.3
+
+11 passed, 1 failed, 0 skipped — /data/SNAS/research/android/results.json
+journeys failed: 1

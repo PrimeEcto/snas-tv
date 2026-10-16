@@ -1,0 +1,2 @@
+npm notice run @amazon-devices/snas@0.0.3 typecheck
+npm notice run tsc --noEmit

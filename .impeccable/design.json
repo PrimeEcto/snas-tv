@@ -1,79 +1,257 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-13T14:34:38.456885+00:00",
+  "generatedAt": "2026-10-16T20:43:14.901295+00:00",
   "title": "Design System: SNAS",
   "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "neutral",
+        "displayName": "Cool ink",
+        "tonalRamp": [
+          "oklch(15% 0.0123 254.16)",
+          "oklch(26% 0.0123 254.16)",
+          "oklch(38% 0.0123 254.16)",
+          "oklch(49% 0.0123 254.16)",
+          "oklch(61% 0.0123 254.16)",
+          "oklch(72% 0.0123 254.16)",
+          "oklch(84% 0.0123 254.16)",
+          "oklch(95% 0.0123 254.16)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Sheet surface",
+        "tonalRamp": [
+          "oklch(15% 0.0178 255.70)",
+          "oklch(26% 0.0178 255.70)",
+          "oklch(38% 0.0178 255.70)",
+          "oklch(49% 0.0178 255.70)",
+          "oklch(61% 0.0178 255.70)",
+          "oklch(72% 0.0178 255.70)",
+          "oklch(84% 0.0178 255.70)",
+          "oklch(95% 0.0178 255.70)"
+        ]
+      },
+      "raised": {
+        "role": "neutral",
+        "displayName": "Raised surface",
+        "tonalRamp": [
+          "oklch(15% 0.0215 254.16)",
+          "oklch(26% 0.0215 254.16)",
+          "oklch(38% 0.0215 254.16)",
+          "oklch(49% 0.0215 254.16)",
+          "oklch(61% 0.0215 254.16)",
+          "oklch(72% 0.0215 254.16)",
+          "oklch(84% 0.0215 254.16)",
+          "oklch(95% 0.0215 254.16)"
+        ]
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "Ivory",
+        "tonalRamp": [
+          "oklch(15% 0.0054 95.10)",
+          "oklch(26% 0.0054 95.10)",
+          "oklch(38% 0.0054 95.10)",
+          "oklch(49% 0.0054 95.10)",
+          "oklch(61% 0.0054 95.10)",
+          "oklch(72% 0.0054 95.10)",
+          "oklch(84% 0.0054 95.10)",
+          "oklch(95% 0.0054 95.10)"
+        ]
+      },
+      "secondary": {
+        "role": "neutral",
+        "displayName": "Secondary text",
+        "tonalRamp": [
+          "oklch(15% 0.0179 256.30)",
+          "oklch(26% 0.0179 256.30)",
+          "oklch(38% 0.0179 256.30)",
+          "oklch(49% 0.0179 256.30)",
+          "oklch(61% 0.0179 256.30)",
+          "oklch(72% 0.0179 256.30)",
+          "oklch(84% 0.0179 256.30)",
+          "oklch(95% 0.0179 256.30)"
+        ]
+      },
+      "subdued": {
+        "role": "neutral",
+        "displayName": "Subdued text",
+        "tonalRamp": [
+          "oklch(15% 0.0246 252.25)",
+          "oklch(26% 0.0246 252.25)",
+          "oklch(38% 0.0246 252.25)",
+          "oklch(49% 0.0246 252.25)",
+          "oklch(61% 0.0246 252.25)",
+          "oklch(72% 0.0246 252.25)",
+          "oklch(84% 0.0246 252.25)",
+          "oklch(95% 0.0246 252.25)"
+        ]
+      },
+      "sand": {
+        "role": "primary",
+        "displayName": "Warm sand",
+        "tonalRamp": [
+          "oklch(15% 0.0946 71.02)",
+          "oklch(26% 0.0946 71.02)",
+          "oklch(38% 0.0946 71.02)",
+          "oklch(49% 0.0946 71.02)",
+          "oklch(61% 0.0946 71.02)",
+          "oklch(72% 0.0946 71.02)",
+          "oklch(84% 0.0946 71.02)",
+          "oklch(95% 0.0946 71.02)"
+        ]
+      },
+      "divider": {
+        "role": "neutral",
+        "displayName": "Divider",
+        "tonalRamp": [
+          "oklch(15% 0.0253 250.76)",
+          "oklch(26% 0.0253 250.76)",
+          "oklch(38% 0.0253 250.76)",
+          "oklch(49% 0.0253 250.76)",
+          "oklch(61% 0.0253 250.76)",
+          "oklch(72% 0.0253 250.76)",
+          "oklch(84% 0.0253 250.76)",
+          "oklch(95% 0.0253 250.76)"
+        ]
+      },
+      "error": {
+        "role": "error",
+        "displayName": "Muted coral",
+        "tonalRamp": [
+          "oklch(15% 0.0887 24.40)",
+          "oklch(26% 0.0887 24.40)",
+          "oklch(38% 0.0887 24.40)",
+          "oklch(49% 0.0887 24.40)",
+          "oklch(61% 0.0887 24.40)",
+          "oklch(72% 0.0887 24.40)",
+          "oklch(84% 0.0887 24.40)",
+          "oklch(95% 0.0887 24.40)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Home display",
+        "purpose": "Compact Home title."
+      },
+      "headline": {
+        "displayName": "Screen heading",
+        "purpose": "Collection, Search and Settings headings."
+      },
+      "body": {
+        "displayName": "Native body",
+        "purpose": "Descriptions and synopses."
+      }
+    },
+    "shadows": [],
     "motion": [
       {
         "name": "card-focus",
-        "value": "130ms; scale 1 \u2192 1.035",
-        "purpose": "Remote focus feedback."
+        "value": "120ms; scale 1 → 1.025",
+        "purpose": "Remote focus feedback; immediate with reduced motion."
+      },
+      {
+        "name": "sheet-reveal",
+        "value": "Native Modal fade; none with reduced motion",
+        "purpose": "Reveal a distinct native remote interaction window."
       }
     ],
-    "shadows": []
+    "breakpoints": []
   },
   "components": [
     {
-      "name": "Primary button",
+      "name": "Primary text action",
       "kind": "button",
-      "description": "Portable preview of the native control grammar.",
-      "html": "<button class=\"ds-control\">Play preview</button>",
-      "css": ".ds-control{background:#F5F4F0;color:#0C1015;height:49px;padding:0 22px;border:2px solid transparent;font:600 17px sans-serif}.ds-control:hover,.ds-control:focus-visible{background:#E8B77C;color:#0C1015;border-color:#F5F4F0;outline:none}"
+      "refersTo": "button-primary",
+      "description": "Portable illustration of the native primary control.",
+      "html": "<button class=\"ds-control\">Play</button>",
+      "css": ".ds-control{background:#F5F4F0;color:#0C1015}.ds-control{height:52px;padding:0 22px;border:2px solid transparent;border-radius:6px;font:600 18px sans-serif;cursor:pointer}.ds-control:hover,.ds-control:focus-visible{background:#E8B77C;color:#0C1015;border-color:#F5F4F0;outline:none}.ds-control:active{opacity:.85}"
     },
     {
-      "name": "Secondary button",
+      "name": "Secondary text action",
       "kind": "button",
-      "description": "Portable preview of the native control grammar.",
-      "html": "<button class=\"ds-control\">Play preview</button>",
-      "css": ".ds-control{background:#252D37;color:#F5F4F0;height:49px;padding:0 22px;border:2px solid transparent;font:600 17px sans-serif}.ds-control:hover,.ds-control:focus-visible{background:#E8B77C;color:#0C1015;border-color:#F5F4F0;outline:none}"
+      "refersTo": "button-secondary",
+      "description": "Portable illustration of the native secondary control.",
+      "html": "<button class=\"ds-control\">Details</button>",
+      "css": ".ds-control{background:#252D37;color:#F5F4F0}.ds-control{height:52px;padding:0 22px;border:2px solid transparent;border-radius:6px;font:600 18px sans-serif;cursor:pointer}.ds-control:hover,.ds-control:focus-visible{background:#E8B77C;color:#0C1015;border-color:#F5F4F0;outline:none}.ds-control:active{opacity:.85}"
     },
     {
-      "name": "Filter",
+      "name": "Circular primary action",
       "kind": "button",
-      "description": "Portable preview of the native control grammar.",
-      "html": "<button class=\"ds-control\">Play preview</button>",
-      "css": ".ds-control{background:#F5F4F0;color:#0C1015;height:49px;padding:0 22px;border:2px solid transparent;font:600 17px sans-serif}.ds-control:hover,.ds-control:focus-visible{background:#E8B77C;color:#0C1015;border-color:#F5F4F0;outline:none}"
+      "refersTo": "icon-primary",
+      "description": "Native icon-control family; the player uses a larger central instance.",
+      "html": "<button class=\"ds-icon\" aria-label=\"Play\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M8 4L20 12L8 20Z\" fill=\"currentColor\"/></svg></button>",
+      "css": ".ds-icon{display:grid;place-items:center;width:56px;height:56px;border:2px solid transparent;border-radius:50%;background:#F5F4F0;color:#0C1015;cursor:pointer}.ds-icon:hover,.ds-icon:focus-visible{background:#E8B77C;border-color:#F5F4F0;outline:none}.ds-icon:active{opacity:.85}"
     },
     {
       "name": "Query display",
       "kind": "input",
-      "description": "Portable illustration; the application runtime is native Vega.",
-      "html": "<div class=\"ds-query\">Movies, series\u2026</div>",
-      "css": ".ds-query{background:#191F27;color:#8693A2;padding:14px 15px;border:1px solid #36414D;font:22px sans-serif}"
+      "refersTo": "query-display",
+      "description": "Read-only portable illustration; the runtime uses a native query display and remote keyboard.",
+      "html": "<div class=\"ds-query\" role=\"status\">Movies, series…</div>",
+      "css": ".ds-query{display:flex;align-items:center;height:56px;padding:0 18px;border:1px solid #36414D;border-radius:6px;background:#191F27;color:#95A1AF;font:23px sans-serif}"
     },
     {
-      "name": "Navigation",
+      "name": "Header text navigation",
       "kind": "nav",
-      "description": "Portable illustration; the application runtime is native Vega.",
-      "html": "<nav class=\"ds-nav\"><button>Home</button><button>Movies</button></nav>",
-      "css": ".ds-nav{display:flex;gap:7px;background:#0C1015}.ds-nav button{color:#B6BEC9;background:transparent;padding:11px 15px;border:2px solid transparent;font:17px sans-serif}.ds-nav button:hover,.ds-nav button:focus-visible{color:#0C1015;background:#F5F4F0;border-color:#E8B77C}"
+      "description": "Active destination is underlined; remote focus changes the control field.",
+      "html": "<nav class=\"ds-nav\"><button class=\"ds-active\">Home</button><button>Movies</button><button>Series</button></nav>",
+      "css": ".ds-nav{display:flex;gap:14px;background:#0C1015;padding:12px}.ds-nav button{position:relative;padding:11px 15px;border:2px solid transparent;border-radius:6px;background:transparent;color:#B6BEC9;font:19px sans-serif}.ds-nav .ds-active{color:#F5F4F0;font-weight:600}.ds-nav .ds-active:after{content:\"\";position:absolute;left:15px;right:15px;bottom:-3px;height:2px;background:#E8B77C}.ds-nav button:hover,.ds-nav button:focus-visible{background:#F5F4F0;color:#0C1015;border-color:#E8B77C;outline:none}"
     },
     {
       "name": "Artwork card",
       "kind": "card",
-      "description": "Portable illustration; the application runtime is native Vega.",
-      "html": "<button class=\"ds-card\"><span>Title artwork</span><strong>Interstellar</strong></button>",
-      "css": ".ds-card{display:grid;gap:8px;padding:7px;background:#0C1015;color:#F5F4F0;border:2px solid transparent;width:138px}.ds-card span{background:#191F27;height:186px}.ds-card:hover,.ds-card:focus-visible{border-color:#F5F4F0;transform:scale(1.035);transition:transform 130ms}"
+      "description": "Geometry illustration; production cards display genuine title artwork.",
+      "html": "<button class=\"ds-card\"><span class=\"ds-frame\"><span class=\"ds-art\">Title artwork</span></span><strong>Title</strong><small>2026 · Film</small></button>",
+      "css": ".ds-card{display:grid;width:148px;gap:9px;margin-right:18px;padding:4px;border:0;background:#0C1015;color:#B6BEC9;text-align:left;cursor:pointer}.ds-frame{display:block;border:2px solid transparent;padding:1px;transition:transform 120ms}.ds-art{display:grid;place-items:center;width:134px;height:201px;background:#191F27;color:#95A1AF;font:15px sans-serif}.ds-card strong{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font:500 18px sans-serif}.ds-card small{color:#95A1AF;font:15px sans-serif}.ds-card:hover,.ds-card:focus-visible{color:#F5F4F0;outline:none}.ds-card:hover .ds-frame,.ds-card:focus-visible .ds-frame{border-color:#F5F4F0;transform:scale(1.025)}@media(prefers-reduced-motion:reduce){.ds-frame{transition:none}}"
+    },
+    {
+      "name": "Genre trigger",
+      "kind": "button",
+      "description": "Compact collection control opening a native sheet.",
+      "html": "<button class=\"ds-filter\">All genres <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M6 9L12 15L18 9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/></svg></button>",
+      "css": ".ds-filter{display:flex;align-items:center;gap:14px;height:44px;padding:0 15px;border:2px solid #36414D;border-radius:6px;background:#0C1015;color:#F5F4F0;font:500 18px sans-serif}.ds-filter:hover,.ds-filter:focus-visible{background:#E8B77C;color:#0C1015;border-color:#F5F4F0;outline:none}.ds-filter:active{opacity:.85}"
+    },
+    {
+      "name": "Selected sheet choice",
+      "kind": "custom",
+      "description": "Selection has a check and tonal fill; temporary focus uses sand.",
+      "html": "<button class=\"ds-choice\" aria-pressed=\"true\"><span>Drama</span><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M5 12L10 17L19 7\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/></svg></button>",
+      "css": ".ds-choice{display:flex;align-items:center;justify-content:space-between;gap:6px;width:250px;height:50px;padding:0 12px;border:2px solid transparent;border-radius:6px;background:#191F27;color:#F5F4F0;font:600 18px sans-serif}.ds-choice svg{color:#E8B77C}.ds-choice:hover,.ds-choice:focus-visible{background:#E8B77C;color:#0C1015;border-color:#F5F4F0;outline:none}.ds-choice:hover svg,.ds-choice:focus-visible svg{color:#0C1015}.ds-choice:active{opacity:.85}"
     }
   ],
   "narrative": {
     "northStar": "The evening edit",
-    "overview": "Artwork carries the atmosphere; the interface stays precise and quiet.",
+    "overview": "Genuine artwork carries the atmosphere; precise alignment, readable type and clear remote focus carry the interface. Cool ink surfaces and warm sand feedback suit a television viewed from the sofa. The native Android TV implementation is the current release surface; the shared Vega target remains a separate platform.\n\nControl shapes express their role: rectangular text actions, circular icon actions, square artwork and spacious sheet choices. Browsing, search, title details, settings and playback each have a composition suited to their task. Genre selection uses a dedicated sheet; playback has centered transport and a separate utility hierarchy.",
     "keyCharacteristics": [
-      "Genuine cinematic photography and legibility gradients.",
-      "Angular controls and portrait artwork."
+      "Genuine cinematic photography with integrated legibility masks.",
+      "Quiet ink surfaces, ivory text and sand focus.",
+      "Role-specific controls and distinct screen compositions.",
+      "Predictable D-pad navigation, native sheets and restored focus.",
+      "Honest sample-catalog and simulated-preview states."
     ],
     "rules": [
       {
         "name": "Focus First",
-        "body": "Color is reinforced with a white frame; it never carries focus alone.",
+        "body": "Reinforce focus with shape or a visible frame as well as color. Shared buttons use sand fill, ink content and an ivory frame; artwork uses an ivory frame and modest scale. Header text destinations use an ivory focus field with a sand border. Persistent selection uses an underline, check or radio marker and remains distinct from temporary focus.",
         "section": "colors"
       }
     ],
     "dos": [
-      "Do preserve artwork ratios, safe margins and visible focus."
+      "Do preserve artwork ratios, safe margins and visible remote focus.",
+      "Do distinguish selection from focus with checks, radio markers or underlines.",
+      "Do use circular controls for icon actions and rounded rectangles for text actions.",
+      "Do center transport controls and align title copy, timelines and utility groups deliberately.",
+      "Do keep errors actionable and sample mode distinguishable.",
+      "Do inspect native TV captures and remote behavior before claiming a layout is verified."
     ],
     "donts": [
+      "Don't expand genre choices into a permanent wall of filter buttons.",
+      "Don't invent catalog information, ratings, source availability or licensing claims.",
+      "Don't replace real playback failure with an unlabeled simulated clock.",
+      "Don't add decorative glass, glow or slow navigation choreography.",
       "Don't request focus for a hidden scope or remove a focused page-loading control."
     ]
   }

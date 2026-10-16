@@ -1,0 +1,35 @@
+Load: 0.23 / 0.24 / 0.24
+CPU usage from 116161ms to 68739ms ago (2026-10-16 17:20:28.586 to 2026-10-16 17:21:16.007):
+  5.3% 29374/com.snas.tv: 3.5% user + 1.8% kernel / faults: 45551 minor 1 major
+  1.1% 439/surfaceflinger: 0.6% user + 0.5% kernel / faults: 29 minor
+  0.9% 565/system_server: 0.7% user + 0.2% kernel / faults: 2231 minor 1 major
+  0.8% 395/android.hardware.graphics.composer3-service.ranchu: 0% user + 0.8% kernel
+  0.3% 435/audioserver: 0.2% user + 0.1% kernel
+  0.2% 448/adbd: 0.1% user + 0.1% kernel / faults: 50673 minor
+  0.2% 374/android.hardware.audio.service: 0% user + 0.1% kernel / faults: 9 minor
+  0.2% 793/com.android.systemui: 0.1% user + 0% kernel / faults: 643 minor 7 major
+  0.1% 466/logcat: 0% user + 0.1% kernel
+  0.1% 162/logd: 0% user + 0% kernel / faults: 441 minor
+  0.1% 1357/com.google.android.as: 0.1% user + 0% kernel / faults: 734 minor
+  0.1% 32272/kworker/1:1-virtio_vsock: 0% user + 0.1% kernel
+  0.1% 15/ksoftirqd/0: 0% user + 0.1% kernel
+  0.1% 26/ksoftirqd/1: 0% user + 0.1% kernel
+  0% 1008/com.google.android.gms.persistent: 0% user + 0% kernel / faults: 57 minor
+  0% 1297/com.google.android.inputmethod.latin: 0% user + 0% kernel / faults: 53 minor 1 major
+  0% 1237/com.google.android.apps.nexuslauncher: 0% user + 0% kernel / faults: 61 minor
+  0% 164/servicemanager: 0% user + 0% kernel
+  0% 212/jbd2/dm-46-8: 0% user + 0% kernel
+  0% 367/statsd: 0% user + 0% kernel
+  0% 479/media.metrics: 0% user + 0% kernel
+  0% 837/com.android.networkstack.process: 0% user + 0% kernel / faults: 190 minor
+  0% 932/com.android.phone: 0% user + 0% kernel / faults: 75 minor
+  0% 1345/com.google.android.providers.media.module: 0% user + 0% kernel
+  0% 1373/com.google.android.googlequicksearchbox:interactor: 0% user + 0% kernel / faults: 10 minor
+  0% 1382/com.google.android.apps.messaging:rcs: 0% user + 0% kernel / faults: 125 minor
+  0% 1972/kworker/u4:4-writeback: 0% user + 0% kernel
+  0% 11275/com.google.android.apps.messaging: 0% user + 0% kernel / faults: 11 minor 21 major
+  0% 16013/kworker/u4:2-events_unbound: 0% user + 0% kernel
+  0% 27863/wpa_supplicant: 0% user + 0% kernel
+  0% 32739/kworker/0:2-events: 0% user + 0% kernel
+ +0% 3881/kworker/u5:0: 0% user + 0% kernel
+9.9% TOTAL: 5.2% user + 4% kernel + 0.3% iowait + 0.3% irq + 0% softirq

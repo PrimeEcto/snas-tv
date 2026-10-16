@@ -1,0 +1,131 @@
+npm notice run @amazon-devices/snas@0.0.3 lint
+npm notice run eslint src tests package.json --ext .ts,.tsx
+
+/data/SNAS/src/App.tsx
+   72:14  warning  Inline style: {
+  paddingHorizontal: 15,
+  paddingVertical: 11,
+  borderRadius: 6,
+  backgroundColor: "focused ? C.text : 'transparent'",
+  borderWidth: 2,
+  borderColor: "focused ? C.accent : 'transparent'"
+}  react-native/no-inline-styles
+   81:16  warning  Inline style: { fontSize: 19, fontWeight: "active || focused ? '600' : '400'" }                                                                                                                                    react-native/no-inline-styles
+   90:18  warning  Inline style: { position: 'absolute', bottom: 2, left: 15, right: 15, height: 2 }                                                                                                                                  react-native/no-inline-styles
+  250:20  warning  Inline style: { flex: 1 }                                                                                                                                                                                          react-native/no-inline-styles
+  252:18  warning  Inline style: { width: 1280, height: 720, position: 'absolute' }                                                                                                                                                   react-native/no-inline-styles
+  275:26  warning  Inline style: {
+  position: 'absolute',
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0,
+  zIndex: 10
+}                                                                                                               react-native/no-inline-styles
+  298:24  warning  Inline style: { flex: 1, display: "player ? 'none' : 'flex'" }                                                                                                                                                     react-native/no-inline-styles
+  302:26  warning  Inline style: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  borderBottomWidth: 1,
+  borderBottomColor: 'rgba(182,190,201,0.08)'
+}                                                                            react-native/no-inline-styles
+  313:28  warning  Inline style: { fontSize: 30, fontWeight: '800', letterSpacing: 4, marginRight: 42 }                                                                                                                               react-native/no-inline-styles
+  322:32  warning  Inline style: { flex: 1 }                                                                                                                                                                                          react-native/no-inline-styles
+  328:32  warning  Inline style: { flex: 1, flexDirection: 'row', alignItems: 'center' }                                                                                                                                              react-native/no-inline-styles
+  334:34  warning  Inline style: {
+  flex: 1,
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: 14
+}                                                                                                 react-native/no-inline-styles
+  353:34  warning  Inline style: { flexDirection: 'row', gap: 16, marginLeft: 42 }                                                                                                                                                    react-native/no-inline-styles
+  371:30  warning  Inline style: { flex: 1 }                                                                                                                                                                                          react-native/no-inline-styles
+  441:28  warning  Inline style: {
+  position: 'absolute',
+  bottom: 'store.error ? 62 : 15',
+  left: 56,
+  right: 56,
+  padding: 14,
+  borderRadius: 0
+}                                                                             react-native/no-inline-styles
+  452:30  warning  Inline style: { fontSize: 17 }                                                                                                                                                                                     react-native/no-inline-styles
+  459:28  warning  Inline style: {
+  position: 'absolute',
+  bottom: 15,
+  left: 56,
+  right: 56,
+  padding: 14,
+  borderRadius: 0
+}                                                                                                  react-native/no-inline-styles
+  468:34  warning  Inline style: { fontSize: 17 }                                                                                                                                                                                     react-native/no-inline-styles
+
+/data/SNAS/src/SmokeApp.tsx
+  4:43   warning  Inline style: {
+  flex: 1,
+  backgroundColor: '#10151C',
+  justifyContent: 'center',
+  alignItems: 'center'
+}  react-native/no-inline-styles
+  4:136  warning  Inline style: { fontSize: 50, color: '#FFFFFF' }                                                               react-native/no-inline-styles
+
+/data/SNAS/src/ui/BootScreen.tsx
+  30:14  warning  Inline style: { flex: 1, justifyContent: 'center', alignItems: 'center' }  react-native/no-inline-styles
+  38:16  warning  Inline style: { fontSize: 62, fontWeight: '800', letterSpacing: 6 }        react-native/no-inline-styles
+  46:20  warning  Inline style: { fontSize: 20, marginTop: 14 }                              react-native/no-inline-styles
+  49:20  warning  Inline style: { fontSize: 21, marginTop: 44 }                              react-native/no-inline-styles
+  51:16  warning  Inline style: { width: 520, height: 5, marginTop: 26 }                     react-native/no-inline-styles
+  53:18  warning  Inline style: { height: 5 }                                                react-native/no-inline-styles
+  58:16  warning  Inline style: { fontSize: 17, marginTop: 14 }                              react-native/no-inline-styles
+
+/data/SNAS/src/ui/CinematicArtwork.tsx
+  12:40  warning  Inline style: { overflow: 'hidden' }                                                                        react-native/no-inline-styles
+  16:16  warning  Inline style: {
+  position: 'absolute',
+  left: 260,
+  right: 0,
+  top: 0,
+  bottom: 0,
+  minHeight: 574
+}  react-native/no-inline-styles
+  41:16  warning  Inline style: { position: 'absolute', left: 0, right: 0, bottom: 0, height: 110 }                           react-native/no-inline-styles
+
+/data/SNAS/src/ui/DetailsScreen.tsx
+  274:13  warning  FlatList missing props: 'windowSize'.  FlatList performance is not fully unlocked without these props.  See https://developer.amazon.com/docs/vega/latest/best_practices.html#flatlist for more  @amazon-devices/kepler/flat-list
+  408:44  warning  Inline style: { gap: 12 }                                                                                                                                                                        react-native/no-inline-styles
+
+/data/SNAS/src/ui/PlayerScreen.tsx
+  511:13  warning  Inline style: {
+  backgroundColor: 'unavailable\n' +
+    "                ? 'rgba(5,8,12,0.8)'\n" +
+    "                : 'rgba(5,8,12,0.25)'"
+}  react-native/no-inline-styles
+  542:24  warning  Inline style: { flex: 1, marginRight: 28 }                                                                                                         react-native/no-inline-styles
+  698:49  warning  Inline style: { alignItems: 'flex-end' }                                                                                                           react-native/no-inline-styles
+  745:34  warning  Inline style: { gap: 12, paddingBottom: 32 }                                                                                                       react-native/no-inline-styles
+  829:18  warning  Inline style: { gap: 7, marginBottom: 12 }                                                                                                         react-native/no-inline-styles
+  888:46  warning  Inline style: { height: 8 }                                                                                                                        react-native/no-inline-styles
+  890:18  warning  Inline style: { height: '100%', borderRadius: 4 }                                                                                                  react-native/no-inline-styles
+  901:24  warning  Inline style: { width: 16, height: 16, marginLeft: -8, top: -4 }                                                                                   react-native/no-inline-styles
+  914:32  warning  Inline style: { textAlign: 'right' }                                                                                                               react-native/no-inline-styles
+
+/data/SNAS/src/ui/TVOverlay.tsx
+  41:18  warning  Inline style: { position: 'absolute', width: 1280, height: 720 }  react-native/no-inline-styles
+
+/data/SNAS/src/ui/controls.tsx
+  225:11  warning  Inline style: { borderColor: "focused ? C.text : 'transparent'" }                  react-native/no-inline-styles
+  238:22  warning  Inline style: { height: 4 }                                                        react-native/no-inline-styles
+  478:14  warning  Inline style: { alignItems: 'center', opacity: 'disabled ? 0.4 : 1' }              react-native/no-inline-styles
+  480:16  warning  Inline style: { alignItems: 'center', justifyContent: 'center', borderWidth: 2 }   react-native/no-inline-styles
+  503:18  warning  Inline style: { fontSize: 16, lineHeight: 22, marginTop: 9, textAlign: 'center' }  react-native/no-inline-styles
+
+/data/SNAS/src/ui/focus.tsx
+  61:16  warning  Inline style: { flex: 1, display: "active ? 'flex' : 'none'" }  react-native/no-inline-styles
+
+/data/SNAS/tests/playback.test.ts
+  190:8  warning  'show' is already declared in the upper scope on line 8 column 7  @typescript-eslint/no-shadow
+
+/data/SNAS/tests/player-events.spec.tsx
+  75:9  warning  'React' is already declared in the upper scope on line 1 column 8  @typescript-eslint/no-shadow
+
+✖ 50 problems (0 errors, 50 warnings)

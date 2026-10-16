@@ -1,0 +1,2 @@
+npm notice run snas-firetv@0.0.3 typecheck
+npm notice run tsc --noEmit -p tsconfig.json

@@ -1,0 +1,25 @@
+FAIL tests/player-events.spec.tsx
+  ● Home synopsis keeps abbreviations within a complete short overview
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected value: "When the son of an L.A. mayor disappears, the family must find him."
+    Received array: ["Interstellar", "When the son of an L.A.", ["Discovery by TMDB", " ", "·", " ", "Playback depends on source availability"]]
+
+      414 |   await act(async () => { mounted = create(<HomeScreen catalog={{home} as never} library={emptyLibrary()} onOpen={() => {}} onPlay={() => {}} onResume={() => {}} onToggle={() => {}} onExplore={() => {}} onDemo={() => {}} />); });
+      415 |   const text = mounted.root.findAllByType('Text' as never).map(node => node.props.children);
+    > 416 |   expect(text).toContain(overview);
+          |                ^
+      417 | });
+      418 |
+
+      at Object.toContain (tests/player-events.spec.tsx:416:16)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+PASS tests/focus-restoration.spec.tsx
+
+Test Suites: 1 failed, 1 passed, 2 total
+Tests:       1 failed, 13 passed, 14 total
+Snapshots:   0 total
+Time:        1.03 s
