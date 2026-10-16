@@ -1,0 +1,9 @@
+# SNAS TV 0.0.3 design
+
+The supplied release brief delegates product/design decisions and explicitly authorizes proceeding after the audit. The baseline audit is `docs/UI_UX_AUDIT.md`.
+
+Preserve shared React Native architecture, ink #0C1015, sand #E8B77C, factual metadata/artwork and native TV conventions. Replace the prototype composition with a restrained cinema library: 56-unit safe edges, an 80-unit navigation bar, complete bounded backdrop fades, clear 48–52 unit title typography, 18–20 unit body copy, consistent squared controls and larger portrait covers. Avoid decorative glow, glass, invented claims or category labels above headings. Focus uses warm fill plus a contrasting frame; active navigation keeps an underline. Motion is short and honors reduced-motion preferences.
+
+Home gives the hero a controlled height and shows the first discovery rail. Details preserve full synopsis, episode/season/cast/related content and explicitly restore scroll with focus. Browse fills seven columns and retains filters/pagination. Search separates a centered remote keyboard from results, with useful initial/error/empty states. My List distinguishes saved portrait titles from landscape continue-watching progress. About becomes a structured information/settings surface with version, correct target capability, attribution and catalog switching. Player separates transport from options and gives unavailable streams a truthful retry state; preview simulation is explicit and does not create progress accidentally.
+
+Android APK remains the release target; Vega source compatibility remains checked, without promising a newly tested Vega runtime. The existing debug signing configuration must be disclosed. Publication uses gh and requires verified authentication/tag availability; absent credentials are a blocker, never a reason to fake publication.
