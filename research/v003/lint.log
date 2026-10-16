@@ -129,4 +129,3 @@ npm notice run eslint src tests package.json --ext .ts,.tsx
   75:9  warning  'React' is already declared in the upper scope on line 1 column 8  @typescript-eslint/no-shadow
 
 ✖ 50 problems (0 errors, 50 warnings)
-
