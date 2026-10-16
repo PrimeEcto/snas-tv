@@ -1,0 +1,46 @@
+✔ the featured backdrop leads the home artwork and other rails contribute their posters (2.063276ms)
+✔ without the featured id the first item of the first rail is used, and an empty catalogue falls back to the sample record (0.295722ms)
+✔ continue watching and the wide rail contribute backdrops while titles without a path are skipped (0.24705ms)
+✔ the same artwork is never listed twice, whatever rail it arrives from (0.170068ms)
+✔ an empty list resolves immediately and never calls prefetch (0.818087ms)
+✔ every url is fetched exactly once and progress rises monotonically to the total (0.645648ms)
+✔ no more images are in flight at once than the concurrency allows (15.018449ms)
+✔ concurrency is clamped to the number of images actually waiting (3.129215ms)
+✔ images that reject or throw synchronously are counted as done instead of failing the launch (0.704827ms)
+✔ an image that never settles is abandoned after its own timeout (6.043832ms)
+✔ the budget stops the wave from starting further images, counting the rest as done (0.362022ms)
+✔ home preloading fetches the artwork the catalogue rails describe (0.351825ms)
+✔ an unreachable catalogue ends the launch wave instead of failing it (0.179779ms)
+✖ a hanging image cannot extend launch beyond the remaining overall budget (103.171065ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 13
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 704.665111
+
+✖ failing tests:
+
+test at tests/preload.test.ts:2:8398
+✖ a hanging image cannot extend launch beyond the remaining overall budget (103.171065ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + 'launch still blocked'
+  - {
+  -   done: 1,
+  -   total: 1
+  - }
+
+      at TestContext.<anonymous> (/data/SNAS/tests/preload.test.ts:174:10)
+      at async Test.run (node:internal/test_runner/test:1313:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'launch still blocked',
+    expected: { done: 1, total: 1 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

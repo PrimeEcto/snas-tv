@@ -1,0 +1,62 @@
+[
+  {
+    "journey": "Genre menu opens",
+    "result": "PASS",
+    "detail": "Genre choices reached with Select"
+  },
+  {
+    "journey": "Genre Back scope",
+    "result": "PASS",
+    "detail": "Back dismissed the menu and kept Movies open"
+  },
+  {
+    "journey": "Full-word remote search",
+    "result": "PASS",
+    "detail": "DUNE typed using individual on-screen keys; real results returned"
+  },
+  {
+    "journey": "No search results",
+    "result": "PASS",
+    "detail": "A real unmatched query shows recovery copy"
+  },
+  {
+    "journey": "Series details",
+    "result": "PASS",
+    "detail": "Genuine sample series exposes season and episode controls"
+  },
+  {
+    "journey": "Extended run",
+    "result": "FAIL",
+    "detail": "Selecting the current season keeps Play available"
+  },
+  {
+    "journey": "Hero focus restoration",
+    "result": "PASS",
+    "detail": "Back restored View details on Home"
+  },
+  {
+    "journey": "Offline catalog recovery",
+    "result": "PASS",
+    "detail": "Network failure exposes Retry and sample-catalog actions"
+  },
+  {
+    "journey": "Unavailable stream",
+    "result": "PASS",
+    "detail": "No simulated clock appears after failed native streaming"
+  },
+  {
+    "journey": "Explicit preview",
+    "result": "PASS",
+    "detail": "Simulation starts only after selecting Play simulated preview"
+  },
+  {
+    "journey": "Aspect menu",
+    "result": "PASS",
+    "detail": "Fill, Original and Stretch remain available with visible focus"
+  },
+  {
+    "journey": "Extended run",
+    "result": "FAIL",
+    "detail": "Closing the menu restored its opening control"
+  }
+]

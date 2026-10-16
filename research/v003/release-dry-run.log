@@ -1,0 +1,7 @@
+
+snas-0.0.3.apk: 0 bytes, sha256 (dry run)…
+$ git push origin HEAD:refs/heads/codex/snas-tv-0.0.3
+$ gh release create v0.0.3 /data/SNAS/dist/snas-0.0.3.apk /data/SNAS/dist/version.json --repo PrimeEcto/snas-tv --target 65d4efe2dae47613dadfafa6ab103e6cef889f14 --title SNAS TV 0.0.3 --notes-file /data/SNAS/dist/release-notes.md --latest
+
+Published v0.0.3. The app will see it through /v1/app/latest.
+(dry run: nothing was built, tagged or uploaded)

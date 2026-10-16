@@ -1,0 +1,37 @@
+✔ paused playback freezes time and resumed ticks honor playback speed (0.806775ms)
+✔ seeks clamp at both ends and completion stops playback (0.129755ms)
+✔ nonfinite timing and unsupported speeds cannot poison playback (0.199803ms)
+✔ episodes use their runtime and movie, show, and episode keys never collide (0.115082ms)
+✔ settings and controls can change independently of play position (0.112146ms)
+✔ a media surface owns time once it reports, and reports it safely (0.140726ms)
+✔ screen fit is remembered per viewer and maps onto the media layer resize modes (0.698802ms)
+✔ time formatting handles hours, negative, and nonfinite values (0.143389ms)
+✔ watchlist toggles immutably and distinguishes movie and television ids (0.161639ms)
+✔ progress saves episodes separately and removes a title at the 95 percent boundary (0.281381ms)
+✔ continue watching sorts newest first and displays only the latest episode per title (0.308706ms)
+✔ library parsing rejects broken schemas without crashing and roundtrips valid progress (0.380308ms)
+✔ library parsing drops corrupt entries and validates preferences and canonical keys (0.204453ms)
+✔ real catalog string years and missing artwork survive library persistence (0.236218ms)
+✔ episode progress with no thumbnail survives a restart (0.141698ms)
+✖ replay restarts a completed title and advances its clock (0.235649ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 15
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 150.429068
+
+✖ failing tests:
+
+test at tests/playback.test.ts:2:13305
+✖ replay restarts a completed title and advances its clock (0.235649ms)
+  TypeError: Cannot read properties of undefined (reading 'position')
+      at TestContext.<anonymous> (/data/SNAS/tests/playback.test.ts:199:25)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)

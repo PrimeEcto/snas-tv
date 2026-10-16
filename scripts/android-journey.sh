@@ -10,6 +10,7 @@
 #   bash scripts/android-journey.sh                       # install dist/snas-<version>.apk, then journey
 #   bash scripts/android-journey.sh --no-install          # journey against whatever is installed
 #   ANDROID_SERIAL=emulator-5556 bash scripts/android-journey.sh path/to/app.apk
+#   SNAS_JOURNEY_RESUME=playback bash scripts/android-journey.sh --no-install
 #
 # Playback is the journey that matters most, so it must show real decoding rather than a UI
 # timer: an ExoPlayer/MediaCodec/HLS session in logcat *and* a clock that advances between two
@@ -40,10 +41,50 @@ for arg in "$@"; do
   esac
 done
 
+RESUME="${SNAS_JOURNEY_RESUME:-}"
+if [[ -n "$RESUME" && "$RESUME" != playback ]]; then
+  echo "unknown SNAS_JOURNEY_RESUME mode: $RESUME" >&2
+  exit 2
+fi
+[[ "$RESUME" == playback ]] && INSTALL=0
+
 cd "$ROOT"
 mkdir -p "$OUT"
 RESULTS_TSV="$OUT/.results.tsv"
-: > "$RESULTS_TSV"
+if [[ "$RESUME" == playback ]]; then
+  # Seed only when this follow-up is actually run. Editing the harness never
+  # rewrites the evidence of a standard journey that is still running.
+  python3 - "$OUT/results.json" "$RESULTS_TSV" <<'RESUMEPY'
+import json, pathlib, sys
+report, target = map(pathlib.Path, sys.argv[1:])
+if report.exists():
+    rows = json.loads(report.read_text())
+elif target.exists():
+    rows = []
+    for line in target.read_text().splitlines():
+        fields = line.split('\t')
+        if len(fields) == 4:
+            rows.append(dict(zip(('journey', 'result', 'detail', 'evidence'), fields)))
+else:
+    raise SystemExit('Playback resume requires an existing standard journey report')
+rows = [row for row in rows if row['journey'] not in ('Playback', 'Playback exit', 'Guest resources')]
+if not rows:
+    raise SystemExit('Playback resume found no non-playback results to preserve')
+lines = []
+for row in rows:
+    evidence = row.get('evidence', [])
+    if isinstance(evidence, list):
+        evidence = ', '.join(evidence)
+    values = (row['journey'], row['result'], row.get('detail', ''), evidence)
+    lines.append('\t'.join(str(value).replace('\t', ' ').replace('\n', ' ') for value in values))
+temporary = target.with_suffix('.resume.tmp')
+temporary.write_text('\n'.join(lines) + '\n')
+temporary.replace(target)
+print(f"Playback resume: preserving {len(rows)} non-playback results")
+RESUMEPY
+else
+  : > "$RESULTS_TSV"
+fi
 
 # Every adb call goes through here, so the serial is applied in exactly one place.
 SERIAL="${ANDROID_SERIAL:-}"
@@ -137,7 +178,7 @@ saved_count() {
   python3 - "$1" <<'PY'
 import re, sys
 data = open(sys.argv[1], encoding='utf-8', errors='replace').read()
-match = re.search(r'My List \((\d+)\)', data)
+match = re.search(r'content-desc="Saved, (\d+)"', data)
 print(match.group(1) if match else 0)
 PY
 }
@@ -251,7 +292,7 @@ record() { # journey result detail evidence
 
 # The tab bar, in the order it is rendered. Search is a tab like any other here; leaving it out
 # shifts every later position and the walk below would aim at the wrong tab.
-TABS=(Home Movies Series Search 'My List' About)
+TABS=(Home Movies Series 'My List' Search About)
 
 # The testID of the focused node, which is what identifies a control to the app's own screens
 # (nav-Movies, home-play, details-play, …). Labels are not unique enough for this.
@@ -296,50 +337,26 @@ goto_tab() {
 # Same observed-walk idea as goto_tab, for any testID on the current screen: from the bar step
 # down into the page, from the hero row step right, and from a rail climb up towards the hero.
 focus_target() {
-  local wanted="$1" x i id index target
-  for ((i = 0; i < 20; i++)); do
-    x="$(dump focus-watch)"
-    id="$(focused_id "$x")"
+  local wanted="$1" x id direction i
+  for ((i=0;i<32;i++)); do
+    x="$(dump focus-watch)"; id="$(focused_id "$x")"
     [[ "$id" == "$wanted" ]] && return 0
-    # An unlabelled container is the usual "nothing reports focus" state: an empty result list or a
-    # rail. This walk wants a control inside the page, so it descends — then backtracks, in case the
-    # control it wants is on the row it just left.
-    if [[ -z "$id" ]]; then
-      (( i < 4 )) && { press DOWN 0.4; continue; }
-      (( i < 8 )) && { press UP 0.4; continue; }
-      echo "harness: nothing reports focus, so $wanted cannot be reached" >&2
-      return 1
-    fi
-    case "$id" in
-      nav-*) press DOWN 0.35 ;;
-      details-*)
-        # A detail page is Back above the row Play preview, Add to My List: one step down from
-        # Back, then along the row. Stepping up from those controls leaves the page for the bar.
-        index="$(row_index "$id" details-back details-play details-save)"
-        target="$(row_index "$wanted" details-back details-play details-save)"
-        if [[ "$id" == details-back ]]; then
-          press DOWN 0.35
-        elif (( index >= 0 && target >= 0 )); then
-          if (( index < target )); then press RIGHT 0.35; else press LEFT 0.35; fi
-        else
-          press DOWN 0.35
-        fi ;;
-      home-*)
-        # The hero row runs Play preview, View details, My List. Stepping right off its end drops
-        # into the rail below, so the direction is chosen from the positions, not guessed.
-        index="$(row_index "$id" home-play home-details home-save)"
-        target="$(row_index "$wanted" home-play home-details home-save)"
-        if (( index >= 0 && target >= 0 )); then
-          if (( index < target )); then press RIGHT 0.35; else press LEFT 0.35; fi
-        else
-          press LEFT 0.35
-        fi ;;
-      player-*) press UP 0.35 ;;
-      *) press UP 0.35 ;;
-    esac
+    direction="$(python3 - "$x" "$wanted" <<'FOCUSPY'
+import re,sys,xml.etree.ElementTree as E
+nodes=list(E.parse(sys.argv[1]).iter('node'))
+src=next((n for n in nodes if n.get('focused')=='true'),None)
+target=next((n for n in nodes if n.get('resource-id')==sys.argv[2]),None)
+if src is None or target is None: print('DOWN')
+else:
+ def center(n):
+  a,b,c,d=map(int,re.findall(r'\d+',n.get('bounds','[0,0][0,0]')));return ((a+c)/2,(b+d)/2)
+ x,y=center(src);tx,ty=center(target);dx,dy=tx-x,ty-y
+ print(('DOWN' if dy>0 else 'UP') if abs(dy)>abs(dx) else ('RIGHT' if dx>0 else 'LEFT'))
+FOCUSPY
+)"
+    press "$direction" 0.3
   done
-  echo "harness: focus ended on '${id:-nothing}', not '$wanted'" >&2
-  return 1
+  echo "harness: could not reach $wanted (focus was ${id:-nothing})" >&2; return 1
 }
 
 # The Home hero row is Play preview / View details / My List.
@@ -353,6 +370,177 @@ focus_home_button() {
 }
 
 # ---------------------------------------------------------------------------- journeys --------
+
+# The exact transport label is state, rather than a guess based on whether a
+# key event was sent. MEDIA_PLAY_PAUSE is ignored while a source is loading.
+player_toggle_label() {
+  python3 - "$1" <<'TRANSPORTPY'
+import re, sys, xml.etree.ElementTree as E
+try:
+    nodes = E.parse(sys.argv[1]).iter('node')
+    for node in nodes:
+        rid = node.get('resource-id', '').split(':id/')[-1]
+        if rid == 'player-toggle':
+            labels = [node.get('content-desc', ''), node.get('text', '')]
+            labels += [child.get('text', '') for child in node.iter('node')]
+            for label in labels:
+                if label.strip() in ('Play', 'Pause', 'Replay'):
+                    print(label.strip())
+                    raise SystemExit
+except (E.ParseError, OSError):
+    pass
+TRANSPORTPY
+}
+
+# Restrict codec evidence to this app process and this attempt (logcat is cleared
+# immediately before launch). An ExoPlayer constructor or a URL alone is not a decoder.
+playback_log() {
+  local app_pid
+  app_pid="$(adb_ shell pidof "$APP_ID" 2>/dev/null | tr -d '\r' | awk '{print $1}' || true)"
+  if [[ "$app_pid" =~ ^[0-9]+$ ]]; then
+    adb_ logcat -d --pid="$app_pid" 2>/dev/null || true
+  fi
+}
+
+await_playback_decoder() {
+  local attempt log
+  for ((attempt=0; attempt<35; attempt++)); do
+    log="$(playback_log)"
+    printf '%s\n' "$log" > "$OUT/playback-session-logcat.txt"
+    if grep -Eiq 'MediaCodec(Video|Audio)?Renderer|MediaCodec|CCodec|ACodec|OMX\.' <<< "$log"; then
+      printf '%s\n' "$log" | grep -Ei 'MediaCodec(Video|Audio)?Renderer|MediaCodec|CCodec|ACodec|OMX\.' > "$OUT/playback-logcat.txt" || true
+      return 0
+    fi
+    sleep 2
+  done
+  return 1
+}
+
+# Observe Play before returning a paused reading. If the first pause arrived
+# during backend loading, the next attempt runs after a new observed tree and
+# can pause the now-ready session. A paused player keeps its chrome visible.
+# A Pause label is also handled explicitly, rather than treating a sent key as
+# proof that playback stopped. There are no seek keys in this measurement.
+pause_playback() {
+  local name="$1" attempt xml label
+  for ((attempt=0; attempt<8; attempt++)); do
+    press MEDIA_PLAY_PAUSE 0.7
+    press UP 0.4
+    xml="$(dump "$name")"
+    label="$(player_toggle_label "$xml")"
+    if [[ "$label" == Play ]] && [[ -n "$(clock "$xml")" ]] && ! saw "$xml" 'Concept'; then
+      echo "$xml"
+      return 0
+    fi
+    if saw_id "$xml" player-retry || saw "$xml" 'Concept'; then
+      echo "$xml"
+      return 1
+    fi
+    echo "harness: waiting for paused native playback (attempt $((attempt+1)), transport=${label:-unavailable})" >&2
+    sleep 2
+  done
+  echo "$xml"
+  return 1
+}
+
+playback_exit_journey() {
+  local xml leaving=0
+  while (( leaving < 3 )); do
+    press BACK 1.0
+    xml="$(dump playback-exit)"
+    if saw_id "$xml" home-details && ! saw_id "$xml" details-back && ! saw_id "$xml" player-reveal; then break; fi
+    leaving=$((leaving + 1))
+  done
+  if saw_id "$xml" home-details && ! saw_id "$xml" details-back && ! saw_id "$xml" player-reveal; then
+    record 'Playback exit' PASS 'Back exited the player to the hero on Home' 'playback-exit.xml'
+  else
+    record 'Playback exit' FAIL "Back did not return to Home; on screen: $(summary "$xml")" 'playback-exit.xml'
+  fi
+}
+
+playback_journey() {
+  step 'native playback'
+  NOTE=""
+  local xml clock_a='' clock_b='' label_a='' label_b='' codec=0 advanced=0 paused_a=0 paused_b=0
+  if ! goto_tab Home || ! focus_target home-play; then
+    record Playback FAIL 'could not focus the Home Play control' 'focus-watch.xml'
+    report_resources
+    return
+  fi
+  # Waiting for app-process codec work avoids firing the first toggle while the
+  # backend is still resolving sources. UI state below remains authoritative.
+  adb_ logcat -c >/dev/null 2>&1 || true
+  press CENTER 0.5
+  if await_playback_decoder; then
+    codec=1
+    sleep 2
+  else
+    note 'no app-process MediaCodec decoder evidence appeared within 70 seconds'
+  fi
+  if xml="$(pause_playback playback)"; then
+    paused_a=1
+    label_a="$(player_toggle_label "$xml")"
+    clock_a="$(clock "$xml")"
+    shot playback
+    # A stable second reading proves the Play label corresponds to a paused
+    # clock, rather than a toggle whose native side has not yet settled.
+    sleep 2
+    press UP 0.3
+    xml="$(dump playback-chrome)"
+    label_a="$(player_toggle_label "$xml")"
+    if [[ "$label_a" != Play || "$(clock "$xml")" != "$clock_a" ]]; then
+      paused_a=0
+      note 'the first paused clock was not stable across two observations'
+    fi
+  else
+    shot playback
+    note "could not observe paused native transport; visible: $(summary "$xml")"
+  fi
+
+  if (( paused_a )); then
+    # Both measurements require the observed Play label. Resume between them
+    # without asking UIAutomator to idle on a moving clock: that idle wait is
+    # exactly what used to outlast auto-hide. The second native position must
+    # advance, so merely sending a resume key can never make this pass.
+    press MEDIA_PLAY_PAUSE 0.5
+    press UP 0.3
+    shot playback-resumed
+    sleep 12
+    if xml="$(pause_playback playback-later)"; then
+      paused_b=1
+      label_b="$(player_toggle_label "$xml")"
+      clock_b="$(clock "$xml")"
+    else
+      note 'could not observe the second paused native transport'
+    fi
+    shot playback-later
+  fi
+
+  playback_log > "$OUT/playback-session-logcat.txt"
+  if grep -Ei 'MediaCodec(Video|Audio)?Renderer|MediaCodec|CCodec|ACodec|OMX\.' "$OUT/playback-session-logcat.txt" > "$OUT/playback-logcat.txt"; then
+    codec=1
+    note "app-process decoder evidence ($(wc -l < "$OUT/playback-logcat.txt") lines)"
+  else
+    codec=0
+    note 'no app-process decoder evidence'
+  fi
+  if [[ -n "$clock_a" && -n "$clock_b" ]]; then
+    note "native clock $clock_a -> $clock_b; paused labels ${label_a:-none}/${label_b:-none}"
+    if (( $(secs "$clock_b") > $(secs "$clock_a") )); then advanced=1; fi
+  else
+    note "missing native clock readings (${clock_a:-none}/${clock_b:-none})"
+  fi
+  if (( paused_a && paused_b && advanced && codec )) && ! saw "$xml" 'Concept'; then
+    record Playback PASS "$NOTE" 'playback.png, playback.xml, playback-chrome.xml, playback-resumed.png, playback-later.png, playback-later.xml, playback-logcat.txt'
+  else
+    record Playback FAIL "paused=${paused_a}/${paused_b} advanced=${advanced} decoding=${codec} · $NOTE" 'playback.png, playback.xml, playback-chrome.xml, playback-resumed.png, playback-later.png, playback-later.xml, playback-logcat.txt'
+  fi
+  # Resource capture is taken in the player. Leaving a paused native session
+  # open does not masquerade as a CPU measurement of active decoding.
+  if (( paused_b )); then press MEDIA_PLAY_PAUSE 0.5; fi
+  report_resources
+  playback_exit_journey
+}
 
 main() {
   step 'device'
@@ -381,6 +569,19 @@ main() {
   local pkg
   pkg="$(adb_ shell dumpsys package "$APP_ID" 2>/dev/null | grep -E 'versionName|versionCode|primaryCpuAbi' | tr -d '\r' | tr '\n' ' ' || true)"
   echo "installed: ${pkg:-not installed}"
+
+  if [[ "$RESUME" == playback ]]; then
+    step 'resume playback only'
+    adb_ shell am force-stop "$APP_ID" >/dev/null 2>&1 || true
+    adb_ shell am start -W -n "$ACTIVITY" >/dev/null
+    if ! await_id playback-resume-home home-play 30 >/dev/null; then
+      record Playback FAIL 'Home did not become ready for playback resume' 'playback-resume-home.xml'
+      report_resources
+      return
+    fi
+    playback_journey
+    return
+  fi
 
   if (( INSTALL )); then
     step "install $APK"
@@ -416,7 +617,7 @@ main() {
   # ---- Home ---------------------------------------------------------------------------------
   NOTE=""
   goto_tab Home
-  if xml="$(await_text home 'CATALOG' 24)"; then
+  if xml="$(await_id home home-play 24)"; then
     shot home
     if saw "$xml" 'LIVE CATALOG'; then
       note 'live catalogue badge present (backend reachable from the device)'
@@ -437,7 +638,7 @@ main() {
   for tab in Movies Series; do
     NOTE=""
     goto_tab "$tab"
-    if xml="$(await_text "browse-$(echo "$tab" | tr 'A-Z' 'a-z')" 'Sort:' 26)"; then
+    if xml="$(await_id "browse-$(echo "$tab" | tr 'A-Z' 'a-z')" genre 26)"; then
       shot "browse-$(echo "$tab" | tr 'A-Z' 'a-z')"
       note "heading and filters present (Genre / Sort)"
       if saw "$xml" 'No titles in this category'; then note 'grid reported empty'; fi
@@ -453,7 +654,7 @@ main() {
   # ---- Search -------------------------------------------------------------------------------
   NOTE=""
   goto_tab Search
-  if xml="$(await_text search 'Find your next story' 24)"; then
+  if xml="$(await_id search key-A 24)"; then
     shot search
     # The screen carries its own letter grid, so a real query is typed with the remote alone: one
     # Select types a letter and the live backend search runs on it. The key is targeted explicitly
@@ -472,9 +673,9 @@ main() {
     else
       printf '%s\n' 'harness: the on-screen keyboard never took focus' >&2
     fi
-    if xml="$(await_text search-results 'results for' 22)"; then
+    if xml="$(await_text search-results 'shown for' 22)"; then
       served=1
-      note "query ran against the backend: $(labels "$xml" | grep -E 'results for|No matches|Searching' | head -1)"
+      note "query ran against the backend: $(labels "$xml" | grep -E 'shown for|No matches|Searching' | head -1)"
     elif saw "$xml" 'No matches'; then
       served=1
       note 'query ran and returned a genuine empty state'
@@ -496,13 +697,13 @@ main() {
   # ---- My List, empty then populated from a detail page --------------------------------------
   NOTE=""
   goto_tab 'My List'
-  if xml="$(await_text my-list-empty 'Your collection' 22)"; then
+  if xml="$(await_id my-list-empty list-saved 22)"; then
     shot my-list-empty
     local saved_empty
     saved_empty="$(saved_count "$xml")"
     # The heading alone says nothing: what makes a collection screen empty is the empty copy and a
     # count of zero, so both are required before this leg is allowed to pass.
-    if saw "$xml" 'Make it your movie night' && (( saved_empty == 0 )); then
+    if saw "$xml" 'No saved titles yet' && (( saved_empty == 0 )); then
       note "empty state on a fresh install · counts: $(counts "$xml")"
       record 'My List (empty)' PASS "$NOTE" 'my-list-empty.png, my-list-empty.xml'
     else
@@ -533,7 +734,7 @@ main() {
     local longest save_before save_after played=0 toggled=0
     longest="$(labels "$xml" | awk '{ print length($0) }' | sort -n | tail -1)"
     note "longest text block ${longest} chars (synopsis)"
-    if saw "$xml" 'Play preview' || saw "$xml" 'Play episode preview' || saw "$xml" 'Resume preview'; then
+    if saw_id "$xml" details-play; then
       played=1
       note 'Play control present'
     fi
@@ -572,7 +773,7 @@ main() {
 
   NOTE=""
   goto_tab 'My List'
-  xml="$(await_text my-list 'Your collection' 22)"
+  xml="$(await_id my-list list-saved 22)"
   shot my-list
   if (( $(saved_count "$xml") > 0 )); then
     note "saved title listed: $(counts "$xml")"
@@ -592,7 +793,7 @@ main() {
   sleep 2
   adb_ shell am start -n "$ACTIVITY" >/dev/null 2>&1 || true
   goto_tab 'My List' || true
-  xml="$(await_text my-list-relaunch 'Your collection' 26)" || true
+  xml="$(await_id my-list-relaunch list-saved 26)" || true
   shot my-list-relaunch
   if (( $(saved_count "$xml") > 0 )); then
     note "the collection survived a relaunch: $(counts "$xml")"
@@ -604,6 +805,8 @@ main() {
   # ---- About --------------------------------------------------------------------------------
   NOTE=""
   goto_tab About
+  focus_target settings-About
+  press CENTER 0.6
   if xml="$(await_text about 'TMDB' 24)"; then
     shot about
     note 'TMDB attribution present'
@@ -619,99 +822,7 @@ main() {
     record About FAIL "About did not render its attribution; on screen: $(summary "$xml")" 'about.png, about.xml'
   fi
 
-  # ---- Playback -----------------------------------------------------------------------------
-  # Cleared first, so any ExoPlayer/codec line in the log belongs to this attempt.
-  NOTE=""
-  adb_ logcat -c >/dev/null 2>&1 || true
-  # A failed walk must not end the run here: the playback assertions below are the reason the
-  # journey exists, and they fail loudly on their own if the player never opens.
-  goto_tab Home || echo 'harness: could not reselect Home before playback' >&2
-  local pressed=0
-  if focus_home_button 'Play preview'; then
-    press CENTER 3.0
-    pressed=1
-  fi
-  if (( !pressed )); then
-    record Playback FAIL 'could not focus the hero Play control on Home' 'playback.png'
-    report_resources
-    return
-  fi
-  # The player's chrome fades after a few idle seconds, so "is the player open" is answered by its
-  # own status line — `SNAS · LIVE` when it is decoding a stream — not by a control that may already
-  # have faded. Asserting on 'Exit' alone reported an open, playing player as "never opened".
-  if ! xml="$(await_text playback 'SNAS · LIVE' 26)"; then
-    shot playback
-    record Playback FAIL "the player never reported a live stream; on screen: $(summary "$xml")" 'playback.png, playback.xml'
-    report_resources
-    return
-  fi
-  shot playback
-  local clock_a clock_b codec hits stream
-  # The clock is read with the picture paused, and the remote's own play/pause button is what pauses
-  # it. The position readout lives in the player's chrome, which it hides after six idle seconds —
-  # and while the video is decoding, `uiautomator dump` waits for the screen to go idle, so a reading
-  # taken mid-playback always arrived after the bar had gone. Paused, the screen is still, the dump is
-  # quick, and one arrow key is enough to bring the bar back (the app reveals it on any key but Back).
-  # The position is ExoPlayer's own, so it moves only while the stream is really playing: two readings
-  # around twelve seconds of playback are what prove it, not a UI timer.
-  press MEDIA_PLAY_PAUSE 1.5
-  press UP 0.6
-  xml="$(dump playback-chrome)"
-  clock_a="$(clock "$xml")"
-  press MEDIA_PLAY_PAUSE 1.0
-  sleep 12
-  press MEDIA_PLAY_PAUSE 1.5
-  press UP 0.6
-  xml="$(dump playback-later)"
-  clock_b="$(clock "$xml")"
-  shot playback-later
-  # Left playing: the resource report below is meant to catch the app doing its most work.
-  press MEDIA_PLAY_PAUSE 1.2
-  hits="$(adb_ logcat -d 2>/dev/null | grep -Ei 'exoplayer|mediacodec|media3|m3u8|hls|MediaCodecRenderer' | head -8 || true)"
-  printf '%s\n' "$hits" > "$OUT/playback-logcat.txt"
-  codec="$(printf '%s\n' "$hits" | grep -c . || true)"
-  stream="$(printf '%s\n' "$hits" | grep -oE 'index-s[0-9]+p[^" ]*\.m3u8|[a-z0-9.-]+\.zenoak\.top' | head -1 || true)"
-
-  local advanced=0
-  if [[ -n "$clock_a" && -n "$clock_b" ]]; then
-    note "clock $clock_a -> $clock_b"
-    if (( $(secs "$clock_b") > $(secs "$clock_a") )); then advanced=1; fi
-  else
-    note "no clock readout (found: ${clock_a:-none} / ${clock_b:-none})"
-  fi
-  if (( codec > 0 )); then
-    note "decoder/HLS evidence in logcat (${codec} lines${stream:+, stream $stream})"
-  else
-    note 'no ExoPlayer/MediaCodec/HLS line in logcat'
-  fi
-  if saw "$xml" 'SIMULATED PREVIEW'; then note 'the screen still says SIMULATED PREVIEW'; fi
-
-  if (( advanced )) && (( codec > 0 )); then
-    record Playback PASS "$NOTE" 'playback.png, playback-later.png, playback-later.xml, playback-logcat.txt'
-  else
-    record Playback FAIL "playing=${advanced} decoding=${codec} · $NOTE" 'playback.png, playback-later.png, playback-later.xml, playback-logcat.txt'
-  fi
-
-  # Back closes the player's chrome first and only then leaves the player, so the exit is pressed
-  # until the player is really gone rather than assumed to be one press: with the bar still up (the
-  # clock reading above brought it back) a single Back only hides it.
-  local leaving=0
-  while (( leaving < 3 )); do
-    press BACK 1.5
-    xml="$(dump playback-exit)"
-    if ! saw "$xml" 'SNAS · LIVE'; then break; fi
-    leaving=$(( leaving + 1 ))
-  done
-  # Home, not merely "something with a Play control": a detail page shows Play preview too, so the
-  # check is the hero rail without a detail page's Back control on top of it.
-  if saw "$xml" 'View details' && ! saw_id "$xml" details-back && ! saw "$xml" 'SNAS · LIVE'; then
-    NOTE='exited the player back to the hero on Home'
-    record 'Playback exit' PASS "$NOTE" 'playback-exit.xml'
-  else
-    record 'Playback exit' FAIL "Back did not return to Home; on screen: $(summary "$xml")" 'playback-exit.xml'
-  fi
-
-  report_resources
+  playback_journey
 }
 
 # What the app costs the guest while it is doing the most work (the player is still open).

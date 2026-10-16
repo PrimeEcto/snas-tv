@@ -1,0 +1,317 @@
+npm notice run @amazon-devices/snas@0.0.3 test
+npm notice run npm run test:unit && npm run test:player
+npm notice run @amazon-devices/snas@0.0.3 test:unit
+npm notice run node --import tsx --test tests/*.test.ts
+✔ no configured backend produces a populated, searchable, paginated sample catalog (1.882536ms)
+✔ an unavailable backend and network failures never silently become demo results (2.32842ms)
+✔ live search omits people and malformed records and preserves missing metadata (0.622113ms)
+✔ cache deduplicates requests while page and query remain independent (0.538096ms)
+✔ discover sends kind, genre, sort and clamped pagination through documented query parameters (0.235038ms)
+✔ live details and season endpoints retain actual episode identity and credits (0.417144ms)
+✔ paused playback freezes time and resumed ticks honor playback speed (1.36699ms)
+✔ seeks clamp at both ends and completion stops playback (0.211599ms)
+✔ nonfinite timing and unsupported speeds cannot poison playback (0.28713ms)
+✔ episodes use their runtime and movie, show, and episode keys never collide (0.14528ms)
+✔ settings and controls can change independently of play position (0.126277ms)
+✔ a media surface owns time once it reports, and reports it safely (0.158423ms)
+✔ screen fit is remembered per viewer and maps onto the media layer resize modes (0.871172ms)
+✔ time formatting handles hours, negative, and nonfinite values (0.186614ms)
+✔ watchlist toggles immutably and distinguishes movie and television ids (0.281164ms)
+✔ progress saves episodes separately and removes a title at the 95 percent boundary (0.382518ms)
+✔ continue watching sorts newest first and displays only the latest episode per title (0.279899ms)
+✔ library parsing rejects broken schemas without crashing and roundtrips valid progress (0.32651ms)
+✔ library parsing drops corrupt entries and validates preferences and canonical keys (0.186513ms)
+✔ real catalog string years and missing artwork survive library persistence (0.116751ms)
+✔ episode progress with no thumbnail survives a restart (0.103965ms)
+✔ replay restarts a completed title and advances its clock (0.086644ms)
+✔ the featured backdrop leads the home artwork and other rails contribute their posters (1.580513ms)
+✔ without the featured id the first item of the first rail is used, and an empty catalogue falls back to the sample record (0.191766ms)
+✔ continue watching and the wide rail contribute backdrops while titles without a path are skipped (0.153497ms)
+✔ the same artwork is never listed twice, whatever rail it arrives from (0.115616ms)
+✔ an empty list resolves immediately and never calls prefetch (0.477644ms)
+✔ every url is fetched exactly once and progress rises monotonically to the total (0.45189ms)
+✔ no more images are in flight at once than the concurrency allows (11.544973ms)
+✔ concurrency is clamped to the number of images actually waiting (2.611298ms)
+✔ images that reject or throw synchronously are counted as done instead of failing the launch (0.333511ms)
+✔ an image that never settles is abandoned after its own timeout (5.698077ms)
+✔ the budget stops the wave from starting further images, counting the rest as done (0.393222ms)
+✔ home preloading fetches the artwork the catalogue rails describe (0.259565ms)
+✔ an unreachable catalogue ends the launch wave instead of failing it (0.161527ms)
+✔ a hanging image cannot extend launch beyond the remaining overall budget (10.158797ms)
+✔ an Android stream failure never turns into simulated playback (0.636828ms)
+✔ a timed-out stream stays unavailable until explicitly retried or previewed (0.135592ms)
+✔ a native media clock and the Vega preview remain distinct (0.151778ms)
+✔ an APK release targets the source commit that produced the artifact (39.185518ms)
+✔ versions compare numerically, and a release outranks its own prerelease (6.917111ms)
+✔ only a package this build could actually install is offered (0.348985ms)
+✔ the reported line names the version, its size and the installed build (0.237074ms)
+✔ the Fire TV build installs the APK, the Vega build the package (0.143346ms)
+✔ the running build's own format is the one it asks for (0.210133ms)
+✔ a package for the running architecture beats one for another (0.231273ms)
+✔ a malformed manifest resolves to "no update known" rather than a broken banner (1.061358ms)
+✔ a newer release is reported and nothing else is disturbed (0.313028ms)
+✔ a Vega build asks for Vega packages (0.251473ms)
+✔ an unconfigured backend is not contacted at all (0.272358ms)
+✔ failures resolve to "no update known" instead of breaking a launch (0.334907ms)
+ℹ tests 51
+ℹ suites 0
+ℹ pass 51
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 232.801532
+npm notice run @amazon-devices/snas@0.0.3 test:player
+npm notice run jest --config jest.player.config.cjs --runInBand
+PASS tests/player-events.spec.tsx
+  ● Console
+
+    console.error
+      react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+      116 | test('Retry restores the last native position instead of the session-entry position', async () => {
+      117 |   await act(async () => {
+    > 118 |     mounted = create(component());
+          |                     ^
+      119 |   });
+      120 |   await act(async () =>
+      121 |     surface().props.onProgress({position: 600, duration: 7200}),
+
+      at Object.<anonymous>.process.env.NODE_ENV.exports.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17337:17)
+      at tests/player-events.spec.tsx:118:21
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at Object.<anonymous> (tests/player-events.spec.tsx:117:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+    console.error
+      react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+      134 | test('saving a changed subtitle preference does not refetch the active stream', async () => {
+      135 |   await act(async () => {
+    > 136 |     mounted = create(component());
+          |                     ^
+      137 |   });
+      138 |   await act(async () =>
+      139 |     surface().props.onProgress({position: 600, duration: 7200}),
+
+      at Object.<anonymous>.process.env.NODE_ENV.exports.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17337:17)
+      at tests/player-events.spec.tsx:136:21
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at Object.<anonymous> (tests/player-events.spec.tsx:135:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+    console.error
+      react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+      149 | test('a seek at the same position applies again when the media URI changes', async () => {
+      150 |   await act(async () => {
+    > 151 |     mounted = create(
+          |                     ^
+      152 |       <PlayerSurface uri="https://example.test/a" paused seekTo={600} />,
+      153 |     );
+      154 |   });
+
+      at Object.<anonymous>.process.env.NODE_ENV.exports.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17337:17)
+      at tests/player-events.spec.tsx:151:21
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at Object.<anonymous> (tests/player-events.spec.tsx:150:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+    console.error
+      react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+      173 | test('attaching subtitles starts the replacement source at the last native position in milliseconds', async () => {
+      174 |   await act(async () => {
+    > 175 |     mounted = create(<PlayerSurface uri="https://example.test/a" paused />);
+          |                     ^
+      176 |   });
+      177 |   const video = () => mounted.root.findByType('Video' as never);
+      178 |   await act(async () => video().props.onProgress({currentTime: 2400}));
+
+      at Object.<anonymous>.process.env.NODE_ENV.exports.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17337:17)
+      at tests/player-events.spec.tsx:175:21
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at Object.<anonymous> (tests/player-events.spec.tsx:174:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+    console.error
+      react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+      209 |   };
+      210 |   await act(async () => {
+    > 211 |     mounted = create(
+          |                     ^
+      212 |       <DetailsScreen
+      213 |         catalog={catalog as never}
+      214 |         title={series}
+
+      at Object.<anonymous>.process.env.NODE_ENV.exports.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17337:17)
+      at tests/player-events.spec.tsx:211:21
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at Object.<anonymous> (tests/player-events.spec.tsx:210:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+    console.error
+      react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+      238 |   } as never);
+      239 |   await act(async () => {
+    > 240 |     mounted = create(component());
+          |                     ^
+      241 |   });
+      242 |   await act(async () =>
+      243 |     surface().props.onProgress({position: 600, duration: 7200}),
+
+      at Object.<anonymous>.process.env.NODE_ENV.exports.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17337:17)
+      at tests/player-events.spec.tsx:240:21
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at Object.<anonymous> (tests/player-events.spec.tsx:239:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+    console.error
+      react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+      263 | test('focused timeline handles remote seeking, reports full duration, and suppresses seeking inside menus', async () => {
+      264 |   await act(async () => {
+    > 265 |     mounted = create(component());
+          |                     ^
+      266 |   });
+      267 |   await act(async () =>
+      268 |     surface().props.onProgress({position: 600, duration: 7200}),
+
+      at Object.<anonymous>.process.env.NODE_ENV.exports.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17337:17)
+      at tests/player-events.spec.tsx:265:21
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at Object.<anonymous> (tests/player-events.spec.tsx:264:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+    console.error
+      react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+      292 |     );
+      293 |   await act(async () => {
+    > 294 |     mounted = create(
+          |                     ^
+      295 |       <PlayerScreen
+      296 |         title={title}
+      297 |         position={600}
+
+      at Object.<anonymous>.process.env.NODE_ENV.exports.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17337:17)
+      at tests/player-events.spec.tsx:294:21
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at Object.<anonymous> (tests/player-events.spec.tsx:293:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+    console.error
+      react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+      319 | test('completed playback keeps the replay action and restarts at zero', async () => {
+      320 |   await act(async () => {
+    > 321 |     mounted = create(component());
+          |                     ^
+      322 |   });
+      323 |   await act(async () =>
+      324 |     surface().props.onProgress({position: 600, duration: 7200}),
+
+      at Object.<anonymous>.process.env.NODE_ENV.exports.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17337:17)
+      at tests/player-events.spec.tsx:321:21
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at Object.<anonymous> (tests/player-events.spec.tsx:320:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+PASS tests/focus-restoration.spec.tsx
+  ● Console
+
+    console.error
+      react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+      27 |   let renderer: ReactTestRenderer;
+      28 |   await act(async () => {
+    > 29 |     renderer = create(screen(true), {
+         |                      ^
+      30 |       createNodeMock: (element) => ({id: element.props.testID}),
+      31 |     });
+      32 |   });
+
+      at Object.<anonymous>.process.env.NODE_ENV.exports.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17337:17)
+      at tests/focus-restoration.spec.tsx:29:22
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at Object.<anonymous> (tests/focus-restoration.spec.tsx:28:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+
+Test Suites: 2 passed, 2 total
+Tests:       10 passed, 10 total
+Snapshots:   0 total
+Time:        0.3 s, estimated 1 s
+Ran all test suites.

@@ -1,0 +1,56 @@
+  console.error
+    react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+      10 | test('restoration survives Android assigning temporary focus to the first child',async()=>{
+      11 |  jest.useFakeTimers();let renderer:ReactTestRenderer;
+    > 12 |  await act(async()=>{renderer=create(screen(true),{createNodeMock:element=>({id:element.props.testID})});});
+         |                                     ^
+      13 |  await act(async()=>jest.advanceTimersByTime(140));
+      14 |  await act(async()=>renderer!.root.findByProps({testID:'settings'}).props.onFocus());
+      15 |  await act(async()=>renderer!.update(screen(false)));
+
+      at Object.<anonymous>.process.env.NODE_ENV.exports.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17337:17)
+      at tests/focus-restoration.spec.tsx:12:37
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at Object.<anonymous> (tests/focus-restoration.spec.tsx:12:11)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+FAIL tests/focus-restoration.spec.tsx
+  ✕ restoration survives Android assigning temporary focus to the first child (25 ms)
+
+  ● restoration survives Android assigning temporary focus to the first child
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "id": "settings",
+    +   "id": "first",
+      }
+
+      18 |  await act(async()=>renderer!.root.findByProps({testID:'first'}).props.onFocus());
+      19 |  await act(async()=>jest.advanceTimersByTime(140));
+    > 20 |  expect(jest.mocked(requestFocus).mock.calls.at(-1)?.[0]).toEqual({id:'settings'});
+         |                                                           ^
+      21 |  await act(async()=>renderer!.unmount());jest.useRealTimers();
+      22 | });
+      23 |
+
+      at Object.toEqual (tests/focus-restoration.spec.tsx:20:59)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        0.561 s
+Ran all test suites matching /tests\/focus-restoration.spec.tsx/i.

@@ -35,7 +35,7 @@ Phone Material guidance is intentionally subordinate to the requested Fire TV re
 - Working tree initially clean; branch `main`; origin `https://github.com/PrimeEcto/snas-tv.git`; latest commit `e9e4339`; local versions 0.0.2. Work isolated on `codex/snas-tv-0.0.3` after inspection.
 - `npm test`: **45 passed**. Worker tests: **51 passed**. Root typecheck passes. Fire TV typecheck fails on subtitle track types. Lint: **9 errors, 182 warnings**; failing hooks are listed below.
 - Installed existing `dist/snas-0.0.2.apk` on headless Android 15 x86_64 emulator `emulator-5556`, TV display 1920×1080, D-pad events only. No host input injection. Baseline journey: `research/v003/baseline-journey.log`; copied screenshots/trees under `research/v003/baseline/` when the run finishes.
-- Fresh baseline observations before implementation: launch, live Home, Movies, Series, one-letter real search and empty My List passed. Full journey results and screenshots are preserved separately; source inspection is not counted as a device pass.
+- Fresh baseline full journey completed with 13 passes, 0 failures: launch, live Home, Movies, Series, one-letter real search, empty/saved My List, details/save, relaunch persistence, About, decoded playback and exit. Results and screenshots are preserved separately; source inspection is not counted as a device pass.
 - Fresh Home capture shows Android status/navigation bars, title and controls, populated artwork and a hard horizontal mask boundary below the hero. Search capture shows left-aligned letter glyphs inside large key cells and a redundant full-width Search action despite automatic results.
 - No physical Fire TV, production signing key or authenticated GitHub CLI was established during baseline. GitHub publication and remote tag conflict checks must be retried before shipping. Do not infer them from local history.
 
@@ -69,3 +69,7 @@ Real metadata and artwork with explicit TMDB attribution; safe server-side crede
 3. Establish the TV design foundations and shared hero, controls, cards, empty/error states; redesign every primary surface using real data.
 4. Build release APK; run unit/worker/lint/both typechecks; D-pad journey, error recovery, long-title/menu/focus and 720p/1080p checks. Batch visual inspection and corrections; independent finish review.
 5. Set both app versions and Vega manifest to 0.0.3, inspect package/signature, prepare release notes/checksums, check remote conflicts, commit and publish with gh if authentication permits. Record exact blockers otherwise.
+
+## QA-discovered findings (after implementation began)
+
+Independent code review and mounted event tests exposed stale resume positions on Retry, subtitle-preference saves restarting sources, Android side-loaded subtitle changes resetting media position, seek deduplication surviving URI changes, and completed titles lacking a replay action. These are corrected at the shared state/native source boundaries with regression tests. The extended native run independently reproduced the same-season Play-disable regression; its first failing run is retained before correction. The visual reviewer requested top-aligned hero framing, complete first-row labels and current product/design documentation. Their findings and final verdict are recorded under `research/v003/`.

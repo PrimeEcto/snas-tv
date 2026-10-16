@@ -8,6 +8,8 @@
  */
 import type {PlayerSurfaceProps} from '../../src/player';
 
+export const supportsPlayback = false;
+
 export function PlayerSurface(_props: PlayerSurfaceProps) {
   return null;
 }

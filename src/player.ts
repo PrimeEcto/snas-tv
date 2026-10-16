@@ -71,6 +71,8 @@ export interface PlayerSurfaceProps {
   rate?: number;
   /** When this number changes the surface seeks to it, in seconds. */
   seekTo?: number;
+  /** A new command may seek to the same position again, such as Replay. */
+  seekId?: number;
   resizeMode?: 'contain' | 'cover' | 'stretch';
   onProgress?: (progress: PlayerProgress) => void;
   onEnded?: () => void;

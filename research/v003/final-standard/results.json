@@ -1,0 +1,126 @@
+[
+  {
+    "journey": "launch",
+    "result": "PASS",
+    "detail": "first paint: SNAS|Home|Movies|Series|My List|Search|Settings|Animals \u00b7 installed:     primaryCpuAbi=x86_64     versionCode=3 minSdk=24 targetSdk=35     versionName=0.0.3 ",
+    "evidence": [
+      "launch.png",
+      "launch.xml"
+    ]
+  },
+  {
+    "journey": "Home",
+    "result": "PASS",
+    "detail": "visible: SNAS|Home|Movies|Series|My List|Search|Settings|Animals",
+    "evidence": [
+      "home.png",
+      "home.xml"
+    ]
+  },
+  {
+    "journey": "Movies",
+    "result": "PASS",
+    "detail": "heading and filters present (Genre / Sort) \u00b7 visible: SNAS|Home|Movies|Series|My List|Search|Settings|Genre, All genres",
+    "evidence": [
+      "browse-movies.png",
+      "browse-movies.xml"
+    ]
+  },
+  {
+    "journey": "Series",
+    "result": "PASS",
+    "detail": "heading and filters present (Genre / Sort) \u00b7 visible: SNAS|Home|Movies|Series|My List|Search|Settings|Genre, All genres",
+    "evidence": [
+      "browse-series.png",
+      "browse-series.xml"
+    ]
+  },
+  {
+    "journey": "Search",
+    "result": "PASS",
+    "detail": "one letter typed on the on-screen keyboard \u00b7 query ran against the backend: 20 titles shown for \u201cA\u201d \u00b7 visible: SNAS|Home|Movies|Series|My List|Search|Settings|Movies and series from TMDB",
+    "evidence": [
+      "search.png",
+      "search.xml"
+    ]
+  },
+  {
+    "journey": "My List (empty)",
+    "result": "PASS",
+    "detail": "empty state on a fresh install \u00b7 counts: ",
+    "evidence": [
+      "my-list-empty.png",
+      "my-list-empty.xml"
+    ]
+  },
+  {
+    "journey": "Details + save",
+    "result": "PASS",
+    "detail": "longest text block 295 chars (synopsis) \u00b7 Play control present \u00b7 save toggled on the detail page: Add to My List \u2192 Remove from My List",
+    "evidence": [
+      "details.png",
+      "details.xml",
+      "details-saved.xml"
+    ]
+  },
+  {
+    "journey": "My List (saved)",
+    "result": "PASS",
+    "detail": "saved title listed:  \u00b7 visible: SNAS|Home|Movies|Series|My List|Search|Settings|Saved, 1",
+    "evidence": [
+      "my-list.png",
+      "my-list.xml"
+    ]
+  },
+  {
+    "journey": "Relaunch persistence",
+    "result": "PASS",
+    "detail": "the collection survived a relaunch: ",
+    "evidence": [
+      "my-list-relaunch.png",
+      "my-list-relaunch.xml"
+    ]
+  },
+  {
+    "journey": "About",
+    "result": "PASS",
+    "detail": "TMDB attribution present \u00b7 visible: SNAS|Home|Movies|Series|My List|Search|Settings|SNAS TV 0.0.3",
+    "evidence": [
+      "about.png",
+      "about.xml"
+    ]
+  },
+  {
+    "journey": "Playback",
+    "result": "PASS",
+    "detail": "app-process decoder evidence (211 lines) \u00b7 native clock 0:22 -> 0:43; paused labels Play/Play",
+    "evidence": [
+      "playback.png",
+      "playback.xml",
+      "playback-chrome.xml",
+      "playback-resumed.png",
+      "playback-later.png",
+      "playback-later.xml",
+      "playback-logcat.txt"
+    ]
+  },
+  {
+    "journey": "Guest resources",
+    "result": "PASS",
+    "detail": " TOTAL PSS: 300493 TOTAL RSS: 420980 TOTAL SWAP PSS: 582 \u00b7     primaryCpuAbi=x86_64     versionCode=3 minSdk=24 targetSdk=35     versionName=0.0.3 ",
+    "evidence": [
+      "meminfo.txt",
+      "cpuinfo.txt",
+      "top.txt",
+      "package.txt"
+    ]
+  },
+  {
+    "journey": "Playback exit",
+    "result": "PASS",
+    "detail": "Back exited the player to the hero on Home",
+    "evidence": [
+      "playback-exit.xml"
+    ]
+  }
+]

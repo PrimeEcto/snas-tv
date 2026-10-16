@@ -1,0 +1,98 @@
+[
+  {
+    "journey": "Expanded genres use live catalog",
+    "result": "PASS",
+    "detail": "Native Settings confirms that live TMDB discovery is selected",
+    "evidence": [
+      "genres-live-catalog.xml"
+    ]
+  },
+  {
+    "journey": "Movies expanded genre choices",
+    "result": "PASS",
+    "detail": "D-pad reached genuine genre rows: History, Music, Mystery, TV Movie, War, Western",
+    "evidence": [
+      "movies-genre-history.xml",
+      "movies-genre-music.xml",
+      "movies-genre-mystery.xml",
+      "movies-genre-tv-movie.xml",
+      "movies-genre-war.xml",
+      "movies-genre-western.xml"
+    ]
+  },
+  {
+    "journey": "Movies Western remote scroll",
+    "result": "PASS",
+    "detail": "Scrolled the native chooser to the Western row, displayed as Westerns",
+    "evidence": [
+      "movies-western-sheet.xml"
+    ]
+  },
+  {
+    "journey": "Movies Western selection",
+    "result": "PASS",
+    "detail": "Selecting Western committed the Westerns filter and restored its trigger",
+    "evidence": [
+      "movies-western-selected.xml"
+    ]
+  },
+  {
+    "journey": "Movies Western real results",
+    "result": "PASS",
+    "detail": "Live Western discovery returned actual catalog card browse-movie-68718",
+    "evidence": [
+      "movies-western-results.xml"
+    ]
+  },
+  {
+    "journey": "Movies Western metadata",
+    "result": "PASS",
+    "detail": "The opened title displays its genuine Western genre metadata; no metadata was manufactured",
+    "evidence": [
+      "movies-western-metadata.xml"
+    ]
+  },
+  {
+    "journey": "Movies Western selected state",
+    "result": "PASS",
+    "detail": "The canonical Western choice is checked when reopening the sheet",
+    "evidence": [
+      "movies-western-checked.xml"
+    ]
+  },
+  {
+    "journey": "Movies Western Back restoration",
+    "result": "PASS",
+    "detail": "Back closed the native genre sheet, preserved Westerns and restored the opener",
+    "evidence": [
+      "movies-western-back.xml"
+    ]
+  },
+  {
+    "journey": "Movies All genres restored",
+    "result": "PASS",
+    "detail": "Restored All genres before leaving the section",
+    "evidence": [
+      "movies-reset-closed.xml"
+    ]
+  },
+  {
+    "journey": "Series expanded genre choices",
+    "result": "PASS",
+    "detail": "D-pad reached genuine genre rows: Kids, News, Reality, Soap, Talk, War & Politics, Western",
+    "evidence": [
+      "series-genre-kids.xml",
+      "series-genre-news.xml",
+      "series-genre-reality.xml",
+      "series-genre-soap.xml",
+      "series-genre-talk.xml",
+      "series-genre-war-&-politics.xml",
+      "series-genre-western.xml"
+    ]
+  },
+  {
+    "journey": "Extended run",
+    "result": "FAIL",
+    "detail": "Scrolled the native chooser to the Western row, displayed as Westerns"
+  }
+]

@@ -1,0 +1,16 @@
+using ANDROID_SERIAL=emulator-5556
+
+== device
+device ready: sdk_gphone64_x86_64 / Android 35
+installed:     primaryCpuAbi=x86_64     versionCode=3 minSdk=24 targetSdk=35     versionName=0.0.3
+
+== install dist/snas-0.0.3.apk
+Performing Streamed Install
+Success
+installed:     primaryCpuAbi=x86_64     versionCode=3 minSdk=24 targetSdk=35     versionName=0.0.3
+
+== launch
+PASS launch         first paint: SNAS|Home|Movies|Series|My List|Search|Settings|Tenzing · installed:     primaryCpuAbi=x86_64     versionCode=3 minSdk=24 targetSdk=35     versionName=0.0.3
+PASS Home           visible: SNAS|Home|Movies|Series|My List|Search|Settings|Tenzing
+PASS Movies         heading and filters present (Genre / Sort) · visible: SNAS|Home|Movies|Series|My List|Search|Settings|Genre, All genres
+PASS Series         heading and filters present (Genre / Sort) · visible: SNAS|Home|Movies|Series|My List|Search|Settings|Genre, All genres

@@ -1,0 +1,14 @@
+PASS Hero focus restoration Back restored Details on the Home feature
+PASS Offline catalog recovery A fresh offline query exposes Try again and Use sample catalog
+PASS Unavailable stream Failed native playback shows recovery actions without a transport or simulated clock
+PASS Concept player Concept opens explicitly with one quiet label and no preview banners
+PASS Player settings hierarchy Native Settings sheet exposes quality, screen fit and speed; focus=player-quality
+PASS Nested aspect menu Screen fit opens its own Fill, Original and Stretch choices
+PASS Aspect Back hierarchy Back returns to Settings with a valid focused setting row; focus=player-quality
+PASS Aspect selection commits Selecting Original updates its parent setting value; focus=player-quality
+PASS Nested speed menu Playback speed exposes 0.5×, 1×, 1.5× and 2× in its nested sheet
+PASS Speed selection commits Selecting 1.5× updates its parent setting value; focus=player-quality
+PASS Speed Back hierarchy Back returns to Settings with valid focus; focus=player-quality
+PASS Player menu focus restoration Closing Settings restores its opening player-settings control
+PASS Player exit focus restoration Exit player returns to its original Home Play control
+PASS TV sizes and font scaling Native captures saved at 1920×1080, 1280×720 and 130% font scaling; visual judgment is separate

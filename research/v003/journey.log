@@ -1,0 +1,49 @@
+using ANDROID_SERIAL=emulator-5556
+
+== device
+device ready: sdk_gphone64_x86_64 / Android 35
+installed:     primaryCpuAbi=x86_64     versionCode=2 minSdk=24 targetSdk=35     versionName=0.0.2
+
+== install dist/snas-0.0.3.apk
+Performing Streamed Install
+Success
+installed:     primaryCpuAbi=x86_64     versionCode=3 minSdk=24 targetSdk=35     versionName=0.0.3
+
+== launch
+PASS launch         first paint: SNAS|Home|Movies|Series|Search|My List|About|LIVE CATALOG · installed:     primaryCpuAbi=x86_64     versionCode=3 minSdk=24 targetSdk=35     versionName=0.0.3
+PASS Home           live catalogue badge present (backend reachable from the device) · hero controls present · visible: SNAS|Home|Movies|Series|Search|My List|About|LIVE CATALOG
+PASS Movies         heading and filters present (Genre / Sort) · visible: SNAS|Home|Movies|Series|Search|My List|About|LIVE CATALOG
+PASS Series         heading and filters present (Genre / Sort) · visible: SNAS|Home|Movies|Series|Search|My List|About|LIVE CATALOG
+PASS Search         one letter typed on the on-screen keyboard · query ran against the backend: 20 results for “A” · visible: SNAS|Home|Movies|Series|Search|My List|About|LIVE CATALOG
+PASS My List (empty) empty state on a fresh install · counts: My List (0) My List (0) Continue watching (0) Continue watching (0)
+PASS Details + save longest text block 166 chars (synopsis) · Play control present · save toggled on the detail page: Add to My List → Remove from My List
+PASS My List (saved) saved title listed: My List (1) My List (1) Continue watching (0) Continue watching (0) · visible: SNAS|Home|Movies|Series|Search|My List|About|LIVE CATALOG
+PASS Relaunch persistence the collection survived a relaunch: My List (1) My List (1) Continue watching (0) Continue watching (0)
+PASS About          TMDB attribution present · visible: SNAS|Home|Movies|Series|Search|My List|About|LIVE CATALOG
+PASS Playback       clock 0:03 -> 0:16 · decoder/HLS evidence in logcat (8 lines)
+PASS Playback exit  exited the player back to the hero on Home
+
+== guest resources
+PASS Guest resources  TOTAL PSS: 328404 TOTAL RSS: 446808 TOTAL SWAP PSS: 578 ·     primaryCpuAbi=x86_64     versionCode=3 minSdk=24 targetSdk=35     versionName=0.0.3
+--- meminfo ---
+  Native Heap   177890   177816       48       78   178768   207244   179419    22437
+  Dalvik Heap    57678    57540       84      175    58520    21941    10971    10970
+--
+ App Summary
+                       Pss(KB)                        Rss(KB)
+--
+           Java Heap:    61404                          80540
+         Native Heap:   177816                         178768
+                Code:    38028                         151084
+--
+           TOTAL PSS:   328404            TOTAL RSS:   446808       TOTAL SWAP PSS:      578
+
+--- top (app rows) ---
+  PID USER         PR  NI VIRT  RES  SHR S[%CPU] %MEM     TIME+ ARGS
+ 6791 u0_a210      10 -10  35G 392M 149M S  3.8  15.8   0:09.96 com.snas.tv
+--- package ---
+    primaryCpuAbi=x86_64
+    versionCode=3 minSdk=24 targetSdk=35
+    versionName=0.0.3
+
+13 passed, 0 failed, 0 skipped — /data/SNAS/research/android/results.json

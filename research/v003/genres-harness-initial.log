@@ -1,0 +1,21 @@
+PASS Expanded genres use live catalog Native Settings confirms that live TMDB discovery is selected
+PASS Movies expanded genre choices D-pad reached genuine genre rows: History, Music, Mystery, TV Movie, War, Western
+PASS Movies Western remote scroll Scrolled the native chooser to the Western row, displayed as Westerns
+PASS Movies Western selection Selecting Western committed the Westerns filter and restored its trigger
+PASS Movies Western real results Live Western discovery returned actual catalog card browse-movie-68718
+PASS Movies Western metadata The opened title displays its genuine Western genre metadata; no metadata was manufactured
+PASS Movies Western selected state The canonical Western choice is checked when reopening the sheet
+PASS Movies Western Back restoration Back closed the native genre sheet, preserved Westerns and restored the opener
+PASS Movies All genres restored Restored All genres before leaving the section
+PASS Series expanded genre choices D-pad reached genuine genre rows: Kids, News, Reality, Soap, Talk, War & Politics, Western
+Traceback (most recent call last):
+  File "/data/SNAS/scripts/android-extended.py", line 397, in <module>
+    genres_only_journey()
+  File "/data/SNAS/scripts/android-extended.py", line 346, in genres_only_journey
+    genre_journey(tab, kind, additions)
+  File "/data/SNAS/scripts/android-extended.py", line 225, in genre_journey
+    check(tab + ' Western remote scroll', scrolled and western is not None
+  File "/data/SNAS/scripts/android-extended.py", line 134, in check
+    assert assertion, detail
+           ^^^^^^^^^
+AssertionError: Scrolled the native chooser to the Western row, displayed as Westerns

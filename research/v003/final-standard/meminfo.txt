@@ -1,0 +1,57 @@
+Applications Memory Usage (in Kilobytes):
+Uptime: 19931584 Realtime: 19931584
+
+** MEMINFO in pid 4259 [com.snas.tv] **
+                   Pss  Private  Private  SwapPss      Rss     Heap     Heap     Heap
+                 Total    Dirty    Clean    Dirty    Total     Size    Alloc     Free
+                ------   ------   ------   ------   ------   ------   ------   ------
+  Native Heap   159394   159328       44       78   160280   187152   156055    26336
+  Dalvik Heap    48692    48588       28      176    49544    71499    46923    24576
+ Dalvik Other     2958     1960        4        4     4348
+        Stack     2204     2204        0        0     2208
+       Ashmem      403        0        0        0     1452
+    Other dev       48       12       32        0      304
+     .so mmap     9746      192     4424       24    44176
+    .jar mmap     2894        0      324        0    40368
+    .apk mmap    22670      828    14888        0    33820
+    .ttf mmap      441        0       64        0     1460
+    .dex mmap    15249        8    15188        0    16152
+    .oat mmap     1017        0      224        0    13092
+    .art mmap     4812     3688      260      300    22156
+   Other mmap     1316        4      504        0     3148
+      Unknown    28067    28048        8        0    28472
+        TOTAL   300493   244860    35992      582   420980   258651   202978    50912
+
+ App Summary
+                       Pss(KB)                        Rss(KB)
+                        ------                         ------
+           Java Heap:    52536                          71700
+         Native Heap:   159328                         160280
+                Code:    36228                         151120
+               Stack:     2204                           2208
+            Graphics:        0                              0
+       Private Other:    30556
+              System:    19641
+             Unknown:                                   35672
+
+           TOTAL PSS:   300493            TOTAL RSS:   420980       TOTAL SWAP PSS:      582
+
+ Objects
+               Views:     1185         ViewRootImpl:        1
+         AppContexts:        5           Activities:        1
+              Assets:       24        AssetManagers:        0
+       Local Binders:       37        Proxy Binders:       74
+       Parcel memory:       15         Parcel count:       61
+    Death Recipients:        2             WebViews:        0
+
+ SQL
+         MEMORY_USED:       97
+  PAGECACHE_OVERFLOW:       37          MALLOC_SIZE:       46
+
+ DATABASES
+      pgsz     dbsz   Lookaside(b) cache hits cache misses cache size  Dbname
+PER CONNECTION STATS
+         4       28             34    12    33     3  /data/user/0/com.snas.tv/databases/RKStorage
+POOL STATS
+     cache hits  cache misses    cache size  Dbname
+             12            34            46  /data/user/0/com.snas.tv/databases/RKStorage

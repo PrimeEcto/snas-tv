@@ -1,0 +1,8 @@
+10-16 11:53:38.911  4729  4729 I ExoPlayerImpl: Init 50a421a [AndroidXMedia3/1.8.0] [emu64xa, sdk_gphone64_x86_64, Google, 35]
+10-16 11:53:38.925   565  2009 I MediaFocusControl: requestAudioFocus() from uid/pid 10210/4729 AA=USAGE_MEDIA/CONTENT_TYPE_UNKNOWN clientId=android.media.AudioManager@8756340com.brentvatne.exoplayer.ReactExoplayerView$OnAudioFocusChangedListener@1b8f279 callingPack=com.snas.tv req=1 flags=0x0 sdk=35
+10-16 11:53:40.624  4729  4732 I com.snas.tv: JIT allocated 62KB for compiled code of androidx.media3.exoplayer.hls.playlist.HlsMediaPlaylist androidx.media3.exoplayer.hls.playlist.HlsPlaylistParser.parseMediaPlaylist(androidx.media3.exoplayer.hls.playlist.HlsMultivariantPlaylist, androidx.media3.exoplayer.hls.playlist.HlsMediaPlaylist, androidx.media3.exoplayer.hls.playlist.HlsPlaylistParser$LineIterator, java.lang.String)
+10-16 11:53:40.624  4729  4732 I com.snas.tv: Compiler allocated 5155KB to compile androidx.media3.exoplayer.hls.playlist.HlsMediaPlaylist androidx.media3.exoplayer.hls.playlist.HlsPlaylistParser.parseMediaPlaylist(androidx.media3.exoplayer.hls.playlist.HlsMultivariantPlaylist, androidx.media3.exoplayer.hls.playlist.HlsMediaPlaylist, androidx.media3.exoplayer.hls.playlist.HlsPlaylistParser$LineIterator, java.lang.String)
+10-16 11:53:42.380  4729  5070 I DMCodecAdapterFactory: Creating an asynchronous MediaCodec adapter for track type video
+10-16 11:53:42.401  4729  5101 I MediaCodec: MediaCodec will operate in async mode
+10-16 11:53:42.401  4729  5101 I MediaCodec: [c2.goldfish.h264.decoder] setting surface generation to 4842497
+10-16 11:53:42.403  4729  5070 D MediaCodec: keep callback message for reclaim

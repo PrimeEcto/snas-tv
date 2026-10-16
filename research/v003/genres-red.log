@@ -1,0 +1,73 @@
+npm notice run @amazon-devices/snas@0.0.3 test:unit
+npm notice run node --import tsx --test tests/*.test.ts
+✔ no configured backend produces a populated, searchable, paginated sample catalog (1.650216ms)
+✔ an unavailable backend and network failures never silently become demo results (1.175181ms)
+✔ live search omits people and malformed records and preserves missing metadata (0.546479ms)
+✔ cache deduplicates requests while page and query remain independent (0.471532ms)
+✔ discover sends kind, genre, sort and clamped pagination through documented query parameters (0.269878ms)
+✔ live details and season endpoints retain actual episode identity and credits (0.366466ms)
+✖ expanded movie and series genres request the canonical catalog IDs and retain metadata (3.000323ms)
+✔ paused playback freezes time and resumed ticks honor playback speed (1.729354ms)
+✔ seeks clamp at both ends and completion stops playback (0.305298ms)
+✔ nonfinite timing and unsupported speeds cannot poison playback (0.41382ms)
+✔ episodes use their runtime and movie, show, and episode keys never collide (0.249701ms)
+✔ settings and controls can change independently of play position (0.207186ms)
+✔ a media surface owns time once it reports, and reports it safely (0.266029ms)
+✔ screen fit is remembered per viewer and maps onto the media layer resize modes (1.366563ms)
+✔ time formatting handles hours, negative, and nonfinite values (0.229033ms)
+✔ watchlist toggles immutably and distinguishes movie and television ids (1.10711ms)
+✔ progress saves episodes separately and removes a title at the 95 percent boundary (0.551344ms)
+✔ continue watching sorts newest first and displays only the latest episode per title (0.430928ms)
+✔ library parsing rejects broken schemas without crashing and roundtrips valid progress (0.500622ms)
+✔ library parsing drops corrupt entries and validates preferences and canonical keys (0.280169ms)
+✔ real catalog string years and missing artwork survive library persistence (0.222085ms)
+✔ episode progress with no thumbnail survives a restart (0.178245ms)
+✔ replay restarts a completed title and advances its clock (0.143174ms)
+✔ the featured backdrop leads the home artwork and other rails contribute their posters (2.435644ms)
+✔ without the featured id the first item of the first rail is used, and an empty catalogue falls back to the sample record (0.366736ms)
+✔ continue watching and the wide rail contribute backdrops while titles without a path are skipped (0.304392ms)
+✔ the same artwork is never listed twice, whatever rail it arrives from (0.27241ms)
+✔ an empty list resolves immediately and never calls prefetch (0.9932ms)
+✔ every url is fetched exactly once and progress rises monotonically to the total (0.64293ms)
+✔ no more images are in flight at once than the concurrency allows (15.012386ms)
+✔ concurrency is clamped to the number of images actually waiting (1.926149ms)
+✔ images that reject or throw synchronously are counted as done instead of failing the launch (0.522017ms)
+✔ an image that never settles is abandoned after its own timeout (5.544686ms)
+✔ the budget stops the wave from starting further images, counting the rest as done (0.364478ms)
+✔ home preloading fetches the artwork the catalogue rails describe (0.317858ms)
+✔ an unreachable catalogue ends the launch wave instead of failing it (0.249012ms)
+✔ a hanging image cannot extend launch beyond the remaining overall budget (10.203816ms)
+✔ an Android stream failure never turns into simulated playback (1.030626ms)
+✔ a timed-out stream stays unavailable until explicitly retried or previewed (0.268502ms)
+✔ a native media clock and the Vega preview remain distinct (0.261592ms)
+✔ an APK release targets the source commit that produced the artifact (57.269508ms)
+✔ versions compare numerically, and a release outranks its own prerelease (9.835524ms)
+✔ only a package this build could actually install is offered (0.345833ms)
+✔ the reported line names the version, its size and the installed build (0.234302ms)
+✔ the Fire TV build installs the APK, the Vega build the package (0.221125ms)
+✔ the running build's own format is the one it asks for (0.157458ms)
+✔ a package for the running architecture beats one for another (0.195834ms)
+✔ a malformed manifest resolves to "no update known" rather than a broken banner (0.7274ms)
+✔ a newer release is reported and nothing else is disturbed (0.397245ms)
+✔ a Vega build asks for Vega packages (0.435272ms)
+✔ an unconfigured backend is not contacted at all (0.436807ms)
+✔ failures resolve to "no update known" instead of breaking a launch (0.390689ms)
+ℹ tests 52
+ℹ suites 0
+ℹ pass 51
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 279.175804
+
+✖ failing tests:
+
+test at tests/catalog.test.ts:2:7390
+✖ expanded movie and series genres request the canonical catalog IDs and retain metadata (3.000323ms)
+  Error: Network connection unavailable. Try again or use the sample catalog.
+      at <anonymous> (/data/SNAS/src/catalog/service.ts:36:129)
+      at async Catalog.discover (/data/SNAS/src/catalog/service.ts:57:20)
+      at async TestContext.<anonymous> (/data/SNAS/tests/catalog.test.ts:126:17)
+      at async Test.run (node:internal/test_runner/test:1313:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)

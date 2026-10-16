@@ -125,7 +125,7 @@ export async function preloadArtwork(urls: string[], options: PreloadOptions = {
     while (!stopped) {
       const index = next++;
       if (index >= total) return;
-      await one(list[index], prefetch, perImageMs);
+      await one(list[index], prefetch, Math.max(1, Math.min(perImageMs, deadline - now())));
       done += 1;
       onProgress?.({done, total});
       if (now() >= deadline) {

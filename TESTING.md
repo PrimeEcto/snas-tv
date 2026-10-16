@@ -1,8 +1,12 @@
 # SNAS testing record
 
-Two builds have been tested on real running devices: the Fire OS APK (the Fire TV build) on a
-headless Android emulator, and the Vega package on Amazon's official virtual device. Actual
-observations only; implementation is not counted as a device pass.
+## Current 0.0.3 verification — 2026-10-16
+
+See [the 0.0.3 QA record](docs/QA_0.0.3.md) for the current package, second redesign, regression tests and native TV evidence. Tests use the headless Android 35 x86_64 emulator with a TV profile and adb D-pad input. Physical Fire TV and Vega runtime testing were not repeated for this release.
+
+The dated records below are historical and retain the wording and observations of those builds.
+
+The historical records cover the Fire OS APK on a headless Android emulator and the Vega package on Amazon’s official virtual device. These are emulator observations, not physical Fire TV certification; implementation alone is not counted as a runtime pass.
 
 ---
 

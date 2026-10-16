@@ -165,3 +165,11 @@ test('an unreachable catalogue ends the launch wave instead of failing it', asyn
   assert.deepEqual(result, { done: 0, total: 0 });
   assert.equal(calls, 0);
 });
+
+test('a hanging image cannot extend launch beyond the remaining overall budget', async () => {
+  const result = await Promise.race([
+    preloadArtwork(['never'], {budgetMs:10, perImageMs:500, prefetch:() => new Promise(() => {})}),
+    new Promise<string>(resolve => setTimeout(() => resolve('launch still blocked'), 100)),
+  ]);
+  assert.deepEqual(result, {done:1,total:1});
+});

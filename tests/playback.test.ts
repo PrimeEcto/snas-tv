@@ -192,3 +192,12 @@ test('episode progress with no thumbnail survives a restart', () => {
  const restored=parseLibrary(JSON.stringify(saveProgress(emptyLibrary(),{...createPlayback(show,ep),position:60},1000)));
  assert.equal(continueWatching(restored)[0].episode!.number,2);
 });
+
+test('replay restarts a completed title and advances its clock', () => {
+  const finished = playbackReducer(createPlayback(movie), {type:'seekTo',position:999999});
+  const replayed = playbackReducer(finished, {type:'replay'});
+  assert.equal(replayed.position, 0);
+  assert.equal(replayed.completed, false);
+  assert.equal(replayed.playing, true);
+  assert.equal(playbackReducer(replayed, {type:'tick',seconds:3}).position, 3);
+});

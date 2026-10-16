@@ -3,8 +3,8 @@ import episodeRecords from './demo-episodes.json';
 import type {Title,Episode,Rail,Kind,Page,Detail} from './types';
 export const demoTitles:Title[]=records.map(t=>({...t,kind:t.kind as Kind,director:t.director||undefined,seasons:t.seasons||undefined}));
 const demoEpisodes=episodeRecords as Record<string,Episode[]>;
-export const movieGenres:Record<string,number>={'Action':28,'Adventure':12,'Animation':16,'Comedy':35,'Crime':80,'Documentary':99,'Drama':18,'Family':10751,'Fantasy':14,'Horror':27,'Romance':10749,'Science Fiction':878,'Thriller':53};
-export const tvGenres:Record<string,number>={'Action & Adventure':10759,'Animation':16,'Comedy':35,'Crime':80,'Documentary':99,'Drama':18,'Family':10751,'Mystery':9648,'Sci-Fi & Fantasy':10765};
+export const movieGenres:Record<string,number>={'Action':28,'Adventure':12,'Animation':16,'Comedy':35,'Crime':80,'Documentary':99,'Drama':18,'Family':10751,'Fantasy':14,'History':36,'Horror':27,'Music':10402,'Mystery':9648,'Romance':10749,'Science Fiction':878,'TV Movie':10770,'Thriller':53,'War':10752,'Western':37};
+export const tvGenres:Record<string,number>={'Action & Adventure':10759,'Animation':16,'Comedy':35,'Crime':80,'Documentary':99,'Drama':18,'Family':10751,'Kids':10762,'Mystery':9648,'News':10763,'Reality':10764,'Sci-Fi & Fantasy':10765,'Soap':10766,'Talk':10767,'War & Politics':10768,'Western':37};
 export function imageUrl(path:string|null,size='w500'):string|undefined{return path&&/^\/[\w.-]+$/.test(path)?`https://image.tmdb.org/t/p/${size}/${path.slice(1)}`:undefined;}
 const finite=(n:unknown)=>typeof n==='number'&&Number.isFinite(n);
 function normalize(raw:any,kind:Kind):Title|null{

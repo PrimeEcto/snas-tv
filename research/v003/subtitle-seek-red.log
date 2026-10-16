@@ -1,0 +1,25 @@
+FAIL tests/player-events.spec.tsx
+  ● subtitle reload preserves the native clock without replaying a stale seek command
+
+    expect(jest.fn()).toHaveBeenCalledTimes(expected)
+
+    Expected number of calls: 1
+    Received number of calls: 2
+
+      337 |  await act(async()=>mounted.update(<PlayerSurface uri="https://example.test/a" paused seekTo={600} subtitleUri="https://example.test/en.vtt"/>));
+      338 |  expect(video().props.source.startPosition).toBe(2400000);
+    > 339 |  expect(mockSeek).toHaveBeenCalledTimes(1);
+          |                   ^
+      340 | });
+      341 |
+
+      at Object.toHaveBeenCalledTimes (tests/player-events.spec.tsx:339:19)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+PASS tests/focus-restoration.spec.tsx
+
+Test Suites: 1 failed, 1 passed, 2 total
+Tests:       1 failed, 10 passed, 11 total
+Snapshots:   0 total
+Time:        0.839 s, estimated 1 s

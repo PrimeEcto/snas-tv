@@ -1,0 +1,37 @@
+Playback resume: preserving 10 non-playback results
+using ANDROID_SERIAL=emulator-5556
+
+== device
+device ready: sdk_gphone64_x86_64 / Android 35
+installed:     primaryCpuAbi=x86_64     versionCode=3 minSdk=24 targetSdk=35     versionName=0.0.3
+
+== resume playback only
+
+== native playback
+PASS Playback       app-process decoder evidence (211 lines) · native clock 0:22 -> 0:43; paused labels Play/Play
+
+== guest resources
+PASS Guest resources  TOTAL PSS: 300493 TOTAL RSS: 420980 TOTAL SWAP PSS: 582 ·     primaryCpuAbi=x86_64     versionCode=3 minSdk=24 targetSdk=35     versionName=0.0.3
+--- meminfo ---
+  Native Heap   159394   159328       44       78   160280   187152   156055    26336
+  Dalvik Heap    48692    48588       28      176    49544    71499    46923    24576
+--
+ App Summary
+                       Pss(KB)                        Rss(KB)
+--
+           Java Heap:    52536                          71700
+         Native Heap:   159328                         160280
+                Code:    36228                         151120
+--
+           TOTAL PSS:   300493            TOTAL RSS:   420980       TOTAL SWAP PSS:      582
+
+--- top (app rows) ---
+  PID USER         PR  NI VIRT  RES  SHR S[%CPU] %MEM     TIME+ ARGS
+ 4259 u0_a210      10 -10  35G 390M 150M S 11.5  15.7   0:07.59 com.snas.tv
+--- package ---
+    primaryCpuAbi=x86_64
+    versionCode=3 minSdk=24 targetSdk=35
+    versionName=0.0.3
+PASS Playback exit  Back exited the player to the hero on Home
+
+13 passed, 0 failed, 0 skipped — /data/SNAS/research/android/results.json
