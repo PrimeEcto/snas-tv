@@ -4,7 +4,7 @@ import {DetailsScreen} from '../src/ui/DetailsScreen';
 import {BrowseScreen, HomeScreen} from '../src/ui/CatalogScreen';
 import {PlayerScreen} from '../src/ui/PlayerScreen';
 import {PlayerSurface} from '../firetv/player/android';
-import {loadWatch} from '../src/player';
+import {loadRenditions, loadWatch} from '../src/player';
 import {demoTitles} from '../src/catalog/service';
 import {emptyLibrary} from '../src/state/library';
 
@@ -17,9 +17,17 @@ jest.mock('react-native', () => ({
   ScrollView: 'ScrollView',
   ActivityIndicator: 'ActivityIndicator',
   StyleSheet: {absoluteFill: {}, create: (styles: any) => styles},
-  BackHandler: {addEventListener: () => ({remove: () => {}})},
+  BackHandler: {
+    addEventListener: (_event: string, handler: () => boolean) => {
+      mockBackHandler = handler;
+      return {remove: () => {}};
+    },
+  },
 }));
 let mockTVHandler: (event: any) => void;
+// The remote's back button is how a viewer actually leaves the player, so the harness has to be able
+// to press it rather than merely register it.
+let mockBackHandler: (() => boolean) | undefined;
 jest.mock(
   'snas-tv',
   () => ({
@@ -68,7 +76,33 @@ jest.mock('../src/ui/controls', () => ({
 }));
 jest.mock('../src/player', () => ({
   loadWatch: jest.fn(),
+  // Most of these tests are about the player's own behaviour, so the provider is given no master
+  // playlist: the policy then falls back to the labels, exactly as it does when the provider or the
+  // network cannot answer. The tests that care about measured renditions pass one in.
+  loadRenditions: jest.fn().mockResolvedValue([]),
   subtitleUrl: (id: string) => `https://example.test/${id}.vtt`,
+}));
+// The attempt record is the crash-safe half of the fix, so the real logic runs here against an
+// in-memory store: only the platform's AsyncStorage is replaced.
+let mockAttemptDisk: Record<string, string> = {};
+jest.mock('../src/state/attempt-storage', () => ({
+  attemptStorage: {
+    getItem: async (key: string) => mockAttemptDisk[key] ?? null,
+    setItem: async (key: string, value: string) => {
+      mockAttemptDisk[key] = value;
+    },
+    removeItem: async (key: string) => {
+      delete mockAttemptDisk[key];
+    },
+  },
+}));
+jest.mock('../src/device', () => ({
+  // No native module in this harness: the policy stays on its conservative defaults, which is the
+  // behaviour that matters for a device the app could not measure.
+  deviceInfo: async () => ({probed: false, model: 'harness', sdkInt: 35}),
+  videoPolicy: () => require('../src/ladder').CONSTRAINED_POLICY,
+  playbackLog: jest.fn(),
+  redact: (value: string) => value,
 }));
 const mockSeek = jest.fn();
 jest.mock('react-native-video', () => {
@@ -81,6 +115,11 @@ jest.mock('react-native-video', () => {
     }),
     SelectedTrackType: {INDEX: 'index', DISABLED: 'disabled'},
     TextTrackType: {VTT: 'text/vtt'},
+    BufferingStrategyType: {
+      DEFAULT: 'Default',
+      DISABLE_BUFFERING: 'DisableBuffering',
+      DEPENDING_ON_MEMORY: 'DependingOnMemory',
+    },
   };
 });
 
@@ -116,6 +155,8 @@ beforeEach(() => {
     .mocked(loadWatch)
     .mockReset()
     .mockResolvedValue(watch as never);
+  jest.mocked(loadRenditions).mockReset().mockResolvedValue([] as never);
+  mockAttemptDisk = {};
   mockSeek.mockReset();
   mockNativeSurface = false;
 });
@@ -242,11 +283,18 @@ test('selecting the same season twice keeps the header Play action available', a
 test('Settings groups current values and a quality change resumes at the latest position', async () => {
   jest.mocked(loadWatch).mockResolvedValue({
     ...watch,
+    playlist: 'https://example.test/master.m3u8',
     sources: [
       ...watch.sources,
       {quality: '720p', url: 'https://example.test/b.m3u8'},
     ],
   } as never);
+  // The provider's own numbers: a genuine 1080p rung at High Level 4.0 is what this device renders
+  // natively, so measuring the ladder must leave the default where it was.
+  jest.mocked(loadRenditions).mockResolvedValue([
+    {uri: 'https://example.test/a.m3u8', name: 'a.m3u8', width: 1920, height: 1080, codecs: ['avc1.640028']},
+    {uri: 'https://example.test/b.m3u8', name: 'b.m3u8', width: 1280, height: 720, codecs: ['avc1.4d401f']},
+  ] as never);
   await act(async () => {
     mounted = create(component());
   });
@@ -389,21 +437,23 @@ const ladder = {
   ],
 };
 
-test('a rendition this device cannot decode steps down the ladder instead of ending playback', async () => {
+test('a constrained device opens the rung it can decode, not the one the label promises', async () => {
   jest.mocked(loadWatch).mockResolvedValue(ladder as never);
   await act(async () => {
     mounted = create(component());
   });
+  // With no measured renditions and a conservative policy, the 2160p and 1080p labels are not
+  // allowed: the label is a claim, and on this ladder the claim was 2584×1080 High Level 5.0.
+  expect(surface().props.uri).toBe('https://example.test/b.m3u8');
   await act(async () =>
     surface().props.onProgress({position: 600, duration: 7200}),
   );
   await act(async () =>
     surface().props.onProgress({position: 2400, duration: 7200}),
   );
-  expect(surface().props.uri).toBe('https://example.test/a.m3u8');
   await act(async () => surface().props.onError('Codec reported err 0xfffffff4'));
   expect(mounted.root.findAllByProps({testID: 'player-error'})).toHaveLength(0);
-  expect(surface().props.uri).toBe('https://example.test/b.m3u8');
+  expect(surface().props.uri).toBe('https://example.test/c.m3u8');
   // The viewer picks up where the failed rendition left them, not at the start.
   await act(async () =>
     surface().props.onProgress({position: 0, duration: 7200}),
@@ -411,7 +461,74 @@ test('a rendition this device cannot decode steps down the ladder instead of end
   expect(surface().props.seekTo).toBe(2400);
   expect(
     mounted.root.findByProps({testID: 'player-seek-feedback'}).props.children,
-  ).toContain('720p');
+  ).toContain('480p');
+});
+
+test('the provider\u2019s real rendition sizes let a 1080p rung be opened as before', async () => {
+  jest.mocked(loadWatch).mockResolvedValue({...ladder, playlist: 'https://example.test/master.m3u8'} as never);
+  jest.mocked(loadRenditions).mockResolvedValue([
+    {uri: 'https://example.test/2160.m3u8', name: '2160.m3u8', width: 3840, height: 2160, codecs: ['avc1.640033']},
+    {uri: 'https://example.test/a.m3u8', name: 'a.m3u8', width: 1920, height: 1080, codecs: ['avc1.640028']},
+    {uri: 'https://example.test/b.m3u8', name: 'b.m3u8', width: 1280, height: 720, codecs: ['avc1.4d401f']},
+  ] as never);
+  await act(async () => {
+    mounted = create(component());
+  });
+  // 2160p is 3840×2160 High Level 5.1 and is refused; 1080p is 1920×1080 High Level 4.0 and is the
+  // rung this device renders natively, so measuring the ladder must not cost picture quality.
+  expect(surface().props.uri).toBe('https://example.test/a.m3u8');
+});
+
+test('a rung that took the last session down with it is not opened a second time', async () => {
+  jest.mocked(loadWatch).mockResolvedValue(ladder as never);
+  // What a killed session leaves behind: an attempt record for 720p that was never settled, because
+  // the process that armed it did not live long enough to play a frame.
+  mockAttemptDisk = {
+    'snas.playback.attempt.v1': JSON.stringify({
+      quality: '720p',
+      titleKey: 'movie:1',
+      url: 'https://example.test/b.m3u8',
+      at: Date.now() - 10_000,
+    }),
+  };
+  await act(async () => {
+    mounted = create(component());
+  });
+  expect(surface().props.uri).toBe('https://example.test/c.m3u8');
+  // And the record has been taken rather than left to blame the rung again next launch.
+  expect(Object.keys(mockAttemptDisk)).toHaveLength(1);
+  expect(JSON.parse(mockAttemptDisk['snas.playback.attempt.v1']).quality).toBe('480p');
+});
+
+test('a constrained device hands the surface a bounded buffer and a memory-aware strategy', async () => {
+  jest.mocked(loadWatch).mockResolvedValue(ladder as never);
+  await act(async () => {
+    mounted = create(component());
+  });
+  // Media3's defaults are 50 seconds of media, no ceiling on the heap and no reserve for anything
+  // else — measured on the emulator as a Dalvik heap that went from 10 MB to 59 MB when a 6 Mbps
+  // title opened. On this device the surface is told to take less, and to stop filling rather than
+  // fill the heap the decoder needs.
+  expect(surface().props.bufferConfig).toMatchObject({
+    minBufferMs: 10000,
+    maxBufferMs: 25000,
+    maxHeapAllocationPercent: 0.25,
+    minBufferMemoryReservePercent: 0.2,
+  });
+  expect(surface().props.bufferingStrategy).toBe('DependingOnMemory');
+});
+
+test('the rung about to be opened is on disk before the surface mounts, and gone once it plays', async () => {
+  jest.mocked(loadWatch).mockResolvedValue(ladder as never);
+  await act(async () => {
+    mounted = create(component());
+  });
+  const record = JSON.parse(mockAttemptDisk['snas.playback.attempt.v1']);
+  expect(record.quality).toBe('720p');
+  await act(async () =>
+    surface().props.onProgress({position: 600, duration: 7200}),
+  );
+  expect(Object.keys(mockAttemptDisk)).toHaveLength(0);
 });
 
 test('the ladder is walked to the bottom before playback is unavailable, and Try again starts over', async () => {
@@ -422,7 +539,6 @@ test('the ladder is walked to the bottom before playback is unavailable, and Try
   await act(async () =>
     surface().props.onProgress({position: 600, duration: 7200}),
   );
-  await act(async () => surface().props.onError('Codec reported err'));
   expect(surface().props.uri).toBe('https://example.test/b.m3u8');
   await act(async () => surface().props.onError('Codec reported err'));
   expect(surface().props.uri).toBe('https://example.test/c.m3u8');
@@ -432,7 +548,7 @@ test('the ladder is walked to the bottom before playback is unavailable, and Try
   ).toBe('This title couldn’t play. Try again to reconnect.');
   expect(mounted.root.findAllByType('PlayerSurface' as never)).toHaveLength(0);
   await act(async () => button('player-retry').props.onPress());
-  expect(surface().props.uri).toBe('https://example.test/a.m3u8');
+  expect(surface().props.uri).toBe('https://example.test/b.m3u8');
 });
 
 test('a ladder with no 1080p rung starts below the top rather than on the tallest rendition', async () => {
@@ -529,6 +645,43 @@ test('the concept player uses one quiet mode label without preview banners', asy
     );
   expect(text).toContain('Concept');
   expect(text.join(' ')).not.toMatch(/preview|simulated|No video or audio/i);
+});
+
+test("leaving the player with the remote's back button is recorded in the playback log", async () => {
+  const {playbackLog} = jest.requireMock('../src/device') as {playbackLog: jest.Mock};
+  playbackLog.mockClear();
+  const onExit = jest.fn();
+  await act(async () => {
+    mounted = create(
+      <PlayerScreen
+        title={title}
+        position={600}
+        preferences={emptyLibrary().preferences}
+        catalog={{} as never}
+        onSave={() => {}}
+        onExit={onExit}
+        onEpisode={() => {}}
+      />,
+    );
+  });
+  await act(async () =>
+    surface().props.onProgress({position: 900, duration: 7200}),
+  );
+  // The first press only puts the transport away; the second is the viewer leaving.
+  await act(async () => {
+    mockBackHandler?.();
+  });
+  expect(onExit).not.toHaveBeenCalled();
+  await act(async () => {
+    mockBackHandler?.();
+  });
+  expect(onExit).toHaveBeenCalledTimes(1);
+  // Without this line the probe cannot tell a session that ended from one that was killed, which is
+  // the whole question on a device whose failures have no in-process witness.
+  expect(playbackLog).toHaveBeenCalledWith(
+    'playback:exit',
+    expect.objectContaining({position: 900, duration: 7200}),
+  );
 });
 
 test('replaying the same title twice sends a fresh native seek each time', async () => {

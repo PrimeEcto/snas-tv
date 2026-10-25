@@ -2,6 +2,7 @@ import React, {
   useReducer,
   useState,
   useEffect,
+  useMemo,
   useRef,
   useCallback,
 } from 'react';
@@ -17,7 +18,28 @@ import {
 import {useTVEventHandler} from 'snas-tv';
 import {PlayerSurface, supportsPlayback} from 'snas-player';
 import {playbackPhase} from '../state/playback-phase';
-import {loadWatch, subtitleUrl, type WatchResult} from '../player';
+import {
+  loadRenditions,
+  loadWatch,
+  subtitleUrl,
+  type WatchResult,
+} from '../player';
+import {deviceInfo, playbackLog, redact, videoPolicy} from '../device';
+import {
+  bufferFor,
+  describeLadder,
+  orderByQuality,
+  pickQuality,
+  type Rendition,
+  type VideoPolicy,
+} from '../ladder';
+import {deviceSummary, policyForDevice, type DeviceInfo} from '../device-profile';
+import {
+  armAttempt,
+  settleAttempt,
+  takeKilledQuality,
+} from '../state/playback-attempt';
+import {attemptStorage} from '../state/attempt-storage';
 import {Catalog} from '../catalog/service';
 import type {Title, Episode} from '../catalog/types';
 import {
@@ -47,31 +69,13 @@ type Menu =
   | null;
 /** A stalled native source becomes unavailable; preview always requires an explicit choice. */
 const STREAM_WAIT_MS = 25000;
-// 1080p is the default because it is what a Fire TV stick renders natively; anything higher is a
-// deliberate choice from the quality menu, since 2160p costs decode headroom for no visible gain.
-const DEFAULT_QUALITY = '1080p';
-/** Highest first, so the menu reads the way a viewer expects and the default falls out of it. */
-function byQuality(sources: WatchResult['sources']) {
-  return [...sources].sort(
-    (a, b) =>
-      (Number.parseInt(b.quality, 10) || 0) -
-      (Number.parseInt(a.quality, 10) || 0),
-  );
-}
-function pixels(quality: string) {
-  return Number.parseInt(quality, 10) || 0;
-}
-function defaultQuality(sources: WatchResult['sources']) {
-  const sorted = byQuality(sources);
-  // With no 1080p rung the best rung *below* it is the default, never the tallest. The top of a
-  // ladder is the rendition a constrained decoder is least able to open, and a viewer who wants it
-  // can still choose it from the quality menu.
-  return (
-    sorted.find((s) => s.quality === DEFAULT_QUALITY) ??
-    sorted.find((s) => pixels(s.quality) < 1080) ??
-    sorted[sorted.length - 1]
-  )?.quality ?? '';
-}
+// Which rung a session opens on is no longer a constant in this file. It is decided from the real
+// rendition sizes in the provider's master playlist and from what the device says about its memory
+// and its decoder (`src/ladder.ts`, `src/device-profile.ts`), because the labels cannot be trusted:
+// across five titles measured on 2026-10-16, `1080p` was 1920×1080 High Level 4.0 on four of them
+// and 2584×1080 High Level 5.0 on the fifth, and `2160p` was High Level 5.1 every time.
+/** How long the attempt record may take to reach storage before the surface mounts anyway. */
+const ARM_TIMEOUT_MS = 1200;
 export function PlayerScreen({
   title,
   episode,
@@ -105,6 +109,11 @@ export function PlayerScreen({
   const [media, setMedia] = useState<WatchResult | null>(null);
   const [streamError, setStreamError] = useState('');
   const [quality, setQuality] = useState('');
+  // The provider's real ladder for this title, and the policy this device is held to.
+  const [renditions, setRenditions] = useState<Rendition[]>([]);
+  const [policy, setPolicy] = useState<VideoPolicy>(() => videoPolicy());
+  // The surface mounts only once its rung has been written down; see `armAttempt` below.
+  const [armed, setArmed] = useState(false);
   const [subtitleId, setSubtitleId] = useState('');
   const [seek, setSeek] = useState<{target: number; serial: number} | null>(
     null,
@@ -119,10 +128,20 @@ export function PlayerScreen({
   // rung that failed until one this device can open plays. `failed` remembers the rungs this
   // session has already lost, so a repeated error cannot walk the same rung twice.
   const failed = useRef<Set<string>>(new Set());
+  // Rungs this device has already been shown to be unable to survive: one that took the process
+  // down with it (`src/state/playback-attempt.ts`), and one the viewer chose that then failed.
+  const dead = useRef<Set<string>>(new Set());
   const mediaRef = useRef<WatchResult | null>(null);
   const qualityRef = useRef('');
+  const renditionsRef = useRef<Rendition[]>([]);
+  const deviceRef = useRef<DeviceInfo | null>(null);
+  // The source whose attempt record has already been settled, so a rung is armed once and cleared
+  // once rather than on every progress report.
+  const settled = useRef('');
+  const sourceRef = useRef('');
   mediaRef.current = media;
   qualityRef.current = quality;
+  renditionsRef.current = renditions;
   const lastInteraction = useRef(Date.now());
   const latest = useRef(state);
   latest.current = state;
@@ -156,35 +175,77 @@ export function PlayerScreen({
     setLive(false);
     setQuality('');
     setSubtitleId('');
-    // Every fresh attempt starts at the top of the ladder again.
+    setRenditions([]);
+    // Every fresh attempt starts with a clean slate of failures. A rung this device was already
+    // killed by stays out of the ladder — it is the one piece of state that must outlive the
+    // process, because a rung can only kill a process it was allowed to open.
     failed.current.clear();
     setFallback('');
     resumed.current = false;
-    loadWatch(
-      {id: titleId, kind: titleKind, title: titleName, year: titleYear},
-      episodeSeason !== undefined && episodeNumber !== undefined
-        ? {season: episodeSeason, number: episodeNumber}
-        : undefined,
-    )
-      .then((result) => {
-        if (!alive) return;
-        if (!result) {
-          setStreamError('No playable source came back for this title.');
-          return;
-        }
-        setMedia(result);
-        setQuality(defaultQuality(result.sources));
-        // A subtitle choice is remembered across sessions, but only when this release actually offers it.
-        const wanted = preferredSubtitle;
-        setSubtitleId(
-          wanted && result.subtitleGroups.some((g) => g.language === wanted)
-            ? wanted
-            : '',
-        );
-      })
-      .catch(() => {
-        if (alive) setStreamError('The stream could not be reached.');
+    (async () => {
+      const killed = await takeKilledQuality(attemptStorage);
+      if (killed) dead.current.add(killed);
+      const probe = await deviceInfo();
+      if (!alive) return;
+      deviceRef.current = probe;
+      const result = await loadWatch(
+        {id: titleId, kind: titleKind, title: titleName, year: titleYear},
+        episodeSeason !== undefined && episodeNumber !== undefined
+          ? {season: episodeSeason, number: episodeNumber}
+          : undefined,
+      );
+      if (!alive) return;
+      if (!result) {
+        setStreamError('No playable source came back for this title.');
+        playbackLog('playback:no-source', {
+          title: `${titleKind}:${titleId}`,
+          device: deviceSummary(probe),
+          killed: killed ?? '-',
+        });
+        return;
+      }
+      // What the labels really are. A provider that will not say, or says it too slowly, costs the
+      // app only the ability to judge a rung by its measured frame: the policy then falls back to
+      // the label. It never holds up playback.
+      const covered = result.playlist
+        ? await loadRenditions(result.playlist, result.headers)
+        : [];
+      if (!alive) return;
+      const chosen = policyForDevice(probe);
+      const decision = pickQuality(result.sources, covered, chosen, {
+        skip: dead.current,
       });
+      setRenditions(covered);
+      setPolicy(chosen);
+      setMedia(result);
+      setQuality(decision.quality);
+      playbackLog('playback:start', {
+        title: `${titleKind}:${titleId}`,
+        device: deviceSummary(probe),
+        policy: chosen.reason,
+        ceiling: `${chosen.maxWidth}x${chosen.maxHeight} L${(
+          chosen.maxH264Level / 10
+        ).toFixed(1)}`,
+        renditions: covered.length,
+        ladder: describeLadder(result.sources, covered, chosen),
+        killed: killed ?? '-',
+        opening: decision.quality,
+        allowed: decision.allowed,
+        buffer:
+          policyForDevice(probe).kind === 'constrained'
+            ? `maxBufferMs=${bufferFor(chosen).maxBufferMs} reserve=${bufferFor(chosen).minBufferMemoryReservePercent}`
+            : 'default',
+      });
+      // A subtitle choice is remembered across sessions, but only when this release actually offers it.
+      const wanted = preferredSubtitle;
+      setSubtitleId(
+        wanted && result.subtitleGroups.some((g) => g.language === wanted)
+          ? wanted
+          : '',
+      );
+    })().catch(() => {
+      if (alive) setStreamError('The stream could not be reached.');
+    });
     return () => {
       alive = false;
     };
@@ -201,6 +262,14 @@ export function PlayerScreen({
   ]);
   const selected =
     media?.sources.find((s) => s.quality === quality) ?? media?.sources[0];
+  // The identity of the source the surface holds. A rung change is a new attempt, so both the
+  // attempt record and the "has it started" bookkeeping are keyed on it.
+  const sourceId = selected?.url ?? '';
+  sourceRef.current = sourceId;
+  // The buffer this device can afford, and how the player should treat a heap that is nearly spent.
+  const buffer = useMemo(() => bufferFor(policy), [policy]);
+  const bufferingStrategy =
+    policy.kind === 'constrained' ? 'DependingOnMemory' : 'Default';
   const subtitleUri =
     media && subtitleId
       ? subtitleUrl(subtitleId, title.id, title.kind)
@@ -219,7 +288,62 @@ export function PlayerScreen({
     setMenu(null);
     dispatch({type: 'controls', visible: true});
   }, [unavailable]);
-  const exitPlayer = () => onExit(canSave.current ? latest.current : undefined);
+  // The rung about to be opened is written down *before* the surface mounts, and cleared either by
+  // the surface's first clock report or by leaving the player. A record that outlives the process is
+  // therefore the only witness a killed session can leave, and the next launch reads it as "this
+  // rung is fatal on this device". Nothing inside a dead process can step down; this can.
+  useEffect(() => {
+    if (!sourceId) {
+      setArmed(false);
+      return;
+    }
+    let alive = true;
+    setArmed(false);
+    // A new attempt has its own record to settle: re-using the previous source's mark would leave
+    // this one armed after it plays, to be blamed for some later death that was not its doing.
+    settled.current = '';
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const written = Promise.race([
+      armAttempt(attemptStorage, {
+        quality: qualityRef.current || '',
+        titleKey: `${titleKind}:${titleId}`,
+        url: redact(sourceId),
+        at: Date.now(),
+      }),
+      // Storage that never answers must not cost the viewer the picture: after this, the surface
+      // mounts anyway and the attempt is merely unwitnessed.
+      new Promise<void>((resolve) => {
+        timer = setTimeout(resolve, ARM_TIMEOUT_MS);
+      }),
+    ]);
+    written.then(() => {
+      if (timer) clearTimeout(timer);
+      if (alive) setArmed(true);
+    });
+    return () => {
+      alive = false;
+      if (timer) clearTimeout(timer);
+    };
+  }, [sourceId, titleId, titleKind]);
+  // Leaving the player settles the attempt too: a viewer who backs out of a title has not crashed,
+  // and must not be moved to a lower rung next time for it.
+  useEffect(
+    () => () => {
+      settleAttempt(attemptStorage);
+    },
+    [],
+  );
+  // Every way out of the player goes through here, so the log always records that the session ended
+  // rather than dying. That line is what separates a normal exit from a process that never got to
+  // write anything — the distinction the whole on-device diagnosis rests on.
+  const exitPlayer = useCallback(() => {
+    playbackLog('playback:exit', {
+      position: Math.round(latest.current.position),
+      duration: Math.round(latest.current.duration),
+      playing: latest.current.playing,
+    });
+    onExit(canSave.current ? latest.current : undefined);
+  }, [onExit]);
   const retryStream = () => {
     resumeAt.current = latest.current.position;
     resumed.current = false;
@@ -234,6 +358,13 @@ export function PlayerScreen({
   // is what resumes a partially watched title at the position the library saved for it.
   const onProgress = useCallback(
     (progress: {position: number; duration: number}) => {
+      // A clock from the surface is what makes this attempt a session rather than a rung that was
+      // merely opened: there is nothing left to learn from it, so its record goes.
+      const open = sourceRef.current;
+      if (open && settled.current !== open) {
+        settled.current = open;
+        settleAttempt(attemptStorage);
+      }
       setLive(true);
       dispatch({
         type: 'media',
@@ -268,15 +399,27 @@ export function PlayerScreen({
   // open, so the failure walks down instead of leaving the viewer with nothing to watch.
   const onStreamError = useCallback((message: string) => {
     const sources = mediaRef.current?.sources ?? [];
-    const ladder = byQuality(sources);
-    const current = qualityRef.current || defaultQuality(sources);
+    const ladder = orderByQuality(sources);
+    const current = qualityRef.current || ladder[0]?.quality || '';
     const at = ladder.findIndex((s) => s.quality === current);
     if (at >= 0) failed.current.add(current);
+    // Only a rung this device has not already lost is worth the next attempt: the point of stepping
+    // down is to reach something playable, not to spend another failure on the way there.
     const lower =
       at >= 0
-        ? ladder.slice(at + 1).find((s) => !failed.current.has(s.quality))
+        ? ladder
+            .slice(at + 1)
+            .find(
+              (s) => !failed.current.has(s.quality) && !dead.current.has(s.quality),
+            )
         : undefined;
     if (lower) {
+      playbackLog('playback:step-down', {
+        from: current,
+        to: lower.quality,
+        reason: message,
+        position: Math.round(latest.current.position),
+      });
       resumeAt.current = latest.current.position;
       resumed.current = false;
       setSeek(null);
@@ -289,6 +432,17 @@ export function PlayerScreen({
       setQuality(lower.quality);
       return;
     }
+    playbackLog('playback:unavailable', {
+      rung: current || '-',
+      reason: message,
+      device: deviceSummary(deviceRef.current),
+      ladder: describeLadder(
+        sources,
+        renditionsRef.current,
+        policyForDevice(deviceRef.current),
+      ),
+      lost: [...failed.current].join('/') || '-',
+    });
     setStreamError(message);
     setLive(false);
     setMedia(null);
@@ -347,14 +501,14 @@ export function PlayerScreen({
         );
         reveal();
       } else if (unavailable || buffering) {
-        onExit(canSave.current ? latest.current : undefined);
+        exitPlayer();
       } else if (state.controls) {
         dispatch({type: 'controls', visible: false});
-      } else onExit(canSave.current ? latest.current : undefined);
+      } else exitPlayer();
       return true;
     });
     return () => sub.remove();
-  }, [menu, state.controls, onExit, unavailable, buffering]);
+  }, [menu, state.controls, exitPlayer, unavailable, buffering]);
   useEffect(() => {
     if (!buffering) return;
     const timer = setTimeout(() => setSlow(true), STREAM_WAIT_MS);
@@ -434,6 +588,9 @@ export function PlayerScreen({
       dispatch({type: 'subtitles', value});
     }
     if (menu === 'quality' && value !== quality) {
+      // Choosing a rung by hand means the viewer wants it tried, even if an earlier session lost the
+      // process to it. It is cleared here and learned again if this session is the one that loses.
+      dead.current.delete(value);
       resumeAt.current = latest.current.position;
       resumed.current = false;
       setSeek(null);
@@ -456,7 +613,7 @@ export function PlayerScreen({
     ? ['Off', ...media.subtitleGroups.map((g) => g.language)]
     : ['Off', 'English', 'Español'];
   const qualityOptions = media
-    ? byQuality(media.sources).map((s) => s.quality)
+    ? orderByQuality(media.sources).map((s) => s.quality)
     : ['Auto'];
   const menuOptions: string[] =
     menu === 'audio'
@@ -528,10 +685,12 @@ export function PlayerScreen({
     : selected?.quality;
   return (
     <View style={styles.screen}>
-      {selected && !preview && !unavailable ? (
+      {selected && !preview && !unavailable && armed ? (
         <PlayerSurface
           uri={selected.url}
           headers={media?.headers}
+          bufferConfig={buffer}
+          bufferingStrategy={bufferingStrategy}
           subtitleUri={subtitleUri}
           paused={!state.playing}
           rate={state.speed}
@@ -550,7 +709,7 @@ export function PlayerScreen({
           style={StyleSheet.absoluteFill}
         />
       )}
-      {(!selected || preview || unavailable) && (
+      {(!selected || !armed || preview || unavailable) && (
         <View
           pointerEvents="none"
           style={[

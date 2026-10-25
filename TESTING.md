@@ -1,6 +1,34 @@
 # SNAS testing record
 
-## Current 0.0.3 verification — 2026-10-16
+## Current 0.0.5 verification — 2026-10-16
+
+See [the 0.0.5 release record](docs/RELEASE_0.0.5.md) and, for the playback investigation behind it,
+[docs/FIRETV_STICK_PLAYBACK.md](docs/FIRETV_STICK_PLAYBACK.md).
+
+`dist/snas-0.0.5.apk`, 43,552,383 bytes, `versionName=0.0.5`, `primaryCpuAbi=x86_64` on the emulator
+(`arm64-v8a`, `armeabi-v7a`, `x86_64` slices inside), installed with `adb install -r` and driven with
+remote key events only. The JavaScript inside the APK was checked for the new code
+(`playback:start` and the policy's fallback text are in `assets/index.android.bundle`) rather than
+assumed from a successful build.
+
+| Check | Result | Evidence |
+|---|---|---|
+| `npm run test:unit` | **73 passed, 0 failed** | 21 new tests: the measured ladders, the device policy, the attempt record |
+| `npm run test:player` | **24 passed, 0 failed** | 5 new: the constrained start, a measured 1080p rung kept, a fatal rung skipped, the record armed then settled, and the remote's back button leaving an exit record |
+| `npm run typecheck` / `firetv` typecheck | **clean** | both projects |
+| `npm run lint` | **0 errors** | 50 pre-existing warnings (inline styles) |
+| APK build | **built** | `bash firetv/scripts/build-apk.sh` |
+| Device probe on a running app | **PASS** | `SNAS: playback:start … device: sdk_gphone64_x86_64, API 35, x86_64, 64-bit, 192 MB heap, 2473 MB RAM, … c2.goldfish.h264.decoder up to 4096x4096 policy=full … renditions=3 ladder=1080p[1920x1080 L4.0 ok] … opening=1080p allowed=true` |
+| Playback reaches a first frame | **PASS** | `CCodec … int32_t width = 1920` with the AAC decoder allocated, the process alive, no error in logcat |
+| A rendition a killed process was opening is skipped next launch | **PASS** | the process was killed 1.2 s into playback; its attempt record survived in `RKStorage`; the next launch logged `killed=1080p opening=720p` and decoded `1280x720` |
+| Memory at play time | **measured** | home 235 MB PSS / 9.9 MB Dalvik → 1080p 294–312 MB / 65–70 MB; the 720p recovery run 270 MB / 35 MB |
+| 10-minute continuous playback | **PASS** | played 10 min on the emulator: Dalvik settled at 65 MB allocated and fell back from its 89 MB peak (PSS 226 → 301 MB), process alive, 0 fatal/kill lines |
+| Repeated playback sessions | **PASS** | left the player and re-entered the same title: 58 MB Dalvik allocated against 65–89 MB in the first session — no accumulation |
+| Leaving the player records the exit | **PASS** | the remote's back button logs `playback:exit position=2 duration=6491 playing=true`, process alive |
+| Bounded buffer on a constrained device | **BLOCKED** | the only image available reports 2473 MB, 64-bit, API 35 and takes the platform defaults by design; the emulator binary ignored every attempt to shrink its guest RAM. Covered by unit + player tests |
+| The report's own failure, on the physical stick | **NOT RUN** | no device attached — `bash scripts/device-playback-probe.sh <stick-ip>:5555` collects the evidence |
+
+## 0.0.3 verification — 2026-10-16
 
 See [the 0.0.3 QA record](docs/QA_0.0.3.md) for the current package, second redesign, regression tests and native TV evidence. Tests use the headless Android 35 x86_64 emulator with a TV profile and adb D-pad input. Physical Fire TV and Vega runtime testing were not repeated for this release.
 

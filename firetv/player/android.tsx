@@ -9,18 +9,28 @@
  */
 import React, {useEffect, useMemo, useRef} from 'react';
 import Video, {
+  BufferingStrategyType,
   SelectedTrackType,
   TextTrackType,
   type ReactVideoSource,
   type VideoRef,
 } from 'react-native-video';
-import type {PlayerSurfaceProps} from '../../src/player';
+import type {PlayerBufferingStrategy, PlayerSurfaceProps} from '../../src/player';
+
+/** The screen's plain-string strategy onto the library's enum, with its own default as the fallback. */
+const STRATEGY: Record<PlayerBufferingStrategy, BufferingStrategyType> = {
+  Default: BufferingStrategyType.DEFAULT,
+  DisableBuffering: BufferingStrategyType.DISABLE_BUFFERING,
+  DependingOnMemory: BufferingStrategyType.DEPENDING_ON_MEMORY,
+};
 
 export const supportsPlayback = true;
 
 export function PlayerSurface({
   uri,
   headers,
+  bufferConfig,
+  bufferingStrategy = 'Default',
   subtitleUri,
   paused,
   rate = 1,
@@ -45,6 +55,9 @@ export function PlayerSurface({
       startPosition: Math.round(clock.current * 1000),
       uri,
       ...(headers && Object.keys(headers).length ? {headers} : {}),
+      // Media3's load control is a property of the source, not of the view: the buffer this device
+      // can afford is passed in, and an absent one leaves the platform default alone.
+      ...(bufferConfig ? {bufferConfig} : {}),
       ...(subtitleUri
         ? {
             textTracks: [
@@ -63,7 +76,7 @@ export function PlayerSurface({
           }
         : {}),
     }),
-    [uri, headers, subtitleUri],
+    [uri, headers, subtitleUri, bufferConfig],
   );
 
   useEffect(() => {
@@ -85,6 +98,10 @@ export function PlayerSurface({
       paused={paused}
       rate={rate}
       progressUpdateInterval={500}
+      // `DependingOnMemory` makes the load control stop filling when the Java heap is nearly spent
+      // instead of filling until the process is killed for it — the strategy react-native-video
+      // provides for exactly the constrained device this build is for.
+      bufferingStrategy={STRATEGY[bufferingStrategy] ?? BufferingStrategyType.DEFAULT}
       // With no subtitle chosen the track is not merely deselected, it is switched off, so a stale
       // preference from a previous session cannot resurrect captions the viewer turned off.
       selectedTextTrack={

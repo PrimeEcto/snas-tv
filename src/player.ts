@@ -11,6 +11,7 @@
  * keeps. The shared screens therefore contain no platform imports at all.
  */
 import backend from './backend.json';
+import {parseMasterPlaylist, type Rendition} from './ladder';
 
 export interface WatchSource {
   quality: string;
@@ -61,9 +62,40 @@ export interface PlayerProgress {
 }
 
 /** Props every player surface accepts, so the shared screens stay platform-free. */
+/**
+ * Media3's load control, as far as a screen may set it.
+ *
+ * The platform default buffers up to 50 seconds of media, which on this backend's 6 Mbps 1080p
+ * rendition is around 38 MB held in the Java heap — measured on the emulator as a ~48 MB rise in
+ * the app's Dalvik heap the moment the player opened. On a 32-bit device whose heap also holds the
+ * decoded artwork that is memory the decoder's own buffers cannot have, so a constrained device
+ * asks for less.
+ */
+export interface PlayerBufferConfig {
+  minBufferMs?: number;
+  maxBufferMs?: number;
+  bufferForPlaybackMs?: number;
+  bufferForPlaybackAfterRebufferMs?: number;
+  backBufferDurationMs?: number;
+  /** Fraction of the app's memory class the buffered media may occupy. */
+  maxHeapAllocationPercent?: number;
+  /** Fraction of the heap the player leaves free: below it, loading pauses instead of pressing on. */
+  minBufferMemoryReservePercent?: number;
+}
+
+/** How the surface treats memory while buffering; the Android surface maps these to Media3. */
+export type PlayerBufferingStrategy =
+  | 'Default'
+  | 'DependingOnMemory'
+  | 'DisableBuffering';
+
 export interface PlayerSurfaceProps {
   uri: string;
   headers?: Record<string, string>;
+  /** The buffer this device can afford. Absent means the platform's own default. */
+  bufferConfig?: PlayerBufferConfig;
+  /** `DependingOnMemory` stops loading when the heap is nearly spent rather than being killed for it. */
+  bufferingStrategy?: PlayerBufferingStrategy;
   /** WebVTT served by the Worker, attached as a text track when present. */
   subtitleUri?: string;
   paused: boolean;
@@ -85,11 +117,52 @@ type Fetcher = (
   options?: {headers?: Record<string, string>; signal?: AbortSignal},
 ) => Promise<{ok: boolean; status: number; json: () => Promise<unknown>}>;
 
+type TextFetcher = (
+  url: string,
+  options?: {headers?: Record<string, string>; signal?: AbortSignal},
+) => Promise<{ok: boolean; status: number; text: () => Promise<string>}>;
+
 const base = (): string => (backend.workerBase ?? '').trim().replace(/\/+$/, '');
 
 /** One track as WebVTT, converted server-side, so no Referer is needed on the device. */
 export function subtitleUrl(id: string, tmdbId: number, mediaType: 'movie' | 'tv'): string {
   return `${base()}/v1/subtitle/${encodeURIComponent(id)}.vtt?tmdbId=${tmdbId}&type=${mediaType}`;
+}
+
+/**
+ * The real HLS ladder behind the `/v1/watch` sources, read from the provider's master playlist.
+ *
+ * The backend labels its renditions `2160p`/`1080p`/`720p`/`480p`, and those labels are not the
+ * picture: across five titles measured on 2026-10-16 the `1080p` rung was 1920×1080 High Level 4.0
+ * for four of them and 2584×1080 High Level 5.0 for the fifth, and `2160p` was 3840×2160 or
+ * 3832×1600 High Level 5.1 for all of them. Without this call the app can only guess from the
+ * label, and the guess is what puts a frame on a decoder that cannot allocate for it.
+ *
+ * Best-effort by design: any failure — no playlist, a timeout, an unreadable body — returns an
+ * empty list, and the caller falls back to the label-based policy rather than holding up playback.
+ */
+export async function loadRenditions(
+  playlist: string,
+  headers?: Record<string, string>,
+  options: {fetcher?: TextFetcher; timeoutMs?: number} = {},
+): Promise<Rendition[]> {
+  if (!playlist) return [];
+  const fetcher = options.fetcher ?? (fetch as unknown as TextFetcher);
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), options.timeoutMs ?? 4000);
+  try {
+    const response = await fetcher(playlist, {
+      ...(headers && Object.keys(headers).length ? {headers} : {}),
+      signal: controller.signal,
+    });
+    if (!response.ok) return [];
+    const text = await response.text();
+    return parseMasterPlaylist(text, playlist);
+  } catch {
+    return [];
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 /**

@@ -2,6 +2,8 @@ package com.snas.tv
 
 import android.app.Application
 import android.util.Log
+import java.io.File
+import java.util.Date
 import com.facebook.react.PackageList
 import com.facebook.react.ReactApplication
 import com.facebook.react.ReactHost
@@ -36,13 +38,16 @@ class MainApplication : Application(), ReactApplication {
       context = applicationContext,
       packageList =
         PackageList(this).packages.apply {
-          // Autolinking covers react-native-video, react-native-svg and async-storage.
+          // Autolinking covers react-native-video, react-native-svg and async-storage; this app's
+          // own module reports what the device can decode and writes the playback log.
+          add(SnasDevicePackage())
         },
     )
   }
 
   override fun onCreate() {
     super.onCreate()
+    recordFatalExceptions()
     loadReactNative(this)
 
     // This has to happen once the runtime is loaded: `loadReactNative` is what installs the release's
@@ -62,6 +67,49 @@ class MainApplication : Application(), ReactApplication {
       }
     } catch (error: Throwable) {
       Log.e("SNAS", "imperative focus could not be enabled; screens cannot place focus", error)
+    }
+  }
+
+  /**
+   * Write a fatal Java/Kotlin exception to logcat and to a file before the process dies.
+   *
+   * The failure this app is being diagnosed for can be a decoder that takes the process with it, in
+   * which case nothing in the app can report it — but when it *is* a throwable on some thread, the
+   * default handler's stack trace is the whole diagnosis, and it should not depend on logcat having
+   * been running. The file is written to both the app's private files directory and its external
+   * one, so it can be read back over adb on an installed release build:
+   *
+   *   adb shell cat /sdcard/Android/data/com.snas.tv/files/last-crash.txt
+   *
+   * A native (SIGSEGV/SIGABRT) failure never reaches this handler; for those, logcat carries the
+   * tombstone, and `adb logcat -b crash` should be read instead.
+   */
+  private fun recordFatalExceptions() {
+    val previous = Thread.getDefaultUncaughtExceptionHandler()
+    Thread.setDefaultUncaughtExceptionHandler { thread, error ->
+      try {
+        Log.e("SNAS", "fatal exception on ${thread.name}", error)
+        val report = "${Date()}\n${thread.name}\n${Log.getStackTraceString(error)}\n"
+        val targets =
+          listOfNotNull(
+            filesDir,
+            try {
+              getExternalFilesDir(null)
+            } catch (_: Throwable) {
+              null
+            },
+          )
+        for (directory in targets) {
+          try {
+            File(directory, "last-crash.txt").writeText(report)
+          } catch (_: Throwable) {
+            // A read-only or full filesystem must not replace the crash with a second one.
+          }
+        }
+      } catch (_: Throwable) {
+        // Never let reporting the crash be worse than the crash.
+      }
+      previous?.uncaughtException(thread, error)
     }
   }
 }
