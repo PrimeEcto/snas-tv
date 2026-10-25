@@ -30,6 +30,7 @@ export function PlayerSurface({
   uri,
   headers,
   bufferConfig,
+  maxBitRate,
   bufferingStrategy = 'Default',
   subtitleUri,
   paused,
@@ -102,6 +103,11 @@ export function PlayerSurface({
       // instead of filling until the process is killed for it — the strategy react-native-video
       // provides for exactly the constrained device this build is for.
       bufferingStrategy={STRATEGY[bufferingStrategy] ?? BufferingStrategyType.DEFAULT}
+      // The adaptive ceiling. With a master playlist and no `selectedVideoTrack` the library keeps
+      // its adaptive track selection on, and this is the one parameter that bounds it: Media3 then
+      // drops to a smaller rung when the CDN slows down and climbs back when it recovers, instead of
+      // holding one rendition until it starves.
+      {...(maxBitRate ? {maxBitRate} : {})}
       // With no subtitle chosen the track is not merely deselected, it is switched off, so a stale
       // preference from a previous session cannot resurrect captions the viewer turned off.
       selectedTextTrack={

@@ -1,6 +1,6 @@
 {
   "name": "snas-firetv",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "private": true,
   "description": "SNAS for Fire OS (Android) Fire TV devices: the same React Native UI with ExoPlayer (AndroidX Media3) playback.",
   "scripts": {

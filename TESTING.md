@@ -1,6 +1,27 @@
 # SNAS testing record
 
-## Current 0.0.6 verification — 2026-10-25
+## Current 0.0.7 verification — 2026-10-25
+
+A 1st-generation Fire TV Stick 4K played 20–30 seconds, froze, resumed, froze again. The source CDN
+was measured answering three consecutive requests for the same 720p segment at 97 KB/s, 1.67 MB/s
+and 770 KB/s while a Cloudflare control moved 3 MB in 0.289 s. The app pinned one rendition behind a
+25-second buffer, which drains in about half a minute at 97 KB/s. The repair — adaptive playback
+inside a bitrate ceiling on constrained devices, and a 40-second bounded buffer — is recorded in
+[the 0.0.7 release record](docs/RELEASE_0.0.7.md), with the run details in
+[docs/QA_0.0.7.md](docs/QA_0.0.7.md) and the on-device reading instructions in
+[docs/FIRETV_STICK_PLAYBACK.md](docs/FIRETV_STICK_PLAYBACK.md#part-3--the-0007-investigation-and-what-to-read-on-the-stick).
+
+| Check | Result | Evidence |
+|---|---|---|
+| `npm run test:unit` | **82 passed, 0 failed** | 3 new: the adaptive opening rung and ceiling, the pinned/adaptive split, and the ceiling following an explicit choice |
+| `npm run test:player` | **26 passed, 0 failed** | the surface is handed the master playlist with a 3,565,000 bps ceiling; a failed adaptive attempt lands on the pinned rung at the same position; the quality menu raises and lowers the ceiling; the buffer is 15 s/40 s |
+| `npm run typecheck` / `npm --prefix firetv run typecheck` | **clean** | |
+| `npm run lint` | **0 errors** | 52 pre-existing warnings |
+| Device journey, 0.0.7 | **13 passed, 0 failed** | clean install, every screen, live search, My List across a relaunch, native playback (200 decoder lines, clock `0:02 → 0:16`), playback exit, resources |
+| Adaptive path on a player | **TESTS ONLY** | the emulator reports `policy=full`, so it logs `mode=pinned`; ExoPlayer has not carried the master playlist on hardware |
+| Physical Fire TV | **NOT RUN** | no device attached — this is the check that decides whether the stalling ends |
+
+## 0.0.6 verification — 2026-10-25
 
 Playback was down because the provider's API began answering `403` to every request that did not
 carry a `Referer` from its current site host; the backend sent none. The repair, the host discovery

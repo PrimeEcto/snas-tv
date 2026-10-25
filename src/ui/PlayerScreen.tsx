@@ -31,6 +31,8 @@ import {
   describeLadder,
   orderByQuality,
   pickQuality,
+  planPlayback,
+  type PlaybackPlan,
   type Rendition,
   type VideoPolicy,
 } from '../ladder';
@@ -116,6 +118,9 @@ export function PlayerScreen({
   // The provider's real ladder for this title, and the policy this device is held to.
   const [renditions, setRenditions] = useState<Rendition[]>([]);
   const [policy, setPolicy] = useState<VideoPolicy>(() => videoPolicy());
+  // Whether this attempt adapts within a ceiling rather than holding one rendition. Only a
+  // constrained device does, and only when the backend gave it the master playlist to adapt in.
+  const [adaptive, setAdaptive] = useState(false);
   // The surface mounts only once its rung has been written down; see `armAttempt` below.
   const [armed, setArmed] = useState(false);
   const [subtitleId, setSubtitleId] = useState('');
@@ -139,6 +144,9 @@ export function PlayerScreen({
   const qualityRef = useRef('');
   const renditionsRef = useRef<Rendition[]>([]);
   const deviceRef = useRef<DeviceInfo | null>(null);
+  const adaptiveRef = useRef(false);
+  const policyRef = useRef<VideoPolicy>(policy);
+  const planRef = useRef<PlaybackPlan | null>(null);
   // The source whose attempt record has already been settled, so a rung is armed once and cleared
   // once rather than on every progress report.
   const settled = useRef('');
@@ -146,6 +154,8 @@ export function PlayerScreen({
   mediaRef.current = media;
   qualityRef.current = quality;
   renditionsRef.current = renditions;
+  adaptiveRef.current = adaptive;
+  policyRef.current = policy;
   const lastInteraction = useRef(Date.now());
   const latest = useRef(state);
   latest.current = state;
@@ -181,6 +191,7 @@ export function PlayerScreen({
     setQuality('');
     setSubtitleId('');
     setRenditions([]);
+    setAdaptive(false);
     // Every fresh attempt starts with a clean slate of failures. A rung this device was already
     // killed by stays out of the ladder — it is the one piece of state that must outlive the
     // process, because a rung can only kill a process it was allowed to open.
@@ -217,13 +228,20 @@ export function PlayerScreen({
         : [];
       if (!alive) return;
       const chosen = policyForDevice(probe);
+      // Adaptive playback needs somewhere to adapt: a master playlist, and a device the app is
+      // already keeping off the tall rungs. It opens lower than the decoder would allow for the
+      // same reason the ceiling exists — the link, not the codec, is what fails on this class of
+      // device, and a rung the player cannot climb back to is a rung it should not start on.
+      const wantsAdaptive = chosen.kind === 'constrained' && Boolean(result.playlist);
       const decision = pickQuality(result.sources, covered, chosen, {
         skip: dead.current,
+        adaptive: wantsAdaptive,
       });
       setRenditions(covered);
       setPolicy(chosen);
       setMedia(result);
       setQuality(decision.quality);
+      setAdaptive(wantsAdaptive);
       playbackLog('playback:start', {
         title: `${titleKind}:${titleId}`,
         device: deviceSummary(probe),
@@ -236,6 +254,11 @@ export function PlayerScreen({
         killed: killed ?? '-',
         opening: decision.quality,
         allowed: decision.allowed,
+        mode: wantsAdaptive ? 'adaptive' : 'pinned',
+        cap: wantsAdaptive
+          ? planPlayback(result.sources, covered, chosen, decision.quality, result.playlist)
+              ?.maxBitRate ?? '-'
+          : '-',
         buffer:
           policyForDevice(probe).kind === 'constrained'
             ? `maxBufferMs=${bufferFor(chosen).maxBufferMs} reserve=${bufferFor(chosen).minBufferMemoryReservePercent}`
@@ -282,7 +305,19 @@ export function PlayerScreen({
     media?.sources.find((s) => s.quality === quality) ?? media?.sources[0];
   // The identity of the source the surface holds. A rung change is a new attempt, so both the
   // attempt record and the "has it started" bookkeeping are keyed on it.
-  const sourceId = selected?.url ?? '';
+  // The URI for this attempt: the master playlist with a ceiling on a constrained device, or the
+  // pinned rendition. `pinned` rides along so a failed adaptive attempt has somewhere to land.
+  const plan = useMemo(
+    () =>
+      media
+        ? planPlayback(media.sources, renditions, policy, quality, media.playlist, {
+            adaptive,
+          })
+        : null,
+    [media, renditions, policy, quality, adaptive],
+  );
+  planRef.current = plan;
+  const sourceId = plan?.uri ?? selected?.url ?? '';
   sourceRef.current = sourceId;
   // The buffer this device can afford, and how the player should treat a heap that is nearly spent.
   const buffer = useMemo(() => bufferFor(policy), [policy]);
@@ -417,6 +452,28 @@ export function PlayerScreen({
   // error. The rungs below it are Main profile at 1724x720 and 852x480, which that decoder does
   // open, so the failure walks down instead of leaving the viewer with nothing to watch.
   const onStreamError = useCallback((message: string) => {
+    // An adaptive attempt that fails is not a failed title: the pinned rendition the ladder picked
+    // is one request away, and only when that fails too does the ladder step down.
+    if (adaptiveRef.current) {
+      adaptiveRef.current = false;
+      setAdaptive(false);
+      playbackLog('playback:adaptive-off', {
+        reason: message,
+        quality: qualityRef.current || '-',
+        pinned: planRef.current?.pinned
+          ? redact(planRef.current.pinned)
+          : '-',
+        position: Math.round(latest.current.position),
+      });
+      resumeAt.current = latest.current.position;
+      resumed.current = false;
+      setSeek(null);
+      setSlow(false);
+      setLive(false);
+      setStreamError('');
+      setFallback('Adaptive playback failed. Switched to a fixed quality.');
+      return;
+    }
     const sources = mediaRef.current?.sources ?? [];
     const ladder = orderByQuality(sources);
     const current = qualityRef.current || ladder[0]?.quality || '';
@@ -610,6 +667,12 @@ export function PlayerScreen({
       // Choosing a rung by hand means the viewer wants it tried, even if an earlier session lost the
       // process to it. It is cleared here and learned again if this session is the one that loses.
       dead.current.delete(value);
+      // The menu is a ceiling, not a pin: the chosen rung is what the player may climb to, and it
+      // still adapts below that. Only a device or a title with no ladder to adapt in loses that.
+      setAdaptive(
+        policyRef.current.kind === 'constrained' &&
+          Boolean(mediaRef.current?.playlist),
+      );
       resumeAt.current = latest.current.position;
       resumed.current = false;
       setSeek(null);
@@ -706,9 +769,10 @@ export function PlayerScreen({
     <View style={styles.screen}>
       {selected && !preview && !unavailable && armed ? (
         <PlayerSurface
-          uri={selected.url}
+          uri={plan?.uri ?? selected.url}
           headers={media?.headers}
           bufferConfig={buffer}
+          {...(plan?.maxBitRate ? {maxBitRate: plan.maxBitRate} : {})}
           bufferingStrategy={bufferingStrategy}
           subtitleUri={subtitleUri}
           paused={!state.playing}

@@ -253,20 +253,29 @@ export function pickQuality(
   sources: WatchSource[],
   renditions: Rendition[],
   policy: VideoPolicy,
-  options: {skip?: Iterable<string>} = {},
+  options: {skip?: Iterable<string>; adaptive?: boolean} = {},
 ): QualityDecision {
   const ladder = orderByQuality(sources);
   if (!ladder.length) return {quality: '', allowed: false};
   const skip = new Set(options.skip ?? []);
   const candidates = ladder.filter((source) => !skip.has(source.quality));
   const usable = candidates.length ? candidates : ladder;
+  // An adaptive session opens inside the same ceiling it will adapt within, so the rung it starts
+  // on is one the player can climb back to. Decoding says 1080p is readable on this device; the
+  // link is what makes 720p the right place to start.
+  const judged = options.adaptive ? capHeight(policy, ADAPTIVE_MAX_HEIGHT) : policy;
   for (const source of usable) {
     const rendition = matchRendition(source, renditions);
-    if (affordable(source, rendition, policy)) {
+    if (affordable(source, rendition, judged)) {
       return {quality: source.quality, allowed: true};
     }
   }
   return {quality: usable[usable.length - 1].quality, allowed: false};
+}
+
+/** The same policy with its height ceiling pulled down, which is all an adaptive cap changes. */
+function capHeight(policy: VideoPolicy, height: number): VideoPolicy {
+  return policy.maxHeight <= height ? policy : {...policy, maxHeight: height};
 }
 
 /** Whether one rung fits the policy. A rung that declares nothing is judged on its label. */
@@ -308,14 +317,137 @@ export function affordable(
 export function bufferFor(policy: VideoPolicy): PlayerBufferConfig {
   if (policy.kind !== 'constrained') return {};
   return {
-    minBufferMs: 10000,
-    maxBufferMs: 25000,
-    bufferForPlaybackMs: 2000,
-    bufferForPlaybackAfterRebufferMs: 4000,
+    // 25 seconds was measured against a link that only ever stalled for a moment. Measured again on
+    // 2026-10-25, the CDN can crawl for the better part of a minute: one 720p segment came back at
+    // 97 KB/s, 1.67 MB/s and 770 KB/s on three consecutive requests for the same URL. A quarter of
+    // a minute of buffer drains in a fifth of a minute at that rate and the viewer sees the picture
+    // stop, so the ceiling is raised to 40 seconds (~16 MB at 720p, inside the 0.25 heap share) and
+    // the player is told to start with a real cushion rather than the minimum.
+    minBufferMs: 15000,
+    maxBufferMs: 40000,
+    bufferForPlaybackMs: 3000,
+    bufferForPlaybackAfterRebufferMs: 5000,
     // Nothing behind the playhead is kept: this device has no memory to spend on the past.
     backBufferDurationMs: 0,
     maxHeapAllocationPercent: 0.25,
     minBufferMemoryReservePercent: 0.2,
+  };
+}
+
+/**
+ * The highest rung an adaptive player on a constrained device climbs to.
+ *
+ * Decoding is not the only limit on this class of device. Measured from this network on 2026-10-25,
+ * the CDN answered three consecutive requests for the *same* 6-second 720p segment (3.1 Mbps) at
+ * 97 KB/s, 1.67 MB/s and 770 KB/s — a 17x spread, with the slowest well under the rung's own
+ * bitrate. A pinned rendition has no answer to that; it either keeps up or it stalls. 720p is the
+ * rung that leaves the widest room above 480p for the player to fall back to without giving up the
+ * frame the stick can actually show.
+ */
+export const ADAPTIVE_MAX_HEIGHT = 720;
+
+/** The adaptive ceiling used when no rendition reports a bandwidth, a little above 720p. */
+export const ADAPTIVE_FALLBACK_BITRATE = 3_600_000;
+
+/** Whether one measured rendition fits a policy on its own, ignoring labels entirely. */
+function renditionFits(rendition: Rendition, policy: VideoPolicy): boolean {
+  if (rendition.width && rendition.width > policy.maxWidth) return false;
+  if (rendition.height && rendition.height > policy.maxHeight) return false;
+  const level = renditionLevel(rendition);
+  return level === undefined || level <= policy.maxH264Level;
+}
+
+/**
+ * A bitrate to assume for a height when the ladder does not declare one.
+ *
+ * Roughly this backend's own ladder, and deliberately generous at the top: a ceiling that is too
+ * low does not make playback safer, it just removes the rung the viewer asked for.
+ */
+function bitrateForHeight(height: number): number {
+  if (height <= 480) return 2_000_000;
+  if (height <= 720) return ADAPTIVE_FALLBACK_BITRATE;
+  if (height <= 1088) return 7_000_000;
+  return 20_000_000;
+}
+
+/**
+ * The bitrate a constrained player may adapt up to, in bits per second.
+ *
+ * Taken from the renditions the device is allowed to decode and no taller than `ceilingHeight`
+ * (720p by default), with a little headroom so the highest of those rungs is not excluded by its
+ * own declared bandwidth. Without a measurement the height's fallback stands in.
+ */
+export function adaptiveCeiling(
+  renditions: Rendition[],
+  policy: VideoPolicy,
+  ceilingHeight: number = ADAPTIVE_MAX_HEIGHT,
+): number {
+  const fitting = renditions.filter(
+    (rendition) =>
+      renditionFits(rendition, policy) &&
+      (rendition.height ?? 0) <= ceilingHeight &&
+      rendition.bandwidth,
+  );
+  if (!fitting.length) return bitrateForHeight(ceilingHeight);
+  const top = Math.max(...fitting.map((rendition) => rendition.bandwidth ?? 0));
+  return Math.max(Math.round(top * 1.15), 1_500_000);
+}
+
+/** What the surface is handed for one attempt: an adaptive playlist, or one pinned rendition. */
+export interface PlaybackPlan {
+  /** The URI the player opens. */
+  uri: string;
+  /** The ABR ceiling in bits per second, only present when the player is adapting. */
+  maxBitRate?: number;
+  adaptive: boolean;
+  /** The pinned rendition, kept to fall back to when adaptive playback fails. */
+  pinned: string;
+  /** The rung the UI names for this attempt. */
+  quality: string;
+}
+
+/**
+ * Decide what to hand the player for one attempt.
+ *
+ * A constrained device does not open a rendition, it opens the master playlist and adapts within a
+ * ceiling; every other device keeps the pinned rendition it always had. The fallback matters: if a
+ * provider's master playlist is something ExoPlayer will not open, the pinned URL is one request
+ * away rather than a dead session.
+ */
+export function planPlayback(
+  sources: WatchSource[],
+  renditions: Rendition[],
+  policy: VideoPolicy,
+  quality: string,
+  playlist: string | undefined,
+  options: {adaptive?: boolean} = {},
+): PlaybackPlan | null {
+  const ladder = orderByQuality(sources);
+  const pinned = ladder.find((source) => source.quality === quality) ?? ladder[0];
+  if (!pinned) return null;
+  const adaptive =
+    options.adaptive !== false && policy.kind === 'constrained' && Boolean(playlist);
+  if (!adaptive) {
+    return {
+      uri: pinned.url,
+      adaptive: false,
+      pinned: pinned.url,
+      quality: pinned.quality,
+    };
+  }
+  // The chosen rung is the ceiling, not a pin: the menu reads as "up to this", and the player is
+  // free to drop below it when the CDN slows down. Picking 480p therefore never plays 720p, and
+  // picking 1080p still falls back rather than stalling.
+  const ceilingHeight = Math.min(
+    policy.maxHeight,
+    labelPixels(pinned.quality) || ADAPTIVE_MAX_HEIGHT,
+  );
+  return {
+    uri: playlist as string,
+    maxBitRate: adaptiveCeiling(renditions, policy, ceilingHeight),
+    adaptive: true,
+    pinned: pinned.url,
+    quality: pinned.quality,
   };
 }
 

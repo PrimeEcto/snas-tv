@@ -3,13 +3,73 @@
 Investigation and repair of the report that playback dies a second or two after it starts on a
 1st-generation Fire TV Stick 4K while the same title plays on a newer Fire TV.
 
-Two records live in this file: [the 2026-10-16 investigation](#part-1--the-original-investigation)
-that first identified the ladder as the suspect, and
-[the 0.0.5 investigation](#part-2--the-0.0.5-investigation) that measured the real stream ladder,
-replaced the label-based default with a measured, device-aware policy, and gave the app a way to
-report what a device actually does. **No physical stick has been attached to any of this work**, so
-every device-specific claim below is either measured on the live backend, read from the platform's
-own documentation, or marked as unverified.
+Three records live in this file: [the 2026-10-16 investigation](#part-1--the-original-investigation)
+that first identified the ladder as the suspect, [the 0.0.5 investigation](#part-2--the-0.0.5-investigation)
+that measured the real stream ladder, replaced the label-based default with a measured, device-aware
+policy, and gave the app a way to report what a device actually does, and
+[the 0.0.7 investigation](#part-3--the-0007-investigation-and-what-to-read-on-the-stick) that found
+the source CDN itself delivering segments at wildly different speeds and gave the player a ladder to
+adapt within. **No physical stick has been attached to any of this work**, so every device-specific
+claim below is either measured on the live backend, read from the platform's own documentation, or
+marked as unverified.
+
+---
+
+# Part 3 — the 0.0.7 investigation, and what to read on the stick
+
+Recorded 2026-10-25 against `codex/snas-tv-0.0.4`. The report this time was not a crash: on the
+1st-generation Fire TV Stick 4K a title plays for 20–30 seconds, freezes, plays again, freezes
+again, while the same title is fine on a stronger Fire TV.
+
+## The measurement that explains it
+
+Three consecutive requests for the *same* 6-second 720p segment (2,659,451 bytes, 3.1 Mbps) came
+back at 97 KB/s, 1.67 MB/s and 770 KB/s — 27.45 s, 1.59 s and 3.45 s for identical bytes. A control
+download from Cloudflare moved 3 MB in 0.289 s (10.4 MB/s), so the host's link was healthy. One
+earlier attempt timed out at 120 s after 2,410,482 bytes.
+
+The app was pinning one rendition chosen by device policy, and Media3's load control on that device
+is capped at 25 seconds of media. Against a 0.78 Mbps crawl, 25 seconds of 1080p or 720p drains in
+about half a minute — the play/freeze cycle, to the second. Nothing was wrong with the decoder, the
+container or the Wi-Fi; a pinned rendition simply has no answer to a CDN that slows to a quarter of
+the stream's bitrate.
+
+Four parallel ranged requests for the same segment (the "multi-threaded downloader" idea) were
+also measured: 10.3 s against 1.6–27 s serially. No reliable gain — HLS already pipelines segment
+requests, and more connections contend for the same egress.
+
+## What 0.0.7 does about it
+
+- A constrained device opens the **master playlist** and adapts inside a ceiling of the chosen
+  rung's bandwidth plus 15% (`planPlayback`, `adaptiveCeiling` in `src/ladder.ts`; `maxBitRate` in
+  `src/player.ts` and `firetv/player/android.tsx`). During a crawl Media3 drops to 480p and climbs
+  back to 720p; it cannot reach the ~5.8 Mbps ultrawide 1080p rung.
+- The opening rung is capped the same way (`pickQuality` with `adaptive`), so it starts where it can
+  return to rather than at 1080p.
+- The buffer is 15 s to start and 40 s maximum (≈16 MB at 720p) with the same heap share and
+  reserve.
+- If the adaptive attempt fails, playback falls back to the pinned rendition at the same position
+  and logs `playback:adaptive-off`; the ladder only steps down after that fails too.
+- The quality menu acts as a ceiling: 1080p allows 1080p and below, 480p allows 480p only.
+
+## What to read on the stick
+
+```
+adb logcat -s SNAS | grep -E 'playback:start|playback:adaptive-off|playback:step-down'
+```
+
+A healthy adaptive session logs one line with `mode=adaptive cap=<bits per second>` — around
+`3.5–3.6` million for a 720p opening, `7` million if 1080p was chosen by hand. Then:
+
+- **No more stalling, `mode=adaptive`** — the fix worked. Expect the picture to soften briefly
+  during a crawl rather than freeze.
+- **`playback:adaptive-off` appears** — ExoPlayer would not play this provider's master playlist.
+  It will have fallen back to the pinned rung; send that line, it names the reason.
+- **`mode=pinned`** — this title's provider returned no master playlist (`vegas`/`Vidmoly` does
+  this). Only the larger buffer applies to those titles; try a title from `miami`.
+- **Still stalling, `mode=adaptive`, `cap` correct** — the egress is worse than 480p (1.3 Mbps)
+  sustained, which is no longer something the player can absorb. The remaining levers are the
+  stick's own link (5 GHz, or a wired adapter) and, failing that, asking the backend to transcode.
 
 ---
 

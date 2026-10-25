@@ -2,7 +2,7 @@
   {
     "journey": "launch",
     "result": "PASS",
-    "detail": "first paint: SNAS|Home|Movies|Series|My List|Search|Settings|Clayface \u00b7 installed:     primaryCpuAbi=x86_64     versionCode=6 minSdk=24 targetSdk=35     versionName=0.0.6 ",
+    "detail": "first paint: SNAS|Home|Movies|Series|My List|Search|Settings|Clayface \u00b7 installed:     primaryCpuAbi=x86_64     versionCode=7 minSdk=24 targetSdk=35     versionName=0.0.7 ",
     "evidence": [
       "launch.png",
       "launch.xml"
@@ -84,7 +84,7 @@
   {
     "journey": "About",
     "result": "PASS",
-    "detail": "TMDB attribution present \u00b7 visible: SNAS|Home|Movies|Series|My List|Search|Settings|SNAS TV 0.0.6",
+    "detail": "TMDB attribution present \u00b7 visible: SNAS|Home|Movies|Series|My List|Search|Settings|SNAS TV 0.0.7",
     "evidence": [
       "about.png",
       "about.xml"
@@ -93,7 +93,7 @@
   {
     "journey": "Playback",
     "result": "PASS",
-    "detail": "app-process decoder evidence (199 lines) \u00b7 native clock 0:01 -> 0:15; paused labels Play/Play",
+    "detail": "app-process decoder evidence (200 lines) \u00b7 native clock 0:02 -> 0:16; paused labels Play/Play",
     "evidence": [
       "playback.png",
       "playback.xml",
@@ -107,7 +107,7 @@
   {
     "journey": "Guest resources",
     "result": "PASS",
-    "detail": " TOTAL PSS: 292208 TOTAL RSS: 415912 TOTAL SWAP PSS: 294 \u00b7     primaryCpuAbi=x86_64     versionCode=6 minSdk=24 targetSdk=35     versionName=0.0.6 ",
+    "detail": " TOTAL PSS: 274157 TOTAL RSS: 396352 TOTAL SWAP PSS: 484 \u00b7     primaryCpuAbi=x86_64     versionCode=7 minSdk=24 targetSdk=35     versionName=0.0.7 ",
     "evidence": [
       "meminfo.txt",
       "cpuinfo.txt",

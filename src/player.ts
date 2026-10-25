@@ -94,6 +94,14 @@ export interface PlayerSurfaceProps {
   headers?: Record<string, string>;
   /** The buffer this device can afford. Absent means the platform's own default. */
   bufferConfig?: PlayerBufferConfig;
+  /**
+   * The bitrate ceiling for adaptive playback, in bits per second.
+   *
+   * Only meaningful with a master playlist: the player then picks among the renditions it carries
+   * and may not climb past this one. Absent means no ceiling, which is only safe for a pinned
+   * rendition — a ceiling below the one rendition on offer would leave nothing to select.
+   */
+  maxBitRate?: number;
   /** `DependingOnMemory` stops loading when the heap is nearly spent rather than being killed for it. */
   bufferingStrategy?: PlayerBufferingStrategy;
   /** WebVTT served by the Worker, attached as a text track when present. */

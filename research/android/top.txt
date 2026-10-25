@@ -1,178 +1,144 @@
-Tasks: 354 total,   2 running, 352 sleeping,   0 stopped,   0 zombie
-  Mem:  2532420K total,  2386900K used,   145520K free,    14592K buffers
- Swap:  1899308K total,   627456K used,  1271852K free,  1064552K cached
-200%cpu  41%user  30%nice  63%sys  56%idle   0%iow   4%irq   0%sirq   7%host
+Tasks: 297 total,   1 running, 296 sleeping,   0 stopped,   0 zombie
+  Mem:  2532420K total,  2307540K used,   224880K free,    10864K buffers
+ Swap:  1899308K total,   324096K used,  1575212K free,  1154212K cached
+200%cpu  15%user   0%nice  23%sys 158%idle   0%iow   0%irq   0%sirq   4%host
   PID USER         PR  NI VIRT  RES  SHR S[%CPU] %MEM     TIME+ ARGS
- 1136 u0_a186      20   0  15G  92M  68M R 11.1   3.7   0:00.27 com.google.android.permissioncontroller
- 1017 u0_a144      20   0  15G 213M 156M S 11.1   8.6   0:07.73 com.google.android.gms.persistent
-  571 system       18  -2  17G 238M 146M S 11.1   9.6   0:19.25 system_server
-  420 media        20   0  10G 5.7M 5.1M S 11.1   0.2   0:00.01 android.hardware.drm-service.widevine
- 5432 shell        20   0  10G 4.8M 3.8M R  7.4   0.1   0:00.01 top -n 1 -b
- 4690 u0_a210      10 -10  35G 377M 150M S  7.4  15.2   0:08.24 com.snas.tv
- 1857 u0_a145      16  -4  31G 150M 120M S  7.4   6.0   0:00.47 com.android.chrome
- 1647 u0_a163      20   0  15G 132M 106M S  7.4   5.3   0:00.34 com.google.android.calendar
- 1469 u0_a143      16  -4  32G 245M 201M S  7.4   9.8   0:03.81 com.google.android.googlequicksearchbox:search
-  395 system       -3   0  11G 5.8M 5.1M S  7.4   0.2   0:03.25 android.hardware.graphics.composer3-service.ranchu
- 3245 u0_a96       20   0  15G  85M  63M S  3.7   3.4   0:00.04 com.google.android.documentsui
- 2991 u0_a132      20   0  15G  85M  63M S  3.7   3.4   0:00.10 com.google.android.partnersetup
- 2793 u0_a151      20   0  15G  81M  59M S  3.7   3.2   0:00.04 com.google.android.webview:webview_service
- 2479 u0_a102      20   0  15G  72M  51M S  3.7   2.9   0:00.01 com.android.managedprovisioning
- 1438 u0_a127      20   0  15G  73M  52M S  3.7   2.9   0:00.01 com.android.printspooler
-  903 radio        20   0  15G 110M  78M S  3.7   4.4   0:00.84 com.android.phone
-  458 logd         30  10  10G 3.3M 3.2M S  3.7   0.1   0:01.81 logcat -f /dev/hvc1 *:V
-  388 media        20   0  11G  11M  10M S  3.7   0.4   0:02.10 android.hardware.media.c2@1.0-service-goldfish
-  295 root         20   0    0    0    0 I  3.7   0.0   0:00.02 [kworker/u4:4-loop8]
-  166 logd         30  10  10G 5.1M 3.9M S  3.7   0.2   0:00.85 logd
-   99 root          0 -20    0    0    0 I  3.7   0.0   0:00.06 [kworker/1:23H-kverityd]
-   43 root         20   0    0    0    0 S  3.7   0.0   0:02.14 [kswapd0]
-   26 root         20   0    0    0    0 S  3.7   0.0   0:00.30 [ksoftirqd/1]
- 5417 media        20   0  10G 6.8M 5.9M S  0.0   0.2   0:00.00 android.hardware.drm-service-lazy.clearkey
- 5277 root         20   0    0    0    0 I  0.0   0.0   0:00.05 [kworker/1:3-events]
- 3275 root          0 -20    0    0    0 I  0.0   0.0   0:00.05 [kworker/1:25H-kverityd]
- 3225 system       20   0  15G  75M  54M S  0.0   3.0   0:00.01 com.android.keychain
- 3160 u0_a167      20   0  15G  91M  69M S  0.0   3.6   0:00.06 com.google.android.marvin.talkback
- 3127 u0_a144      20   0  15G 146M 119M S  0.0   5.9   0:00.33 com.google.android.gms.ui
- 3096 u0_a126      20   0  15G  73M  52M S  0.0   2.9   0:00.02 com.android.traceur
- 3036 u0_a151      20   0  31G  96M  75M S  0.0   3.8   0:00.05 com.google.android.webview:webview_apk
- 3013 u0_a104      20   0  15G  74M  53M S  0.0   2.9   0:00.01 com.android.externalstorage
- 2943 u0_a100      20   0  15G  71M  49M S  0.0   2.8   0:00.01 com.google.android.packageinstaller
- 2920 u0_a202      20   0  15G  71M  49M S  0.0   2.8   0:00.01 com.google.android.ondevicepersonalization.services
- 2861 u0_a189      20   0  15G  83M  62M S  0.0   3.3   0:00.06 com.google.android.adservices.api
- 2837 u0_a194      20   0  15G  74M  53M S  0.0   2.9   0:00.02 com.google.android.healthconnect.controller
- 2827 u0_i9000     20   0  31G  73M  52M S  0.0   2.9   0:00.02 com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0
- 2777 u0_a203      20   0  15G  71M  50M S  0.0   2.8   0:00.02 com.google.android.federatedcompute
- 2750 shell        20   0  10G 3.8M 3.7M S  0.0   0.1   0:00.00 abb
- 2692 u0_a136      20   0  15G  80M  58M S  0.0   3.2   0:00.05 com.google.android.configupdater
- 2674 u0_a200      20   0  15G  82M  61M S  0.0   3.3   0:00.09 com.google.android.rkpdapp
- 2568 u0_a139      20   0  15G  91M  68M S  0.0   3.6   0:00.14 com.google.android.apps.restore
- 2553 shell        20   0  15G  72M  50M S  0.0   2.8   0:00.01 com.android.shell
- 2470 system       20   0  15G  72M  51M S  0.0   2.9   0:00.01 com.android.dynsystem:dynsystem
- 2451 system       20   0  15G  72M  51M S  0.0   2.9   0:00.01 com.android.dynsystem
- 2433 u0_a157      20   0  16G  72M  51M S  0.0   2.9   0:00.02 com.android.camera2
- 2352 u0_a165      20   0  15G  98M  74M S  0.0   3.9   0:01.86 com.google.android.tts
- 2290 u0_a199      20   0  15G  78M  57M S  0.0   3.1   0:00.03 com.google.android.cellbroadcastreceiver
- 2278 u0_a144      20   0  15G 145M 122M S  0.0   5.8   0:01.31 com.google.android.gms.unstable
- 2260 root          0 -20    0    0    0 I  0.0   0.0   0:00.02 [kworker/u5:3-fscrypt_read_queue]
- 2244 u0_a138      20   0  15G  76M  53M S  0.0   3.0   0:00.03 com.android.imsserviceentitlement
- 2181 u0_a128      20   0  15G  71M  50M S  0.0   2.8   0:00.01 com.google.android.onetimeinitializer
- 2100 system       20   0  15G  73M  51M S  0.0   2.9   0:00.02 com.android.localtransport
- 1992 u0_a177      20   0  15G  83M  61M S  0.0   3.3   0:00.04 com.google.android.apps.wallpaper
- 1970 u0_a131      20   0  15G  82M  61M S  0.0   3.3   0:00.19 com.google.android.as.oss
- 1937 u0_a148      20   0  15G  87M  65M S  0.0   3.5   0:00.07 com.google.android.deskclock
- 1924 u0_a101      20   0  15G  79M  58M S  0.0   3.2   0:00.03 com.android.providers.calendar
- 1772 u0_a95       20   0  15G  85M  64M S  0.0   3.4   0:00.09 android.process.media
- 1628 u0_a168      20   0  16G 142M 118M S  0.0   5.7   0:00.73 com.google.android.apps.photos
- 1541 u0_a140      20   0  15G 114M  93M S  0.0   4.6   0:00.45 com.google.android.settings.intelligence
- 1538 u0_a134      20   0  16G 195M 143M S  0.0   7.8   0:02.75 com.google.android.apps.messaging
- 1525 u0_a129      20   0  31G 100M  78M S  0.0   4.0   0:00.43 com.google.android.apps.safetyhub
- 1503 u0_a144      20   0  16G 187M 163M S  0.0   7.5   0:03.42 com.google.android.gms
- 1415 system       20   0  15G  73M  51M S  0.0   2.9   0:00.02 com.android.emulator.multidisplay
- 1404 u0_a134      20   0  15G 118M  87M S  0.0   4.7   0:00.33 com.google.android.apps.messaging:rcs
- 1390 u0_a143      20   0  16G 188M 138M S  0.0   7.5   0:01.84 com.google.android.googlequicksearchbox:interactor
- 1366 u0_a137      20   0  16G 130M  90M S  0.0   5.2   0:01.26 com.google.android.as
- 1356 u0_a184      20   0  15G  93M  67M S  0.0   3.7   0:00.27 com.google.android.providers.media.module
- 1319 u0_a142      20   0  15G 114M  93M S  0.0   4.6   0:01.14 com.google.android.apps.wellbeing
- 1306 u0_a152      10 -10  15G 139M 107M S  0.0   5.6   0:01.03 com.google.android.inputmethod.latin
- 1247 u0_a180      20   0  15G 136M  97M S  0.0   5.4   0:01.75 com.google.android.apps.nexuslauncher
- 1195 u0_a91       20   0  15G  87M  64M S  0.0   3.5   0:00.11 android.process.acore
-  932 u0_a207      20   0  15G  79M  56M S  0.0   3.2   0:00.05 com.google.android.ext.services
-  916 system       20   0  15G 127M 105M S  0.0   5.1   0:00.98 com.android.settings
-  890 secure_element 20 0  15G  75M  52M S  0.0   3.0   0:00.02 com.android.se
-  873 network_stack 20  0  15G  95M  68M S  0.0   3.8   0:00.29 com.android.networkstack.process
-  869 bluetooth    20   0  15G  92M  67M S  0.0   3.7   0:00.19 com.google.android.bluetooth
-  848 webview_zygote 20 0  32G  55M  34M S  0.0   2.2   0:00.02 webview_zygote
-  827 gps          20   0  10G 4.1M 3.8M S  0.0   0.1   0:00.01 android.hardware.gnss-service.ranchu
-  801 u0_a181      20   0  15G 184M 126M S  0.0   7.4   0:02.59 com.android.systemui
-  788 wifi         20   0  10G 5.0M 4.6M S  0.0   0.2   0:00.02 wpa_supplicant -Dnl80211 -iwlan0 -c/vendor/etc/wifi/wpa_supplicant.conf -g@android:wpa_wlan0
-  761 nobody       20   0  10G 4.2M 4.2M S  0.0   0.1   0:00.00 android.hardware.biometrics.face-service.example
-  758 system       20   0  10G 3.6M 3.5M S  0.0   0.1   0:00.01 android.hardware.biometrics.fingerprint-service.ranchu
-  497 system       20   0  10G 3.8M 3.8M S  0.0   0.1   0:00.00 gatekeeperd /data/misc/gatekeeper
-  496 mdnsr        20   0  10G 2.8M 2.7M S  0.0   0.1   0:00.00 mdnsd
-  495 mediacodec   20   0  11G  11M 9.1M S  0.0   0.4   0:00.33 media.swcodec oid.media.swcodec/bin/mediaswcodec
-  488 radio        20   0  11G 5.0M 4.8M S  0.0   0.2   0:00.04 libgoldfish-rild
-  487 wifi         20   0  10G 4.8M 4.3M S  0.0   0.1   0:00.01 wificond
-  485 root         30  10  10G 4.3M 4.2M S  0.0   0.1   0:00.00 storaged
-  479 media        20   0  11G  10M 9.2M S  0.0   0.3   0:00.06 mediaserver
-  477 media        20   0  10G 5.5M 4.8M S  0.0   0.2   0:00.02 media.metrics diametrics
-  476 mediaex      20   0  11G 6.8M 6.8M S  0.0   0.2   0:00.06 media.extractor aextractor
-  475 root         20   0  10G 4.4M 4.3M S  0.0   0.1   0:00.14 installd
-  473 incidentd    20   0  10G 3.8M 3.8M S  0.0   0.1   0:00.00 incidentd
-  465 cameraserver 20   0  11G 7.8M 7.4M S  0.0   0.3   0:00.04 cameraserver
-  460 bluetooth    20   0  10G 2.4M 2.4M S  0.0   0.1   0:00.01 bt_vhci_forwarder -virtio_console_dev=/dev/bluetooth0
-  457 nobody       20   0  10G 2.7M 2.6M S  0.0   0.1   0:00.00 traced
-  456 nobody       20   0  10G 2.6M 2.6M S  0.0   0.1   0:00.00 traced_probes
-  455 drm          20   0  10G 4.4M 4.3M S  0.0   0.1   0:00.01 drmserver
-  446 shell        20   0  10G 6.6M 3.0M S  0.0   0.2   0:00.50 adbd --root_seclabel=u:r:su:s0
-  432 system       -3  -8  11G  17M  11M S  0.0   0.6   0:09.90 surfaceflinger
-  427 gpu_service  20   0  10G 5.0M 4.8M S  0.0   0.2   0:00.00 gpuservice
-  424 credstore    20   0  10G 4.1M 4.1M S  0.0   0.1   0:00.00 credstore /data/misc/credstore
-  421 audioserver  20   0  11G  15M  13M S  0.0   0.6   0:00.84 audioserver
-  418 system       20   0  10G 3.3M 3.3M S  0.0   0.1   0:00.00 android.hardware.rebootescrow-service.default
-  410 system       20   0  10G 3.9M 3.8M S  0.0   0.1   0:00.01 android.hardware.neuralnetworks-shim-service-sample
-  409 system       20   0  10G 4.0M 4.0M S  0.0   0.1   0:00.00 android.hardware.neuralnetworks-service-sample-limited
-  408 system       20   0  10G 4.1M 4.1M S  0.0   0.1   0:00.01 android.hardware.neuralnetworks-service-sample-all
-  407 media        20   0  10G 3.4M 3.4M S  0.0   0.1   0:00.00 android.hardware.cas-service.example
-  404 hsm          20   0  10G 3.3M 3.3M S  0.0   0.1   0:00.00 android.hardware.authsecret-service.example
-  403 nobody       20   0  10G 3.6M 3.5M S  0.0   0.1   0:00.00 android.hardware.vibrator-service.example
-  402 system       20   0  10G 3.7M 3.6M S  0.0   0.1   0:00.00 android.hardware.power.stats-service.example
-  401 nobody       20   0  10G 3.9M 3.7M S  0.0   0.1   0:00.00 android.hardware.power-service.example
-  399 root         20   0  10G 2.8M 2.5M S  0.0   0.1   0:00.01 ip6tables-restore --noflush -w -v
-  398 root         20   0  10G 3.0M 2.6M S  0.0   0.1   0:00.02 iptables-restore --noflush -w -v
-  397 nobody       20   0  10G 3.5M 3.4M S  0.0   0.1   0:00.00 android.hardware.lights-service.example
-  396 nobody       20   0  10G 3.4M 3.4M S  0.0   0.1   0:00.00 android.hardware.identity-service.example
-  394 context_hub  20   0  10G 3.4M 3.3M S  0.0   0.1   0:00.00 android.hardware.contexthub-service.example
-  393 bluetooth    20   0  10G 3.7M 3.6M S  0.0   0.1   0:00.01 android.hardware.bluetooth-service.default
-  392 wifi         20   0  10G 4.2M 4.1M S  0.0   0.1   0:00.01 android.hardware.wifi-service
-  391 system       20   0  10G 3.6M 3.6M S  0.0   0.1   0:00.00 android.hardware.usb-service.example
-  390 system       20   0  10G 3.1M 2.9M S  0.0   0.1   0:00.00 android.hardware.thermal@2.0-service.mock
-  389 system       20   0  10G 4.3M 4.0M S  0.0   0.1   0:00.02 android.hardware.sensors-service.multihal
-  385 system       20   0  10G 4.1M 3.9M S  0.0   0.1   0:00.01 android.hardware.health-service.example
-  384 system       20   0  10G 5.0M 4.4M S  0.0   0.2   0:00.06 android.hardware.graphics.allocator@3.0-service.ranchu
-  383 system       20   0  10G 2.7M 2.7M S  0.0   0.1   0:00.00 android.hardware.gatekeeper@1.0-service.software
-  382 system       20   0  10G 3.8M 3.7M S  0.0   0.1   0:00.02 android.hardware.camera.provider@2.7-service-google
-  381 system       20   0  10G 4.9M 4.8M S  0.0   0.1   0:00.01 android.hardware.camera.provider.ranchu
-  380 audioserver  20   0  11G 5.2M 4.7M S  0.0   0.2   0:00.57 android.hardware.audio.service
-  379 system       20   0  10G 3.1M 3.1M S  0.0   0.1   0:00.00 android.hidl.allocator@1.0-service
-  372 root         20   0  16G  99M  78M S  0.0   4.0   0:00.87 zygote64
-  371 root         20   0  10G 7.6M 6.5M S  0.0   0.3   0:00.14 netd
-  370 statsd       20   0  10G 4.3M 3.9M S  0.0   0.1   0:00.29 statsd
-  365 root         20   0  10G 2.6M 2.6M S  0.0   0.1   0:00.09 dhcpclient -i wlan0 --no-gateway
-  339 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  338 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
-  337 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  336 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  335 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  334 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  333 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  332 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
-  331 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  330 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  329 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
-  328 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
+ 6464 u0_a210      10 -10  35G 378M 152M S  7.6  15.3   0:08.67 com.snas.tv
+ 7157 shell        20   0  10G 4.7M 3.8M R  3.8   0.1   0:00.01 top -n 1 -b
+  431 system       -3  -8  11G  17M  10M S  3.8   0.6   0:15.77 surfaceflinger
+  394 system       -3   0  10G 5.1M 4.2M S  3.8   0.2   0:08.78 android.hardware.graphics.composer3-service.ranchu
+  379 media        20   0  11G  11M 9.1M S  3.8   0.4   0:04.87 android.hardware.media.c2@1.0-service-goldfish
+ 5574 u0_a151      20   0  15G  83M  55M S  0.0   3.3   0:00.03 com.google.android.webview:webview_service
+ 5562 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:8H-kblockd]
+ 5561 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:7H-kblockd]
+ 5560 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:6H-kverityd]
+ 5559 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:5H-kverityd]
+ 5456 u0_a104      20   0  15G  81M  54M S  0.0   3.2   0:00.01 com.android.externalstorage
+ 5443 u0_a95       20   0  15G  87M  59M S  0.0   3.5   0:00.02 android.process.media
+ 5414 u0_a96       20   0  15G  95M  66M S  0.0   3.8   0:00.03 com.google.android.documentsui
+ 5377 u0_a145      20   0  31G 104M  76M S  0.0   4.2   0:00.04 com.android.chrome
+ 5367 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/u5:1-fscrypt_read_queue]
+ 5211 u0_a136      20   0  15G  82M  55M S  0.0   3.3   0:00.02 com.google.android.configupdater
+ 5137 root         20   0    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:3]
+ 3865 root         20   0    0    0    0 I  0.0   0.0   0:00.03 [kworker/u4:4-events_unbound]
+ 3700 root         20   0    0    0    0 I  0.0   0.0   0:00.04 [kworker/u4:1-loop19]
+ 3443 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:4H-kverityd]
+ 3388 u0_a142      20   0  15G 121M  95M S  0.0   4.8   0:00.27 com.google.android.apps.wellbeing
+ 3364 system       20   0  15G  82M  57M S  0.0   3.3   0:00.01 com.android.keychain
+ 3356 root          0 -20    0    0    0 I  0.0   0.0   0:00.01 [kworker/1:3H-kverityd]
+ 3352 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/0:0H]
+ 3349 root         20   0    0    0    0 I  0.0   0.0   0:00.31 [kworker/1:0-events]
+ 3341 shell        20   0  10G 4.3M 3.5M S  0.0   0.1   0:00.00 abb
+ 3313 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/u5:0-fscrypt_read_queue]
+ 3312 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:2H-kverityd]
+ 3308 root          0 -20    0    0    0 I  0.0   0.0   0:00.09 [kworker/1:1H-kverityd]
+ 3254 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:0H-kverityd]
+ 2939 u0_a144      20   0  16G 170M 140M S  0.0   6.8   0:00.72 com.google.android.gms.unstable
+ 1839 u0_a131      20   0  15G  88M  62M S  0.0   3.5   0:00.17 com.google.android.as.oss
+ 1449 u0_a144      20   0  16G 198M 172M S  0.0   8.0   0:02.38 com.google.android.gms
+ 1446 u0_a140      20   0  15G 122M  93M S  0.0   4.9   0:00.19 com.google.android.settings.intelligence
+ 1426 u0_a134      20   0  16G 192M 163M S  0.0   7.7   0:01.35 com.google.android.apps.messaging
+ 1415 u0_a143      20   0  16G 251M 205M S  0.0  10.1   0:03.85 com.google.android.googlequicksearchbox:search
+ 1365 system       20   0  15G  79M  51M S  0.0   3.1   0:00.01 com.android.emulator.multidisplay
+ 1352 u0_a134      20   0  15G 134M  98M S  0.0   5.4   0:00.29 com.google.android.apps.messaging:rcs
+ 1335 u0_a143      20   0  16G 207M 150M S  0.0   8.3   0:02.07 com.google.android.googlequicksearchbox:interactor
+ 1308 u0_a137      20   0  16G 185M 128M S  0.0   7.4   0:01.38 com.google.android.as
+ 1304 u0_a184      20   0  15G 106M  71M S  0.0   4.2   0:00.25 com.google.android.providers.media.module
+ 1234 u0_a180      20   0  15G 143M  97M S  0.0   5.7   0:02.13 com.google.android.apps.nexuslauncher
+ 1224 u0_a152      10 -10  16G 162M 117M S  0.0   6.5   0:01.00 com.google.android.inputmethod.latin
+ 1165 u0_a91       20   0  15G  94M  66M S  0.0   3.8   0:00.08 android.process.acore
+ 1094 u0_a186      20   0  15G 108M  77M S  0.0   4.3   0:00.25 com.google.android.permissioncontroller
+ 1017 u0_a144      20   0  16G 254M 167M S  0.0  10.2   0:04.89 com.google.android.gms.persistent
+  958 u0_a207      20   0  15G  85M  56M S  0.0   3.4   0:00.05 com.google.android.ext.services
+  925 radio        20   0  15G 118M  83M S  0.0   4.7   0:00.78 com.android.phone
+  913 secure_element 20 0  15G  80M  53M S  0.0   3.2   0:00.01 com.android.se
+  893 bluetooth    20   0  15G 104M  73M S  0.0   4.2   0:00.14 com.google.android.bluetooth
+  853 network_stack 20  0  15G 106M  72M S  0.0   4.2   0:00.39 com.android.networkstack.process
+  840 webview_zygote 20 0  32G  60M  33M S  0.0   2.4   0:00.01 webview_zygote
+  811 gps          20   0  10G 3.6M 3.3M S  0.0   0.1   0:00.00 android.hardware.gnss-service.ranchu
+  784 u0_a181      20   0  16G 205M 142M S  0.0   8.2   0:03.01 com.android.systemui
+  770 wifi         20   0  10G 4.3M 3.8M S  0.0   0.1   0:00.06 wpa_supplicant -Dnl80211 -iwlan0 -c/vendor/etc/wifi/wpa_supplicant.conf -g@android:wpa_wlan0
+  743 nobody       20   0  10G 3.6M 3.6M S  0.0   0.1   0:00.00 android.hardware.biometrics.face-service.example
+  738 system       20   0  10G 3.3M 3.3M S  0.0   0.1   0:00.06 android.hardware.biometrics.fingerprint-service.ranchu
+  562 root          0 -20    0    0    0 I  0.0   0.0   0:00.25 [kworker/0:6H-kverityd]
+  554 system       18  -2  17G 261M 163M S  0.0  10.5   0:13.20 system_server
+  468 system       20   0  10G 3.4M 3.3M S  0.0   0.1   0:00.00 gatekeeperd /data/misc/gatekeeper
+  467 mediacodec   20   0  11G  10M 8.5M S  0.0   0.4   0:00.52 media.swcodec oid.media.swcodec/bin/mediaswcodec
+  466 radio        20   0  11G 4.8M 4.4M S  0.0   0.1   0:00.05 libgoldfish-rild
+  465 wifi         20   0  10G 4.0M 3.5M S  0.0   0.1   0:00.03 wificond
+  464 root         30  10  10G 3.9M 3.7M S  0.0   0.1   0:00.01 storaged
+  463 media        20   0  11G 9.2M 8.2M S  0.0   0.3   0:00.05 mediaserver
+  462 media        20   0  10G 5.7M 4.5M S  0.0   0.2   0:00.02 media.metrics diametrics
+  460 mediaex      20   0  11G 7.5M 6.6M S  0.0   0.3   0:00.04 media.extractor aextractor
+  459 root         20   0  10G 4.4M 3.9M S  0.0   0.1   0:00.12 installd
+  458 incidentd    20   0  10G 3.3M 3.3M S  0.0   0.1   0:00.00 incidentd
+  456 cameraserver 20   0  11G 6.7M 6.2M S  0.0   0.2   0:00.04 cameraserver
+  455 bluetooth    20   0  10G 2.7M 2.6M S  0.0   0.1   0:00.01 bt_vhci_forwarder -virtio_console_dev=/dev/bluetooth0
+  454 logd         30  10  10G 3.2M 3.1M S  0.0   0.1   0:02.55 logcat -f /dev/hvc1 *:V
+  453 nobody       20   0  10G 2.6M 2.6M S  0.0   0.1   0:00.00 traced
+  452 nobody       20   0  10G 2.7M 2.6M S  0.0   0.1   0:00.00 traced_probes
+  451 drm          20   0  10G 3.9M 3.6M S  0.0   0.1   0:00.00 drmserver
+  449 mdnsr        20   0  10G 3.0M 2.7M S  0.0   0.1   0:00.00 mdnsd
+  438 shell        20   0  10G 6.9M 3.2M S  0.0   0.2   0:00.93 adbd --root_seclabel=u:r:su:s0
+  429 gpu_service  20   0  10G 3.8M 3.8M S  0.0   0.1   0:00.01 gpuservice
+  428 credstore    20   0  11G 3.4M 3.4M S  0.0   0.1   0:00.00 credstore /data/misc/credstore
+  427 audioserver  20   0  11G  15M  13M S  0.0   0.5   0:01.62 audioserver
+  426 media        20   0  10G 6.2M 5.3M S  0.0   0.2   0:00.01 android.hardware.drm-service.widevine
+  425 system       20   0  10G 3.0M 3.0M S  0.0   0.1   0:00.00 android.hardware.rebootescrow-service.default
+  422 system       20   0  10G 3.4M 3.3M S  0.0   0.1   0:00.01 android.hardware.neuralnetworks-shim-service-sample
+  421 system       20   0  10G 3.7M 3.5M S  0.0   0.1   0:00.00 android.hardware.neuralnetworks-service-sample-limited
+  420 system       20   0  10G 3.6M 3.5M S  0.0   0.1   0:00.00 android.hardware.neuralnetworks-service-sample-all
+  418 media        20   0  10G 3.1M 3.1M S  0.0   0.1   0:00.00 android.hardware.cas-service.example
+  415 hsm          20   0  10G 3.2M 3.2M S  0.0   0.1   0:00.00 android.hardware.authsecret-service.example
+  408 nobody       20   0  10G 3.4M 3.3M S  0.0   0.1   0:00.00 android.hardware.vibrator-service.example
+  407 system       20   0  10G 3.5M 3.3M S  0.0   0.1   0:00.00 android.hardware.power.stats-service.example
+  404 nobody       20   0  10G 3.5M 3.4M S  0.0   0.1   0:00.01 android.hardware.power-service.example
+  398 nobody       20   0  10G 3.3M 3.2M S  0.0   0.1   0:00.00 android.hardware.lights-service.example
+  396 nobody       20   0  10G 3.3M 3.2M S  0.0   0.1   0:00.00 android.hardware.identity-service.example
+  389 context_hub  20   0  10G 3.4M 3.3M S  0.0   0.1   0:00.00 android.hardware.contexthub-service.example
+  387 bluetooth    20   0  10G 3.6M 3.4M S  0.0   0.1   0:00.00 android.hardware.bluetooth-service.default
+  385 root         20   0  10G 3.0M 2.5M S  0.0   0.1   0:00.01 ip6tables-restore --noflush -w -v
+  384 root         20   0  10G 2.8M 2.5M S  0.0   0.1   0:00.02 iptables-restore --noflush -w -v
+  383 wifi         20   0  11G 4.1M 3.8M S  0.0   0.1   0:00.01 android.hardware.wifi-service
+  382 system       20   0  10G 3.4M 3.3M S  0.0   0.1   0:00.00 android.hardware.usb-service.example
+  381 system       20   0  10G 2.9M 2.8M S  0.0   0.1   0:00.00 android.hardware.thermal@2.0-service.mock
+  380 system       20   0  10G 3.8M 3.7M S  0.0   0.1   0:00.28 android.hardware.sensors-service.multihal
+  378 system       20   0  10G 3.7M 3.6M S  0.0   0.1   0:00.02 android.hardware.health-service.example
+  377 system       20   0  10G 4.3M 3.8M S  0.0   0.1   0:00.10 android.hardware.graphics.allocator@3.0-service.ranchu
+  374 system       20   0  10G 2.6M 2.6M S  0.0   0.1   0:00.00 android.hardware.gatekeeper@1.0-service.software
+  373 system       20   0  10G 3.8M 3.7M S  0.0   0.1   0:00.01 android.hardware.camera.provider@2.7-service-google
+  370 system       20   0  10G 3.9M 3.9M S  0.0   0.1   0:00.01 android.hardware.camera.provider.ranchu
+  366 audioserver  20   0  11G 5.6M 5.1M S  0.0   0.2   0:01.28 android.hardware.audio.service
+  365 system       20   0  10G 2.8M 2.8M S  0.0   0.1   0:00.00 android.hidl.allocator@1.0-service
+  363 root         20   0  16G 116M  90M S  0.0   4.7   0:00.67 zygote64
+  362 root         20   0  10G 6.6M 5.6M S  0.0   0.2   0:00.14 netd
+  361 statsd       20   0  10G 4.2M 3.7M S  0.0   0.1   0:00.25 statsd
+  357 root         20   0  10G 2.8M 2.6M S  0.0   0.1   0:00.17 dhcpclient -i wlan0 --no-gateway
+  328 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
   327 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
   326 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  325 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
+  325 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
   324 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
-  323 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  323 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
   322 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
-  321 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
-  320 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
-  319 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
+  321 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  320 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  319 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
   318 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  317 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  317 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
   316 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
   315 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
-  314 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  314 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
   313 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
   312 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  311 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  311 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
   310 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
   309 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  308 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/0:5H-kblockd]
-  307 root          0 -20    0    0    0 I  0.0   0.0   0:00.42 [kworker/0:4H-kverityd]
-  306 root         20   0    0    0    0 I  0.0   0.0   0:00.00 [kworker/u4:6]
-  305 root         20   0    0    0    0 I  0.0   0.0   0:00.24 [kworker/u4:5-loop19]
-  304 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/0:3H-kverityd]
+  308 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  307 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  306 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
+  305 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  304 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
   303 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
   302 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
   301 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
@@ -180,132 +146,114 @@ Tasks: 354 total,   2 running, 352 sleeping,   0 stopped,   0 zombie
   299 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
   298 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
   297 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  296 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
+  296 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
   294 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
-  293 root         20   0    0    0    0 I  0.0   0.0   0:00.05 [kworker/u4:3-events_unbound]
-  292 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
+  293 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  292 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
   291 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
-  290 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  289 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  290 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
+  289 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
   288 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
   287 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
-  286 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
-  285 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  286 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
   284 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
-  283 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
-  282 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  281 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  283 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  282 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
+  281 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
   280 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  279 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  278 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  279 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
   277 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  276 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  276 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
   275 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
   274 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
   273 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
   272 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
   271 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
   270 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  269 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/0:2H-kverityd]
-  268 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
+  269 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  268 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
   267 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  219 tombstoned   20   0  10G 2.4M 2.3M S  0.0   0.1   0:00.00 tombstoned
-  214 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  213 root         20   0    0    0    0 S  0.0   0.0   0:00.17 [jbd2/dm-46-8]
-  208 root          0 -20    0    0    0 I  0.0   0.0   0:00.12 [kworker/u5:2-blk_crypto_wq]
-  207 root          0 -20    0    0    0 I  0.0   0.0   0:00.11 [kworker/u5:1-fscrypt_read_queue]
-  205 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-blk_c]
-  199 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-usbip]
-  193 nobody       20   0  10G 5.3M 4.9M S  0.0   0.2   0:00.01 android.hardware.security.keymint-service
-  192 system       20   0  10G 2.7M 2.7M S  0.0   0.1   0:00.00 android.hardware.atrace@1.0-service
-  191 keystore     20   0  10G 9.3M 8.1M S  0.0   0.3   0:00.04 keystore2 /data/misc/keystore
-  190 system       20   0  10G 4.3M 4.2M S  0.0   0.1   0:00.01 android.system.suspend-service
-  184 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
-  182 root         20   0  10G 4.8M 4.7M S  0.0   0.1   0:00.04 vold --blkid_context=u:r:blkid:s0 --blkid_untrusted_context=u:r:blkid_untrusted:s0 --fsck_context=u:r:fsck:s0 --fsck_untrusted_context=u:r:fsck_untrusted:s0
-  175 root         20   0  10G 2.6M 2.6M S  0.0   0.1   0:00.00 qemu-props
-  171 shell        20   0  10G 2.3M 2.3M S  0.0   0.0   0:00.00 sh
-  170 root         -2   0    0    0    0 S  0.0   0.0   0:00.00 [psimon]
-  169 system       20   0  10G 3.0M 2.5M S  0.0   0.1   0:00.02 hwservicemanager
-  168 system       20   0  10G 3.4M 2.7M S  0.0   0.1   0:00.35 servicemanager
-  167 lmkd         -2   0  10G 3.9M 3.2M S  0.0   0.1   0:00.16 lmkd
-  165 root         RT   0    0    0    0 S  0.0   0.0   0:00.00 [irq/18-goldfish_pipe_dprctd]
-  164 root         RT   0    0    0    0 S  0.0   0.0   0:00.00 [sugov:1]
-  163 root         RT   0    0    0    0 S  0.0   0.0   0:00.00 [sugov:0]
-  162 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-cfg80]
-  160 prng_seeder  20   0  10G 2.9M 2.8M S  0.0   0.1   0:00.01 prng_seeder
-  155 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  154 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  153 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-  149 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
-  148 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
-  146 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
-  143 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
-  142 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
-  140 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
-  139 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
-  138 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
+  266 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  265 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  264 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  263 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  262 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  261 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
+  212 tombstoned   20   0  10G 2.5M 2.5M S  0.0   0.1   0:00.00 tombstoned
+  207 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  206 root         20   0    0    0    0 S  0.0   0.0   0:00.13 [jbd2/dm-46-8]
+  200 root          0 -20    0    0    0 I  0.0   0.0   0:00.04 [kworker/u5:2-fscrypt_read_queue]
+  197 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-blk_c]
+  190 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-usbip]
+  189 root         20   0    0    0    0 I  0.0   0.0   0:00.00 [kworker/0:2-rcu_gp]
+  183 nobody       20   0  10G 5.5M 5.3M S  0.0   0.2   0:00.01 android.hardware.security.keymint-service
+  182 system       20   0  10G 2.8M 2.7M S  0.0   0.1   0:00.00 android.hardware.atrace@1.0-service
+  181 keystore     20   0  10G 9.4M 8.1M S  0.0   0.3   0:00.02 keystore2 /data/misc/keystore
+  180 system       20   0  10G 3.4M 3.3M S  0.0   0.1   0:00.02 android.system.suspend-service
+  174 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
+  170 root         20   0  10G 4.2M 4.1M S  0.0   0.1   0:00.03 vold --blkid_context=u:r:blkid:s0 --blkid_untrusted_context=u:r:blkid_untrusted:s0 --fsck_context=u:r:fsck:s0 --fsck_untrusted_context=u:r:fsck_untrusted:s0
+  166 root         20   0    0    0    0 I  0.0   0.0   0:00.54 [kworker/1:2-virtio_vsock]
+  164 root         20   0  10G 2.6M 2.5M S  0.0   0.1   0:00.00 qemu-props
+  160 shell        20   0  10G 2.2M 2.2M S  0.0   0.0   0:00.00 sh
+  159 root         -2   0    0    0    0 S  0.0   0.0   0:00.00 [psimon]
+  158 system       20   0  10G 2.9M 2.6M S  0.0   0.1   0:00.03 hwservicemanager
+  157 system       20   0  10G 3.4M 2.7M S  0.0   0.1   0:00.44 servicemanager
+  156 lmkd         -2   0  10G 3.7M 3.1M S  0.0   0.1   0:00.09 lmkd
+  155 logd         30  10  10G 4.9M 3.6M S  0.0   0.1   0:01.02 logd
+  154 root         RT   0    0    0    0 S  0.0   0.0   0:00.00 [irq/18-goldfish_pipe_dprctd]
+  153 root         RT   0    0    0    0 S  0.0   0.0   0:00.00 [sugov:1]
+  152 root         RT   0    0    0    0 S  0.0   0.0   0:00.00 [sugov:0]
+  151 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-cfg80]
+  149 prng_seeder  20   0  10G 2.8M 2.6M S  0.0   0.1   0:00.01 prng_seeder
+  143 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  142 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  141 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+  137 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
   136 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
-  135 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
   134 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
-  133 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
-  132 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
   131 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
   130 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
   128 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
+  127 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
   126 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
+  124 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
   123 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
   122 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
   121 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
   120 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
+  119 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
   118 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
-  117 root         20   0    0    0    0 I  0.0   0.0   0:00.10 [kworker/1:2-virtio_vsock]
   116 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
   114 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
   111 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
-  104 root         20   0  10G 3.2M 2.6M S  0.0   0.1   0:00.13 ueventd
-  103 root         20   0  10G 2.3M 2.3M S  0.0   0.0   0:00.00 init subcontext u:r:vendor_init:s0 16
-  100 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:24H-kblockd]
-   98 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:22H-kverityd]
-   97 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:21H-kverityd]
-   96 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:20H-kverityd]
-   95 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:19H-kverityd]
-   94 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-   93 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-   92 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-   91 root          0 -20    0    0    0 I  0.0   0.0   0:00.60 [kworker/1:18H-kverityd]
-   90 root          0 -20    0    0    0 I  0.0   0.0   0:00.02 [kworker/1:17H-kblockd]
-   89 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:16H-kverityd]
-   88 root          0 -20    0    0    0 I  0.0   0.0   0:00.11 [kworker/1:15H-kverityd]
-   87 root          0 -20    0    0    0 I  0.0   0.0   0:00.05 [kworker/1:14H-kverityd]
-   86 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:13H-kverityd]
-   85 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:12H-kverityd]
-   84 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:11H-kverityd]
-   83 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:10H-kverityd]
-   82 root          0 -20    0    0    0 I  0.0   0.0   0:00.05 [kworker/1:9H-kverityd]
-   81 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:8H-kverityd]
-   80 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:7H-kverityd]
-   79 root          0 -20    0    0    0 I  0.0   0.0   0:00.78 [kworker/1:6H-kverityd]
-   78 root          0 -20    0    0    0 I  0.0   0.0   0:00.03 [kworker/1:5H-kverityd]
-   77 root          0 -20    0    0    0 I  0.0   0.0   0:00.15 [kworker/1:4H-kverityd]
-   76 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:3H-kverityd]
-   75 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:2H-kverityd]
+  110 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
+  109 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
+  108 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
+  106 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
+  105 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
+  103 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
+  100 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
+   93 root         20   0  10G 3.1M 2.3M S  0.0   0.1   0:00.13 ueventd
+   92 root         20   0  10G 2.3M 2.2M S  0.0   0.0   0:00.00 init subcontext u:r:vendor_init:s0 16
+   86 root          0 -20    0    0    0 I  0.0   0.0   0:00.10 [kworker/1:11H-kverityd]
+   76 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+   75 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
    74 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-   73 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
-   72 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
+   73 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+   72 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kveri]
    71 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
    70 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
    69 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
    68 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
    67 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
-   66 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
-   65 root         20   0    0    0    0 S  0.0   0.0   0:00.00 [jbd2/vdd1-8]
-   61 root         20   0    0    0    0 I  0.0   0.0   0:00.09 [kworker/0:2-sock_diag_events]
-   60 root         20   0    0    0    0 S  0.0   0.0   0:00.00 [hwrng]
-   59 root         20   0    0    0    0 S  0.0   0.0   0:00.00 [khvcd]
-   58 root         20   0    0    0    0 I  0.0   0.0   0:00.08 [kworker/u4:2-events_unbound]
-   56 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ipv6_]
-   55 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-mld]
-   54 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/0:1H-kverityd]
+   66 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kdmfl]
+   65 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ext4-]
+   64 root         20   0    0    0    0 S  0.0   0.0   0:00.00 [jbd2/vdd1-8]
+   59 root         20   0    0    0    0 S  0.0   0.0   0:00.00 [hwrng]
+   58 root         20   0    0    0    0 S  0.0   0.0   0:00.00 [khvcd]
+   57 root         20   0    0    0    0 I  0.0   0.0   0:00.18 [kworker/u4:2-loop19]
+   55 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-ipv6_]
+   54 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-mld]
    53 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-dm_bu]
    52 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-uas]
    51 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-nvme-]
@@ -315,9 +263,8 @@ Tasks: 354 total,   2 running, 352 sleeping,   0 stopped,   0 zombie
    47 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-kthro]
    46 root         -2   0    0    0    0 S  0.0   0.0   0:00.00 [erofs_worker/1]
    45 root         -2   0    0    0    0 S  0.0   0.0   0:00.00 [erofs_worker/0]
-   44 root          0 -20    0    0    0 I  0.0   0.0   0:00.08 [kworker/u5:0-blk_crypto_wq]
-   42 root          0 -20    0    0    0 I  0.0   0.0   0:00.18 [kworker/1:1H-kverityd]
-   41 root         20   0    0    0    0 I  0.0   0.0   0:00.00 [kworker/1:1-virtio_vsock]
+   43 root         20   0    0    0    0 S  0.0   0.0   0:00.65 [kswapd0]
+   41 root         20   0    0    0    0 I  0.0   0.0   0:00.02 [kworker/1:1-events]
    40 root         RT   0    0    0    0 S  0.0   0.0   0:00.00 [watchdogd]
    39 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-devfr]
    38 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-edac-]
@@ -330,9 +277,8 @@ Tasks: 354 total,   2 running, 352 sleeping,   0 stopped,   0 zombie
    31 root         20   0    0    0    0 S  0.0   0.0   0:00.00 [khungtaskd]
    30 root         20   0    0    0    0 S  0.0   0.0   0:00.00 [kauditd]
    29 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-inet_]
-   28 root          0 -20    0    0    0 I  0.0   0.0   0:00.26 [kworker/1:0H-kverityd]
-   27 root         20   0    0    0    0 I  0.0   0.0   0:00.19 [kworker/1:0-virtio_vsock]
-   25 root         RT   0    0    0    0 S  0.0   0.0   0:00.28 [migration/1]
+   26 root         20   0    0    0    0 S  0.0   0.0   0:00.59 [ksoftirqd/1]
+   25 root         RT   0    0    0    0 S  0.0   0.0   0:00.27 [migration/1]
    24 root         RT   0    0    0    0 S  0.0   0.0   0:00.00 [idle_inject/1]
    23 root         20   0    0    0    0 S  0.0   0.0   0:00.00 [cpuhp/1]
    22 root         20   0    0    0    0 S  0.0   0.0   0:00.00 [cpuhp/0]
@@ -341,19 +287,16 @@ Tasks: 354 total,   2 running, 352 sleeping,   0 stopped,   0 zombie
    19 root         -2   0    0    0    0 S  0.0   0.0   0:00.00 [rcu_exp_par_gp_kthread_worker]
    18 root         -2   0    0    0    0 S  0.0   0.0   0:00.00 [rcu_exp_gp_kthread_worker]
    17 root         -2   0    0    0    0 S  0.0   0.0   0:00.00 [rcub/0]
-   16 root         -2   0    0    0    0 I  0.0   0.0   0:00.05 [rcu_preempt]
-   15 root         20   0    0    0    0 S  0.0   0.0   0:00.20 [ksoftirqd/0]
+   16 root         -2   0    0    0    0 I  0.0   0.0   0:00.09 [rcu_preempt]
+   15 root         20   0    0    0    0 S  0.0   0.0   0:00.33 [ksoftirqd/0]
    14 root         20   0    0    0    0 I  0.0   0.0   0:00.00 [rcu_tasks_trace_kthread]
    13 root         20   0    0    0    0 I  0.0   0.0   0:00.00 [rcu_tasks_kthread]
    12 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-mm_pe]
-   11 root         20   0    0    0    0 I  0.0   0.0   0:00.00 [kworker/u4:1-loop37]
-   10 root         20   0    0    0    0 I  0.0   0.0   0:00.01 [kworker/u4:0-loop41]
-    9 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/0:0H-kverityd]
-    8 root         20   0    0    0    0 I  0.0   0.0   0:00.00 [kworker/0:1-virtio_vsock]
-    7 root         20   0    0    0    0 I  0.0   0.0   0:00.01 [kworker/0:0-sock_diag_events]
+   10 root         20   0    0    0    0 I  0.0   0.0   0:00.09 [kworker/u4:0-events_unbound]
+    8 root         20   0    0    0    0 I  0.0   0.0   0:00.21 [kworker/0:1-events]
     6 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-netns]
     5 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-slub_]
     4 root          0 -20    0    0    0 I  0.0   0.0   0:00.00 [kworker/R-rcu_g]
     3 root         20   0    0    0    0 S  0.0   0.0   0:00.00 [pool_workqueue_release]
     2 root         20   0    0    0    0 S  0.0   0.0   0:00.00 [kthreadd]
-    1 root         20   0  10G 4.3M 3.4M S  0.0   0.1   0:02.24 init second_stage
+    1 root         20   0  10G 4.3M 3.2M S  0.0   0.1   0:02.30 init second_stage

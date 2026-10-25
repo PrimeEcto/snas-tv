@@ -316,12 +316,23 @@ test('Settings groups current values and a quality change resumes at the latest 
   );
   expect(button('player-quality')).toBeUndefined();
   await act(async () => button('player-settings').props.onPress());
-  expect(button('player-quality').props.label).toBe('1080p');
+  // With a master playlist to adapt in, this device opens inside its ceiling and names the rung it
+  // starts on: 720p, not the 1080p its decoder could technically decode but its link cannot feed.
+  expect(button('player-quality').props.label).toBe('720p');
   expect(button('player-speed').props.label).toBe('1×');
   await act(async () => button('player-quality').props.onPress());
-  expect(button('option-1080p').props.selected).toBe(true);
+  expect(button('option-720p').props.selected).toBe(true);
+  // The menu is a ceiling: asking for 1080p raises the ceiling the player may climb to and keeps
+  // adapting below it, instead of pinning one rendition that the CDN can starve.
+  await act(async () => button('option-1080p').props.onPress());
+  expect(surface().props.uri).toBe('https://example.test/master.m3u8');
+  expect(surface().props.maxBitRate).toBe(7_000_000);
+  expect(button('player-quality').props.label).toBe('1080p');
+  // Choosing back down lowers it again, so a 720p choice can never play the 1080p rung.
+  await act(async () => button('player-quality').props.onPress());
   await act(async () => button('option-720p').props.onPress());
-  expect(surface().props.uri).toBe('https://example.test/b.m3u8');
+  expect(surface().props.uri).toBe('https://example.test/master.m3u8');
+  expect(surface().props.maxBitRate).toBe(3_600_000);
   expect(button('player-quality').props.label).toBe('720p');
   await act(async () =>
     surface().props.onProgress({position: 0, duration: 7200}),
@@ -474,19 +485,46 @@ test('a constrained device opens the rung it can decode, not the one the label p
   ).toContain('480p');
 });
 
-test('the provider\u2019s real rendition sizes let a 1080p rung be opened as before', async () => {
+test('a constrained device is handed the master playlist with a ceiling, not one pinned rendition', async () => {
   jest.mocked(loadWatch).mockResolvedValue({...ladder, playlist: 'https://example.test/master.m3u8'} as never);
   jest.mocked(loadRenditions).mockResolvedValue([
     {uri: 'https://example.test/2160.m3u8', name: '2160.m3u8', width: 3840, height: 2160, codecs: ['avc1.640033']},
-    {uri: 'https://example.test/a.m3u8', name: 'a.m3u8', width: 1920, height: 1080, codecs: ['avc1.640028']},
-    {uri: 'https://example.test/b.m3u8', name: 'b.m3u8', width: 1280, height: 720, codecs: ['avc1.4d401f']},
+    {uri: 'https://example.test/a.m3u8', name: 'a.m3u8', width: 1920, height: 1080, bandwidth: 5_800_000, codecs: ['avc1.640028']},
+    {uri: 'https://example.test/b.m3u8', name: 'b.m3u8', width: 1280, height: 720, bandwidth: 3_100_000, codecs: ['avc1.4d401f']},
+    {uri: 'https://example.test/c.m3u8', name: 'c.m3u8', width: 852, height: 480, bandwidth: 1_300_000, codecs: ['avc1.4d401e']},
   ] as never);
   await act(async () => {
     mounted = create(component());
   });
-  // 2160p is 3840×2160 High Level 5.1 and is refused; 1080p is 1920×1080 High Level 4.0 and is the
-  // rung this device renders natively, so measuring the ladder must not cost picture quality.
-  expect(surface().props.uri).toBe('https://example.test/a.m3u8');
+  // The player is given the ladder and a ceiling just above its 720p rung (3.1 Mbps), so it can
+  // fall to 480p when the CDN crawls and climb back without ever pulling the 5.8 Mbps 1080p rung
+  // the stick's link cannot sustain.
+  expect(surface().props.uri).toBe('https://example.test/master.m3u8');
+  expect(surface().props.maxBitRate).toBe(3_565_000);
+});
+
+test('a failed adaptive attempt lands on the pinned rendition instead of stepping down', async () => {
+  jest.mocked(loadWatch).mockResolvedValue({...ladder, playlist: 'https://example.test/master.m3u8'} as never);
+  jest.mocked(loadRenditions).mockResolvedValue([
+    {uri: 'https://example.test/a.m3u8', name: 'a.m3u8', width: 1920, height: 1080, bandwidth: 5_800_000, codecs: ['avc1.640028']},
+    {uri: 'https://example.test/b.m3u8', name: 'b.m3u8', width: 1280, height: 720, bandwidth: 3_100_000, codecs: ['avc1.4d401f']},
+  ] as never);
+  await act(async () => {
+    mounted = create(component());
+  });
+  await act(async () =>
+    surface().props.onProgress({position: 2400, duration: 7200}),
+  );
+  await act(async () => surface().props.onError('Source error'));
+  // Not a lost rung — a lost adaptation. The rendition this device would have opened anyway is
+  // handed over at the position playback had reached, and the ladder is left alone.
+  expect(surface().props.uri).toBe('https://example.test/b.m3u8');
+  expect(surface().props.maxBitRate).toBeUndefined();
+  expect(mounted.root.findAllByProps({testID: 'player-error'})).toHaveLength(0);
+  await act(async () =>
+    surface().props.onProgress({position: 0, duration: 7200}),
+  );
+  expect(surface().props.seekTo).toBe(2400);
 });
 
 test('a rung that took the last session down with it is not opened a second time', async () => {
@@ -519,9 +557,12 @@ test('a constrained device hands the surface a bounded buffer and a memory-aware
   // else — measured on the emulator as a Dalvik heap that went from 10 MB to 59 MB when a 6 Mbps
   // title opened. On this device the surface is told to take less, and to stop filling rather than
   // fill the heap the decoder needs.
+  // 40 seconds of media, because the CDN was measured stalling for the better part of a minute on
+  // a single segment; the heap shares are unchanged, so the bigger buffer still cannot crowd out
+  // the decoder.
   expect(surface().props.bufferConfig).toMatchObject({
-    minBufferMs: 10000,
-    maxBufferMs: 25000,
+    minBufferMs: 15000,
+    maxBufferMs: 40000,
     maxHeapAllocationPercent: 0.25,
     minBufferMemoryReservePercent: 0.2,
   });

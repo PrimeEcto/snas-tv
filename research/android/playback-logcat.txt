@@ -1,199 +1,200 @@
-10-25 17:43:06.813  4690  5242 I DMCodecAdapterFactory: Creating an asynchronous MediaCodec adapter for track type video
-10-25 17:43:06.818  4690  5259 D CCodec  : allocate(c2.goldfish.h264.decoder)
-10-25 17:43:06.822  4690  5259 I CCodec  : setting up 'default' as default (vendor) store
-10-25 17:43:06.826  4690  5259 I CCodec  : Created component [c2.goldfish.h264.decoder]
-10-25 17:43:06.841  4690  5259 D CCodecConfig: read media type: video/avc
-10-25 17:43:06.843  4690  5259 D CCodecConfig: ignoring local param raw.size (0xd2001800) as it is already supported
-10-25 17:43:06.843  4690  5259 D CCodecConfig: ignoring local param default.color (0x5200180b) as it is already supported
-10-25 17:43:06.844  4690  5259 I CCodecConfig: query failed after returning 12 values (BAD_INDEX)
-10-25 17:43:06.844  4690  5259 D CCodecConfig: c2 config diff is Dict {
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 coded.pl.level = 20496
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 coded.pl.profile = 20481
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 coded.vui.color.matrix = 0
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 coded.vui.color.primaries = 0
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 coded.vui.color.range = 2
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 coded.vui.color.transfer = 0
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 default.color.matrix = 0
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 default.color.primaries = 0
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 default.color.range = 0
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 default.color.transfer = 0
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 input.buffers.max-size.value = 6291456
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 input.delay.value = 0
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   string input.media-type.value = "video/avc"
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 output.delay.value = 8
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   string output.media-type.value = "video/raw"
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 raw.color.matrix = 0
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 raw.color.primaries = 0
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 raw.color.range = 2
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 raw.color.transfer = 0
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 raw.max-size.height = 240
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 raw.max-size.width = 320
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 raw.pixel-format.value = 35
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::i32 raw.rotation.flip = 0
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::i32 raw.rotation.value = 0
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 raw.sar.height = 1
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 raw.sar.width = 1
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 raw.size.height = 240
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2::u32 raw.size.width = 320
-10-25 17:43:06.844  4690  5259 D CCodecConfig:   c2:
-10-25 17:43:06.848  4690  5258 I MediaCodec: MediaCodec will operate in async mode
-10-25 17:43:06.849  4690  5258 I MediaCodec: [c2.goldfish.h264.decoder] setting surface generation to 4802561
-10-25 17:43:06.850  4690  5259 I CCodecBufferChannel: Using latch times for frame rendered signals - present fences not supported
-10-25 17:43:06.850  4690  5259 D CCodec  : [c2.goldfish.h264.decoder] buffers are bound to CCodec for this session
-10-25 17:43:06.850  4690  5259 D CCodecConfig: no c2 equivalents for log-session-id
-10-25 17:43:06.850  4690  5259 D CCodecConfig: no c2 equivalents for importance
-10-25 17:43:06.850  4690  5259 D CCodecConfig: no c2 equivalents for color-standard
-10-25 17:43:06.850  4690  5259 D CCodecConfig: no c2 equivalents for csd-1
-10-25 17:43:06.850  4690  5259 D CCodecConfig: no c2 equivalents for native-window
-10-25 17:43:06.850  4690  5259 D CCodecConfig: no c2 equivalents for native-window-generation
-10-25 17:43:06.850  4690  5259 D CCodecConfig: no c2 equivalents for flags
-10-25 17:43:06.850  4690  5259 D CCodecConfig: config failed => CORRUPTED
-10-25 17:43:06.850  4690  5259 D CCodecConfig: c2 config diff is   c2::u32 default.color.matrix = 1
-10-25 17:43:06.850  4690  5259 D CCodecConfig:   c2::u32 default.color.primaries = 1
-10-25 17:43:06.850  4690  5259 D CCodecConfig:   c2::u32 default.color.range = 2
-10-25 17:43:06.850  4690  5259 D CCodecConfig:   c2::u32 default.color.transfer = 3
-10-25 17:43:06.850  4690  5259 D CCodecConfig:   c2::u32 raw.max-size.height = 728
-10-25 17:43:06.850  4690  5259 D CCodecConfig:   c2::u32 raw.max-size.width = 1920
-10-25 17:43:06.850  4690  5259 D CCodecConfig:   c2::u32 raw.size.height = 728
-10-25 17:43:06.850  4690  5259 D CCodecConfig:   c2::u32 raw.size.width = 1920
-10-25 17:43:06.850  4690  5259 D CCodec  : client requested max input size 1059840, which is smaller than what component recommended (6291456); overriding with component recommendation.
-10-25 17:43:06.850  4690  5259 W CCodec  : This behavior is subject to change. It is recommended that app developers double check whether the requested max input size is in reasonable range.
-10-25 17:43:06.850  4690  5259 D CCodec  : encoding statistics level = 0
-10-25 17:43:06.850  4690  5259 D CCodec  : setup formats input: AMessage(what = 0x00000000) = {
-10-25 17:43:06.850  4690  5259 D CCodec  :   int32_t height = 728
-10-25 17:43:06.850  4690  5259 D CCodec  :   int32_t level = 65536
-10-25 17:43:06.850  4690  5259 D CCodec  :   int32_t max-input-size = 6291456
-10-25 17:43:06.850  4690  5259 D CCodec  :   string mime = "video/avc"
-10-25 17:43:06.850  4690  5259 D CCodec  :   int32_t profile = 65536
-10-25 17:43:06.850  4690  5259 D CCodec  :   int32_t width = 1920
-10-25 17:43:06.850  4690  5259 D CCodec  :   Rect crop(0, 0, 1919, 727)
-10-25 17:43:06.850  4690  5259 D CCodec  : }
-10-25 17:43:06.850  4690  5259 D CCodec  : setup formats output: AMessage(what = 0x00000000) = {
-10-25 17:43:06.850  4690  5259 D CCodec  :   int32_t android._color-format = 2135033992
-10-25 17:43:06.850  4690  5259 D CCodec  :   int32_t android._video-scaling = 1
-10-25 17:43:06.850  4690  5259 D CCodec  :   int32_t rotation-degrees = 0
-10-25 17:43:06.850  4690  5259 D CCodec  :   int32_t color-standard = 1
-10-25 17:43:06.850  4690  5259 D CCodec  :   int32_t color-range = 2
-10-25 17:43:06.850  4690  5259 D CCodec  :   int32_t color-transfer = 3
-10-25 17:43:06.850  4690  5259 D CCodec  :   int32_t sar-height = 1
-10-25 17:43:06.850  4690  5259 D CCodec  :   int32_t sar-width = 1
-10-25 17:43:06.850  4690  5259 D CCodec  :   Rect crop(0, 0, 1919, 727)
-10-25 17:43:06.850  4690  5259 D CCodec  :   int32_t width = 1920
-10-25 17:43:06.850  4690  5259 D CCodec  :   int32_t height = 728
-10-25 17:43:06.850  4690  5259 D CCodec  :   int32_t max-height = 728
-10-25 17:43:06.850  4690  5259 D CCodec  :   int32_t max-width = 1920
-10-25 17:43:06.850  4690  5259 D CCodec  :   string mime = "video/raw"
-10-25 17:43:06.850  4690  5259 D CCodec  :   int32_t android._dataspace = 260
-10-25 17:43:06.850  4690  5259 D CCodec  :   int32_t color-format = 2130708361
-10-25 17:43:06.850  4690  5259 D CCodec  : }
-10-25 17:43:06.850  4690  5259 I CCodecConfig: query failed after returning 12 values (BAD_INDEX)
-10-25 17:43:06.851  4690  5259 D CCodecConfig: c2 config diff is   c2::u32 raw.color.matrix = 1
-10-25 17:43:06.851  4690  5259 D CCodecConfig:   c2::u32 raw.color.primaries = 1
-10-25 17:43:06.851  4690  5259 D CCodecConfig:   c2::u32 raw.color.transfer = 3
-10-25 17:43:06.852  4690  5242 D MediaCodec: keep callback message for reclaim
-10-25 17:43:06.852  4690  5259 D CCodecBufferChannel: [c2.goldfish.h264.decoder#798] Created input block pool with allocatorID 16 => poolID 17 - OK (0)
-10-25 17:43:06.853  4690  5259 D CCodecBufferChannel: [c2.goldfish.h264.decoder#798] Query output surface allocator returned 0 params => BAD_INDEX (6)
-10-25 17:43:06.853  4690  5259 I CCodecBufferChannel: [c2.goldfish.h264.decoder#798] Created output block pool with allocatorID 18 => poolID 17 - OK
-10-25 17:43:06.853  4690  5259 D CCodecBufferChannel: [c2.goldfish.h264.decoder#798] Configured output block pool ids 17 => OK
-10-25 17:43:06.884  4690  5242 I DMCodecAdapterFactory: Creating an asynchronous MediaCodec adapter for track type audio
-10-25 17:43:06.885  4690  5267 D CCodec  : allocate(c2.android.aac.decoder)
-10-25 17:43:06.886  4690  5267 I CCodec  : setting up 'default' as default (vendor) store
-10-25 17:43:07.202  4690  5267 I CCodec  : Created component [c2.android.aac.decoder]
-10-25 17:43:07.202  4690  5267 D CCodecConfig: read media type: audio/mp4a-latm
-10-25 17:43:07.204  4690  5267 I CCodecConfig: query failed after returning 21 values (BAD_INDEX)
-10-25 17:43:07.204  4690  5267 D CCodecConfig: c2 config diff is Dict {
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::u32 coded.aac-packaging.value = 0
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::u32 coded.bitrate.value = 64000
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::u32 coded.pl.level = 0
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::u32 coded.pl.profile = 8192
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::i32 coding.drc.album-mode.value = 0
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::float coding.drc.attenuation-factor.value = 1
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::float coding.drc.boost-factor.value = 1
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::i32 coding.drc.compression-mode.value = 3
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::i32 coding.drc.effect-type.value = 3
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::float coding.drc.encoded-level.value = 0.25
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::float coding.drc.reference-level.value = -16
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::u32 input.buffers.max-size.value = 8192
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::u32 input.delay.value = 0
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   string input.media-type.value = "audio/mp4a-latm"
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::u32 output.delay.value = 2
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::float output.drc.output-loudness.value = 0.25
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::u32 output.large-frame.max-size = 0
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::u32 output.large-frame.threshold-size = 0
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   string output.media-type.value = "audio/raw"
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::u32 raw.channel-count.value = 1
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::u32 raw.channel-mask.value = 0
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::u32 raw.max-channel-count.value = 8
-10-25 17:43:07.204  4690  5267 D CCodecConfig:   c2::u32 raw.sample-rate.value = 44100
-10-25 17:43:07.204  4690  5267 D CCodecConfig: }
-10-25 17:43:07.206  4690  5267 I MediaCodec: MediaCodec will operate in async mode
-10-25 17:43:07.206  4690  5267 D CCodec  : [c2.android.aac.decoder] buffers are bound to CCodec for this session
-10-25 17:43:07.206  4690  5267 D CCodecConfig: no c2 equivalents for log-session-id
-10-25 17:43:07.206  4690  5267 D CCodecConfig: no c2 equivalents for importance
-10-25 17:43:07.206  4690  5267 D CCodecConfig: no c2 equivalents for flags
-10-25 17:43:07.206  4690  5267 D CCodecConfig: c2 config diff is   c2::u32 raw.channel-count.value = 2
-10-25 17:43:07.207  4690  5267 D CCodec  : encoding statistics level = 0
-10-25 17:43:07.207  4690  5267 D CCodec  : setup formats input: AMessage(what = 0x00000000) = {
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t aac-drc-album-mode = 0
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t aac-drc-boost-level = 127
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t aac-drc-cut-level = 127
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t aac-drc-effect-type = 3
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t aac-encoded-target-level = -1
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t aac-max-output-channel_count = 8
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t aac-target-ref-level = 64
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t bitrate = 64000
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t channel-count = 2
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t channel-mask = 0
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t level = 0
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t max-input-size = 8192
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t max-output-channel-count = 8
-10-25 17:43:07.207  4690  5267 D CCodec  :   string mime = "audio/mp4a-latm"
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t profile = 2
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t sample-rate = 44100
-10-25 17:43:07.207  4690  5267 D CCodec  : }
-10-25 17:43:07.207  4690  5267 D CCodec  : setup formats output: AMessage(what = 0x00000000) = {
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t aac-drc-album-mode = 0
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t aac-drc-boost-level = 127
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t aac-drc-cut-level = 127
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t aac-drc-effect-type = 3
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t aac-drc-output-loudness = -1
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t aac-encoded-target-level = -1
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t aac-max-output-channel_count = 8
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t aac-target-ref-level = 64
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t buffer-batch-max-output-size = 0
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t buffer-batch-threshold-output-size = 0
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t channel-count = 2
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t channel-mask = 0
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t max-output-channel-count = 8
-10-25 17:43:07.207  4690  5267 D CCodec  :   string mime = "audio/raw"
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t sample-rate = 44100
-10-25 17:43:07.207  4690  5267 D CCodec  :   int32_t android._config-pcm-encoding = 2
-10-25 17:43:07.207  4690  5267 D CCodec  : }
-10-25 17:43:07.207  4690  5267 I CCodecConfig: query failed after returning 21 values (BAD_INDEX)
-10-25 17:43:07.208  4690  5242 D MediaCodec: keep callback message for reclaim
-10-25 17:43:07.212  4690  5267 D CCodecBufferChannel: [c2.android.aac.decoder#499] Created input block pool with allocatorID 16 => poolID 18 - OK (0)
-10-25 17:43:07.212  4690  5267 I CCodecBufferChannel: [c2.android.aac.decoder#499] Created output block pool with allocatorID 16 => poolID 36 - OK
-10-25 17:43:07.213  4690  5267 D CCodecBufferChannel: [c2.android.aac.decoder#499] Configured output block pool ids 36 => OK
-10-25 17:43:07.315  4690  5259 D CCodecConfig: c2 config diff is   c2::u32 raw.crop.height = 728
-10-25 17:43:07.315  4690  5259 D CCodecConfig:   c2::u32 raw.crop.left = 0
-10-25 17:43:07.315  4690  5259 D CCodecConfig:   c2::u32 raw.crop.top = 0
-10-25 17:43:07.315  4690  5259 D CCodecConfig:   c2::u32 raw.crop.width = 1920
-10-25 17:43:07.317  4690  5267 D CCodecConfig: c2 config diff is   c2::u32 raw.channel-mask.value = 12
-10-25 17:43:07.317  4690  5267 D CCodecBuffers: [c2.android.aac.decoder#499:Output[N]] popFromStashAndRegister: at 1000000009866us, output format changed to AMessage(what = 0x00000000) = {
-10-25 17:43:07.317  4690  5267 D CCodecBuffers:   int32_t aac-drc-album-mode = 0
-10-25 17:43:07.317  4690  5267 D CCodecBuffers:   int32_t aac-drc-boost-level = 127
-10-25 17:43:07.317  4690  5267 D CCodecBuffers:   int32_t aac-drc-cut-level = 127
-10-25 17:43:07.317  4690  5267 D CCodecBuffers:   int32_t aac-drc-effect-type = 3
-10-25 17:43:07.317  4690  5267 D CCodecBuffers:   int32_t aac-drc-output-loudness = -1
-10-25 17:43:07.317  4690  5267 D CCodecBuffers:   int32_t aac-encoded-target-level = -1
-10-25 17:43:07.317  4690  5267 D CCodecBuffers:   int32_t aac-max-output-channel_count = 8
-10-25 17:43:07.317  4690  5267 D CCodecBuffers:   int32_t aac-target-ref-level = 64
-10-25 17:43:07.317  4690  5267 D CCodecBuffers:   int32_t buffer-batch-max-output-size = 0
-10-25 17:43:07.317  4690  5267 D CCodecBuffers:   int32_t buffer-batch-threshold-output-size = 0
-10-25 17:43:07.317  4690  5267 D CCodecBuffers:   int32_t channel-count = 2
-10-25 17:43:07.317  4690  5267 D CCodecBuffers:   int32_t channel-mask = 12
-10-25 17:43:07.317  4690  5267 D CCodecBuffers:   int32_t max-output-channel-count = 8
-10-25 17:43:07.317  4690  5267 D CCodecBuffers:   string mime = "audio/raw"
-10-25 17:43:07.317  4690  5267 D CCodecBuffers:   int32_t sample-rate = 44100
-10-25 17:43:07.317  4690  5267 D CCodecBuffers:   int32_t android._config-pcm-encoding = 2
-10-25 17:43:07.317  4690  5267 D CCodecBuffers: }
+10-25 18:32:12.220  6464  6984 I DMCodecAdapterFactory: Creating an asynchronous MediaCodec adapter for track type video
+10-25 18:32:12.221  6464  7001 D CCodec  : allocate(c2.goldfish.h264.decoder)
+10-25 18:32:12.222  6464  7001 I CCodec  : setting up 'default' as default (vendor) store
+10-25 18:32:12.223  6464  7001 I CCodec  : Created component [c2.goldfish.h264.decoder]
+10-25 18:32:12.223  6464  7001 D CCodecConfig: read media type: video/avc
+10-25 18:32:12.224  6464  7001 D CCodecConfig: ignoring local param raw.size (0xd2001800) as it is already supported
+10-25 18:32:12.224  6464  7001 D CCodecConfig: ignoring local param default.color (0x5200180b) as it is already supported
+10-25 18:32:12.225  6464  7001 I CCodecConfig: query failed after returning 12 values (BAD_INDEX)
+10-25 18:32:12.225  6464  7001 D CCodecConfig: c2 config diff is Dict {
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 coded.pl.level = 20496
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 coded.pl.profile = 20481
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 coded.vui.color.matrix = 0
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 coded.vui.color.primaries = 0
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 coded.vui.color.range = 2
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 coded.vui.color.transfer = 0
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 default.color.matrix = 0
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 default.color.primaries = 0
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 default.color.range = 0
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 default.color.transfer = 0
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 input.buffers.max-size.value = 6291456
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 input.delay.value = 0
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   string input.media-type.value = "video/avc"
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 output.delay.value = 8
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   string output.media-type.value = "video/raw"
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 raw.color.matrix = 0
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 raw.color.primaries = 0
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 raw.color.range = 2
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 raw.color.transfer = 0
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 raw.max-size.height = 240
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 raw.max-size.width = 320
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 raw.pixel-format.value = 35
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::i32 raw.rotation.flip = 0
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::i32 raw.rotation.value = 0
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 raw.sar.height = 1
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 raw.sar.width = 1
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 raw.size.height = 240
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2::u32 raw.size.width = 320
+10-25 18:32:12.225  6464  7001 D CCodecConfig:   c2:
+10-25 18:32:12.226  6464  7000 I MediaCodec: MediaCodec will operate in async mode
+10-25 18:32:12.226  6464  7000 I MediaCodec: [c2.goldfish.h264.decoder] setting surface generation to 6619137
+10-25 18:32:12.226  6464  7001 I CCodecBufferChannel: Using latch times for frame rendered signals - present fences not supported
+10-25 18:32:12.226  6464  7001 D CCodec  : [c2.goldfish.h264.decoder] buffers are bound to CCodec for this session
+10-25 18:32:12.226  6464  7001 D CCodecConfig: no c2 equivalents for log-session-id
+10-25 18:32:12.226  6464  7001 D CCodecConfig: no c2 equivalents for importance
+10-25 18:32:12.226  6464  7001 D CCodecConfig: no c2 equivalents for color-standard
+10-25 18:32:12.226  6464  7001 D CCodecConfig: no c2 equivalents for csd-1
+10-25 18:32:12.226  6464  7001 D CCodecConfig: no c2 equivalents for native-window
+10-25 18:32:12.226  6464  7001 D CCodecConfig: no c2 equivalents for native-window-generation
+10-25 18:32:12.226  6464  7001 D CCodecConfig: no c2 equivalents for flags
+10-25 18:32:12.226  6464  7001 D CCodecConfig: config failed => CORRUPTED
+10-25 18:32:12.227  6464  7001 D CCodecConfig: c2 config diff is   c2::u32 default.color.matrix = 1
+10-25 18:32:12.227  6464  7001 D CCodecConfig:   c2::u32 default.color.primaries = 1
+10-25 18:32:12.227  6464  7001 D CCodecConfig:   c2::u32 default.color.range = 2
+10-25 18:32:12.227  6464  7001 D CCodecConfig:   c2::u32 default.color.transfer = 3
+10-25 18:32:12.227  6464  7001 D CCodecConfig:   c2::u32 raw.max-size.height = 728
+10-25 18:32:12.227  6464  7001 D CCodecConfig:   c2::u32 raw.max-size.width = 1920
+10-25 18:32:12.227  6464  7001 D CCodecConfig:   c2::u32 raw.size.height = 728
+10-25 18:32:12.227  6464  7001 D CCodecConfig:   c2::u32 raw.size.width = 1920
+10-25 18:32:12.227  6464  7001 D CCodec  : client requested max input size 1059840, which is smaller than what component recommended (6291456); overriding with component recommendation.
+10-25 18:32:12.227  6464  7001 W CCodec  : This behavior is subject to change. It is recommended that app developers double check whether the requested max input size is in reasonable range.
+10-25 18:32:12.227  6464  7001 D CCodec  : encoding statistics level = 0
+10-25 18:32:12.227  6464  7001 D CCodec  : setup formats input: AMessage(what = 0x00000000) = {
+10-25 18:32:12.227  6464  7001 D CCodec  :   int32_t height = 728
+10-25 18:32:12.227  6464  7001 D CCodec  :   int32_t level = 65536
+10-25 18:32:12.227  6464  7001 D CCodec  :   int32_t max-input-size = 6291456
+10-25 18:32:12.227  6464  7001 D CCodec  :   string mime = "video/avc"
+10-25 18:32:12.227  6464  7001 D CCodec  :   int32_t profile = 65536
+10-25 18:32:12.227  6464  7001 D CCodec  :   int32_t width = 1920
+10-25 18:32:12.227  6464  7001 D CCodec  :   Rect crop(0, 0, 1919, 727)
+10-25 18:32:12.227  6464  7001 D CCodec  : }
+10-25 18:32:12.227  6464  7001 D CCodec  : setup formats output: AMessage(what = 0x00000000) = {
+10-25 18:32:12.227  6464  7001 D CCodec  :   int32_t android._color-format = 2135033992
+10-25 18:32:12.227  6464  7001 D CCodec  :   int32_t android._video-scaling = 1
+10-25 18:32:12.227  6464  7001 D CCodec  :   int32_t rotation-degrees = 0
+10-25 18:32:12.227  6464  7001 D CCodec  :   int32_t color-standard = 1
+10-25 18:32:12.227  6464  7001 D CCodec  :   int32_t color-range = 2
+10-25 18:32:12.227  6464  7001 D CCodec  :   int32_t color-transfer = 3
+10-25 18:32:12.227  6464  7001 D CCodec  :   int32_t sar-height = 1
+10-25 18:32:12.227  6464  7001 D CCodec  :   int32_t sar-width = 1
+10-25 18:32:12.227  6464  7001 D CCodec  :   Rect crop(0, 0, 1919, 727)
+10-25 18:32:12.227  6464  7001 D CCodec  :   int32_t width = 1920
+10-25 18:32:12.227  6464  7001 D CCodec  :   int32_t height = 728
+10-25 18:32:12.227  6464  7001 D CCodec  :   int32_t max-height = 728
+10-25 18:32:12.227  6464  7001 D CCodec  :   int32_t max-width = 1920
+10-25 18:32:12.227  6464  7001 D CCodec  :   string mime = "video/raw"
+10-25 18:32:12.227  6464  7001 D CCodec  :   int32_t android._dataspace = 260
+10-25 18:32:12.227  6464  7001 D CCodec  :   int32_t color-format = 2130708361
+10-25 18:32:12.227  6464  7001 D CCodec  : }
+10-25 18:32:12.227  6464  7001 I CCodecConfig: query failed after returning 12 values (BAD_INDEX)
+10-25 18:32:12.227  6464  7001 D CCodecConfig: c2 config diff is   c2::u32 raw.color.matrix = 1
+10-25 18:32:12.227  6464  7001 D CCodecConfig:   c2::u32 raw.color.primaries = 1
+10-25 18:32:12.227  6464  7001 D CCodecConfig:   c2::u32 raw.color.transfer = 3
+10-25 18:32:12.227  6464  6984 D MediaCodec: keep callback message for reclaim
+10-25 18:32:12.228  6464  7001 D CCodecBufferChannel: [c2.goldfish.h264.decoder#307] Created input block pool with allocatorID 16 => poolID 17 - OK (0)
+10-25 18:32:12.228  6464  7001 D CCodecBufferChannel: [c2.goldfish.h264.decoder#307] Query output surface allocator returned 0 params => BAD_INDEX (6)
+10-25 18:32:12.228  6464  7001 I CCodecBufferChannel: [c2.goldfish.h264.decoder#307] Created output block pool with allocatorID 18 => poolID 18 - OK
+10-25 18:32:12.228  6464  7001 D CCodecBufferChannel: [c2.goldfish.h264.decoder#307] Configured output block pool ids 18 => OK
+10-25 18:32:12.235  6464  6984 I DMCodecAdapterFactory: Creating an asynchronous MediaCodec adapter for track type audio
+10-25 18:32:12.236  6464  7009 D CCodec  : allocate(c2.android.aac.decoder)
+10-25 18:32:12.239  6464  7009 I CCodec  : setting up 'default' as default (vendor) store
+10-25 18:32:12.392  6464  7005 D CCodecBufferChannel: [c2.goldfish.h264.decoder#307] Ignoring stale input buffer done callback: last flush index = 0, frameIndex = 0
+10-25 18:32:12.399  6464  7009 I CCodec  : Created component [c2.android.aac.decoder]
+10-25 18:32:12.400  6464  7009 D CCodecConfig: read media type: audio/mp4a-latm
+10-25 18:32:12.403  6464  7009 I CCodecConfig: query failed after returning 21 values (BAD_INDEX)
+10-25 18:32:12.403  6464  7009 D CCodecConfig: c2 config diff is Dict {
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::u32 coded.aac-packaging.value = 0
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::u32 coded.bitrate.value = 64000
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::u32 coded.pl.level = 0
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::u32 coded.pl.profile = 8192
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::i32 coding.drc.album-mode.value = 0
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::float coding.drc.attenuation-factor.value = 1
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::float coding.drc.boost-factor.value = 1
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::i32 coding.drc.compression-mode.value = 3
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::i32 coding.drc.effect-type.value = 3
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::float coding.drc.encoded-level.value = 0.25
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::float coding.drc.reference-level.value = -16
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::u32 input.buffers.max-size.value = 8192
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::u32 input.delay.value = 0
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   string input.media-type.value = "audio/mp4a-latm"
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::u32 output.delay.value = 2
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::float output.drc.output-loudness.value = 0.25
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::u32 output.large-frame.max-size = 0
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::u32 output.large-frame.threshold-size = 0
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   string output.media-type.value = "audio/raw"
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::u32 raw.channel-count.value = 1
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::u32 raw.channel-mask.value = 0
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::u32 raw.max-channel-count.value = 8
+10-25 18:32:12.403  6464  7009 D CCodecConfig:   c2::u32 raw.sample-rate.value = 44100
+10-25 18:32:12.403  6464  7009 D CCodecConfig: }
+10-25 18:32:12.408  6464  7009 I MediaCodec: MediaCodec will operate in async mode
+10-25 18:32:12.408  6464  7009 D CCodec  : [c2.android.aac.decoder] buffers are bound to CCodec for this session
+10-25 18:32:12.408  6464  7009 D CCodecConfig: no c2 equivalents for log-session-id
+10-25 18:32:12.408  6464  7009 D CCodecConfig: no c2 equivalents for importance
+10-25 18:32:12.408  6464  7009 D CCodecConfig: no c2 equivalents for flags
+10-25 18:32:12.410  6464  7009 D CCodecConfig: c2 config diff is   c2::u32 raw.channel-count.value = 2
+10-25 18:32:12.410  6464  7009 D CCodec  : encoding statistics level = 0
+10-25 18:32:12.410  6464  7009 D CCodec  : setup formats input: AMessage(what = 0x00000000) = {
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t aac-drc-album-mode = 0
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t aac-drc-boost-level = 127
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t aac-drc-cut-level = 127
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t aac-drc-effect-type = 3
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t aac-encoded-target-level = -1
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t aac-max-output-channel_count = 8
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t aac-target-ref-level = 64
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t bitrate = 64000
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t channel-count = 2
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t channel-mask = 0
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t level = 0
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t max-input-size = 8192
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t max-output-channel-count = 8
+10-25 18:32:12.410  6464  7009 D CCodec  :   string mime = "audio/mp4a-latm"
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t profile = 2
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t sample-rate = 44100
+10-25 18:32:12.410  6464  7009 D CCodec  : }
+10-25 18:32:12.410  6464  7009 D CCodec  : setup formats output: AMessage(what = 0x00000000) = {
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t aac-drc-album-mode = 0
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t aac-drc-boost-level = 127
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t aac-drc-cut-level = 127
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t aac-drc-effect-type = 3
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t aac-drc-output-loudness = -1
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t aac-encoded-target-level = -1
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t aac-max-output-channel_count = 8
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t aac-target-ref-level = 64
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t buffer-batch-max-output-size = 0
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t buffer-batch-threshold-output-size = 0
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t channel-count = 2
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t channel-mask = 0
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t max-output-channel-count = 8
+10-25 18:32:12.410  6464  7009 D CCodec  :   string mime = "audio/raw"
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t sample-rate = 44100
+10-25 18:32:12.410  6464  7009 D CCodec  :   int32_t android._config-pcm-encoding = 2
+10-25 18:32:12.410  6464  7009 D CCodec  : }
+10-25 18:32:12.410  6464  7009 I CCodecConfig: query failed after returning 21 values (BAD_INDEX)
+10-25 18:32:12.412  6464  6984 D MediaCodec: keep callback message for reclaim
+10-25 18:32:12.413  6464  7009 D CCodecBufferChannel: [c2.android.aac.decoder#108] Created input block pool with allocatorID 16 => poolID 18 - OK (0)
+10-25 18:32:12.413  6464  7009 I CCodecBufferChannel: [c2.android.aac.decoder#108] Created output block pool with allocatorID 16 => poolID 38 - OK
+10-25 18:32:12.413  6464  7009 D CCodecBufferChannel: [c2.android.aac.decoder#108] Configured output block pool ids 38 => OK
+10-25 18:32:12.418  6464  7009 D CCodecConfig: c2 config diff is   c2::u32 raw.channel-mask.value = 12
+10-25 18:32:12.451  6464  7009 D CCodecBuffers: [c2.android.aac.decoder#108:Output[N]] popFromStashAndRegister: at 1000000009866us, output format changed to AMessage(what = 0x00000000) = {
+10-25 18:32:12.451  6464  7009 D CCodecBuffers:   int32_t aac-drc-album-mode = 0
+10-25 18:32:12.451  6464  7009 D CCodecBuffers:   int32_t aac-drc-boost-level = 127
+10-25 18:32:12.451  6464  7009 D CCodecBuffers:   int32_t aac-drc-cut-level = 127
+10-25 18:32:12.451  6464  7009 D CCodecBuffers:   int32_t aac-drc-effect-type = 3
+10-25 18:32:12.451  6464  7009 D CCodecBuffers:   int32_t aac-drc-output-loudness = -1
+10-25 18:32:12.451  6464  7009 D CCodecBuffers:   int32_t aac-encoded-target-level = -1
+10-25 18:32:12.451  6464  7009 D CCodecBuffers:   int32_t aac-max-output-channel_count = 8
+10-25 18:32:12.451  6464  7009 D CCodecBuffers:   int32_t aac-target-ref-level = 64
+10-25 18:32:12.451  6464  7009 D CCodecBuffers:   int32_t buffer-batch-max-output-size = 0
+10-25 18:32:12.451  6464  7009 D CCodecBuffers:   int32_t buffer-batch-threshold-output-size = 0
+10-25 18:32:12.451  6464  7009 D CCodecBuffers:   int32_t channel-count = 2
+10-25 18:32:12.451  6464  7009 D CCodecBuffers:   int32_t channel-mask = 12
+10-25 18:32:12.451  6464  7009 D CCodecBuffers:   int32_t max-output-channel-count = 8
+10-25 18:32:12.451  6464  7009 D CCodecBuffers:   string mime = "audio/raw"
+10-25 18:32:12.451  6464  7009 D CCodecBuffers:   int32_t sample-rate = 44100
+10-25 18:32:12.451  6464  7009 D CCodecBuffers:   int32_t android._config-pcm-encoding = 2
+10-25 18:32:12.451  6464  7009 D CCodecBuffers: }
+10-25 18:32:12.540  6464  7001 D CCodecConfig: c2 config diff is   c2::u32 raw.crop.height = 728
+10-25 18:32:12.540  6464  7001 D CCodecConfig:   c2::u32 raw.crop.left = 0
+10-25 18:32:12.540  6464  7001 D CCodecConfig:   c2::u32 raw.crop.top = 0
+10-25 18:32:12.540  6464  7001 D CCodecConfig:   c2::u32 raw.crop.width = 1920

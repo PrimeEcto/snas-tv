@@ -1,10 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
+  ADAPTIVE_FALLBACK_BITRATE,
+  ADAPTIVE_MAX_HEIGHT,
   CONSTRAINED_POLICY,
   FULL_POLICY,
+  adaptiveCeiling,
   affordable,
   bufferFor,
+  planPlayback,
   codecLevel,
   describeLadder,
   matchRendition,
@@ -149,12 +153,75 @@ test('the ladder is ordered highest first and every rung is described for the lo
 
 test('a constrained device buffers less, and the reserve keeps the heap for the rest of the app', () => {
   const config = bufferFor(CONSTRAINED_POLICY);
-  assert.equal(config.maxBufferMs, 25000);
-  assert.equal(config.minBufferMs, 10000);
+  // 40 seconds, because a CDN that can answer one segment at 97 KB/s needs more than a quarter of a
+  // minute of runway; the heap shares are what keep that from being at the decoder's expense.
+  assert.equal(config.maxBufferMs, 40000);
+  assert.equal(config.minBufferMs, 15000);
   assert.equal(config.minBufferMemoryReservePercent, 0.2);
   assert.equal(config.maxHeapAllocationPercent, 0.25);
   // A capable device keeps Media3's own defaults rather than being made worse.
   assert.deepEqual(bufferFor(FULL_POLICY), {});
+});
+
+test('an adaptive device opens inside its ceiling, below what its decoder could decode', () => {
+  const renditions = parseMasterPlaylist(SIXTEEN_NINE_MASTER, BASE);
+  // Its decoder is allowed a real 1080p frame, and without adaptation that is the rung it opens.
+  assert.equal(pickQuality(sources, renditions, CONSTRAINED_POLICY).quality, '1080p');
+  // Adapting, it opens at 720p, the rung the player can actually climb back to.
+  const adaptive = pickQuality(sources, renditions, CONSTRAINED_POLICY, {adaptive: true});
+  assert.equal(adaptive.quality, '720p');
+  assert.equal(adaptive.allowed, true);
+  // The ceiling is the 720p rung's own bandwidth plus a margin, so that rung is not excluded by it.
+  assert.equal(adaptiveCeiling(renditions, CONSTRAINED_POLICY), 3_565_000);
+  assert.equal(adaptiveCeiling([], CONSTRAINED_POLICY), ADAPTIVE_FALLBACK_BITRATE);
+});
+
+test('only a constrained device with a playlist adapts; everything else stays pinned', () => {
+  const renditions = parseMasterPlaylist(CINEMASCOPE_MASTER, BASE);
+  const adaptive = planPlayback(
+    sources,
+    renditions,
+    CONSTRAINED_POLICY,
+    '720p',
+    BASE,
+  );
+  assert.equal(adaptive?.uri, BASE);
+  assert.equal(adaptive?.adaptive, true);
+  assert.equal(adaptive?.pinned, sources[2].url);
+  assert.equal(adaptive?.maxBitRate, 3_606_779);
+  // The chosen rung is the ceiling: a 1080p choice lets the player climb that far and no further,
+  // and a 480p choice can never reach back up to 720p.
+  const widescreen = parseMasterPlaylist(SIXTEEN_NINE_MASTER, BASE);
+  assert.equal(
+    planPlayback(sources, widescreen, CONSTRAINED_POLICY, '1080p', BASE)?.maxBitRate,
+    7_015_000,
+  );
+  const low = planPlayback(sources, renditions, CONSTRAINED_POLICY, '480p', BASE)?.maxBitRate;
+  assert.ok((low ?? 0) > 0 && (low ?? 0) < 3_136_330);
+  // A capable device holds the rendition it picked: nothing here exists to make working hardware
+  // worse, and the 4K path is the one that works today.
+  assert.deepEqual(planPlayback(sources, renditions, FULL_POLICY, '2160p', BASE), {
+    uri: sources[0].url,
+    adaptive: false,
+    pinned: sources[0].url,
+    quality: '2160p',
+  });
+  // No master playlist, no adapting: the pinned rung is the only thing there is to play.
+  const pinned = planPlayback(sources, [], CONSTRAINED_POLICY, '720p', undefined);
+  assert.equal(pinned?.uri, sources[2].url);
+  assert.equal(pinned?.adaptive, false);
+  assert.equal(pinned?.maxBitRate, undefined);
+});
+
+test('an adaptive plan never invents a rung, and names one that exists', () => {
+  // A ladder whose only rung is taller than the adaptive ceiling still plays: the ceiling is a
+  // preference the player may exceed when there is nothing else, and the fallback is the pin.
+  const tall: WatchSource[] = [{quality: '1080p', url: 'https://example.test/only.m3u8'}];
+  const plan = planPlayback(tall, [], CONSTRAINED_POLICY, '', BASE);
+  assert.equal(plan?.quality, '1080p');
+  assert.equal(plan?.pinned, tall[0].url);
+  assert.equal(planPlayback([], [], CONSTRAINED_POLICY, '', BASE), null);
+  assert.ok(ADAPTIVE_MAX_HEIGHT < CONSTRAINED_POLICY.maxHeight);
 });
 
 test('an unreadable master playlist costs the app a measurement, never the playback', async () => {

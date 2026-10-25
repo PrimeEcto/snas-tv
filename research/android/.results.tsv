@@ -1,4 +1,4 @@
-launch	PASS	first paint: SNAS|Home|Movies|Series|My List|Search|Settings|Clayface · installed:     primaryCpuAbi=x86_64     versionCode=6 minSdk=24 targetSdk=35     versionName=0.0.6 	launch.png, launch.xml
+launch	PASS	first paint: SNAS|Home|Movies|Series|My List|Search|Settings|Clayface · installed:     primaryCpuAbi=x86_64     versionCode=7 minSdk=24 targetSdk=35     versionName=0.0.7 	launch.png, launch.xml
 Home	PASS	visible: SNAS|Home|Movies|Series|My List|Search|Settings|Clayface	home.png, home.xml
 Movies	PASS	heading and filters present (Genre / Sort) · visible: SNAS|Home|Movies|Series|My List|Search|Settings|Genre, All genres	browse-movies.png, browse-movies.xml
 Series	PASS	heading and filters present (Genre / Sort) · visible: SNAS|Home|Movies|Series|My List|Search|Settings|Genre, All genres	browse-series.png, browse-series.xml
@@ -7,7 +7,7 @@ My List (empty)	PASS	empty state on a fresh install · counts: 	my-list-empty.pn
 Details + save	PASS	longest text block 413 chars (synopsis) · Play control present · save toggled on the detail page: Add to My List → Remove from My List	details.png, details.xml, details-saved.xml
 My List (saved)	PASS	saved title listed:  · visible: SNAS|Home|Movies|Series|My List|Search|Settings|Saved, 1	my-list.png, my-list.xml
 Relaunch persistence	PASS	the collection survived a relaunch: 	my-list-relaunch.png, my-list-relaunch.xml
-About	PASS	TMDB attribution present · visible: SNAS|Home|Movies|Series|My List|Search|Settings|SNAS TV 0.0.6	about.png, about.xml
-Playback	PASS	app-process decoder evidence (199 lines) · native clock 0:01 -> 0:15; paused labels Play/Play	playback.png, playback.xml, playback-chrome.xml, playback-resumed.png, playback-later.png, playback-later.xml, playback-logcat.txt
-Guest resources	PASS	 TOTAL PSS: 292208 TOTAL RSS: 415912 TOTAL SWAP PSS: 294 ·     primaryCpuAbi=x86_64     versionCode=6 minSdk=24 targetSdk=35     versionName=0.0.6 	meminfo.txt, cpuinfo.txt, top.txt, package.txt
+About	PASS	TMDB attribution present · visible: SNAS|Home|Movies|Series|My List|Search|Settings|SNAS TV 0.0.7	about.png, about.xml
+Playback	PASS	app-process decoder evidence (200 lines) · native clock 0:02 -> 0:16; paused labels Play/Play	playback.png, playback.xml, playback-chrome.xml, playback-resumed.png, playback-later.png, playback-later.xml, playback-logcat.txt
+Guest resources	PASS	 TOTAL PSS: 274157 TOTAL RSS: 396352 TOTAL SWAP PSS: 484 ·     primaryCpuAbi=x86_64     versionCode=7 minSdk=24 targetSdk=35     versionName=0.0.7 	meminfo.txt, cpuinfo.txt, top.txt, package.txt
 Playback exit	PASS	Back exited the player to the hero on Home	playback-exit.xml
