@@ -1,57 +1,57 @@
 Applications Memory Usage (in Kilobytes):
-Uptime: 6761277 Realtime: 6761277
+Uptime: 234444 Realtime: 234444
 
-** MEMINFO in pid 28930 [com.snas.tv] **
+** MEMINFO in pid 4690 [com.snas.tv] **
                    Pss  Private  Private  SwapPss      Rss     Heap     Heap     Heap
                  Total    Dirty    Clean    Dirty    Total     Size    Alloc     Free
                 ------   ------   ------   ------   ------   ------   ------   ------
-  Native Heap   179195   179136       24       77   180128   216956   181728    29625
-  Dalvik Heap    10555    10440       84      176    11428    20628    10314    10314
- Dalvik Other     3076     1952        8        3     4596                           
-        Stack     1540     1540        0        0     1548                           
-       Ashmem      180        0        0        0      944                           
-    Other dev       45        8       32        0      304                           
-     .so mmap     8893      192     3996       24    45012                           
-    .jar mmap     2364        0      156        0    40412                           
-    .apk mmap    25815      828    19432        0    33732                           
-    .ttf mmap      644        0      184        0     1452                           
-    .dex mmap    15280        8    15188        0    16200                           
-    .oat mmap      845        0      176        0    13200                           
-    .art mmap     4612     3728      184      263    23352                           
-   Other mmap     1298        4      728        0     2956                           
-      Unknown    27574    27556        8        0    27980                           
-        TOTAL   282459   225392    40200      543   403244   237584   192042    39939
+  Native Heap   167551   167452       88       35   168432   196812   179677    12520
+  Dalvik Heap    36298    36192       72       93    37152    49926    25350    24576
+ Dalvik Other     3189     2004        4        0     4788                           
+        Stack     1712     1712        0        0     1724                           
+       Ashmem      239        0        0        0     1140                           
+    Other dev       49       16       32        0      304                           
+     .so mmap    10651      192     6040        7    43688                           
+    .jar mmap     2689        0      636        0    40196                           
+    .apk mmap    18797      828    12148        0    34392                           
+    .ttf mmap     1074        0      804        0     1452                           
+    .dex mmap    15226        8    15180        0    16188                           
+    .oat mmap     1005        0      320        0    13132                           
+    .art mmap     4394     3500      380      159    21804                           
+   Other mmap     1028        4      204        0     3104                           
+      Unknown    28012    27988       20        0    28416                           
+        TOTAL   292208   239896    35928      294   415912   246738   205027    37096
  
  App Summary
                        Pss(KB)                        Rss(KB)
                         ------                         ------
-           Java Heap:    14352                          34780
-         Native Heap:   179136                         180128
-                Code:    40240                         152300
-               Stack:     1540                           1548
+           Java Heap:    40072                          58956
+         Native Heap:   167452                         168432
+                Code:    36184                         151432
+               Stack:     1712                           1724
             Graphics:        0                              0
-       Private Other:    30324
-              System:    16867
-             Unknown:                                   34488
+       Private Other:    30404
+              System:    16384
+             Unknown:                                   35368
  
-           TOTAL PSS:   282459            TOTAL RSS:   403244       TOTAL SWAP PSS:      543
+           TOTAL PSS:   292208            TOTAL RSS:   415912       TOTAL SWAP PSS:      294
  
  Objects
-               Views:     1085         ViewRootImpl:        1
+               Views:     1228         ViewRootImpl:        1
          AppContexts:        5           Activities:        1
               Assets:       24        AssetManagers:        0
-       Local Binders:       44        Proxy Binders:       64
-       Parcel memory:        8         Parcel count:       35
+       Local Binders:       48        Proxy Binders:       76
+       Parcel memory:       14         Parcel count:       59
     Death Recipients:        2             WebViews:        0
  
  SQL
          MEMORY_USED:      101
-  PAGECACHE_OVERFLOW:       42          MALLOC_SIZE:       54
+  PAGECACHE_OVERFLOW:       42          MALLOC_SIZE:       49
  
  DATABASES
       pgsz     dbsz   Lookaside(b) cache hits cache misses cache size  Dbname
 PER CONNECTION STATS
-         4       32             34    20    41     3  /data/user/0/com.snas.tv/databases/RKStorage
+         4       32             39    17    38     4  /data/user/0/com.snas.tv/databases/RKStorage
 POOL STATS
      cache hits  cache misses    cache size  Dbname
-             20            42            62  /data/user/0/com.snas.tv/databases/RKStorage
+             17            39            56  /data/user/0/com.snas.tv/databases/RKStorage

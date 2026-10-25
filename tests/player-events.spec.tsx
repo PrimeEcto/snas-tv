@@ -76,6 +76,16 @@ jest.mock('../src/ui/controls', () => ({
 }));
 jest.mock('../src/player', () => ({
   loadWatch: jest.fn(),
+  // The real error class, stood in for so `instanceof` holds inside the screen: the screen tells a
+  // service outage apart from an unplayable title by this type.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  SourceUnavailableError: class extends Error {
+    constructor(code: any) {
+      super('The source service is unavailable right now.');
+      this.status = code;
+    }
+    status: number;
+  },
   // Most of these tests are about the player's own behaviour, so the provider is given no master
   // playlist: the policy then falls back to the labels, exactly as it does when the provider or the
   // network cannot answer. The tests that care about measured renditions pass one in.
@@ -682,6 +692,29 @@ test("leaving the player with the remote's back button is recorded in the playba
     'playback:exit',
     expect.objectContaining({position: 900, duration: 7200}),
   );
+});
+
+test('a source service outage is named as one rather than as an unplayable title', async () => {
+  const {SourceUnavailableError} = jest.requireMock('../src/player') as {
+    SourceUnavailableError: new (status: number) => Error & {status: number};
+  };
+  const log = (jest.requireMock('../src/device') as {playbackLog: jest.Mock}).playbackLog;
+  log.mockClear();
+  jest.mocked(loadWatch).mockRejectedValueOnce(new SourceUnavailableError(502));
+  await act(async () => {
+    mounted = create(component());
+  });
+  const text = mounted.root
+    .findAllByType('Text' as never)
+    .flatMap((node) =>
+      typeof node.props.children === 'string' ? [node.props.children] : [],
+    )
+    .join(' ');
+  // The backend being down is not this title's fault, and the viewer must be told that so they come
+  // back to the same title instead of hunting for one that "works".
+  expect(text).toContain('The source service is unavailable right now');
+  expect(text).not.toContain('No playable source came back');
+  expect(log).toHaveBeenCalledWith('playback:source-unavailable', expect.objectContaining({status: 502}));
 });
 
 test('replaying the same title twice sends a fresh native seek each time', async () => {

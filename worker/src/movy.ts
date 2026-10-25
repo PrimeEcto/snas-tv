@@ -7,8 +7,10 @@
  * it a second time, and that the seed's `mediaId` is the TMDB id.
  */
 import { decryptStreamPayload } from './streamcrypto.ts';
+import { clearSiteCache, currentSite, normalize, rememberSite, siteReferer } from './site.ts';
 
 export const STREAM_API_BASE = 'https://api.wecollege.net';
+
 
 export interface Provider {
   name: string;
@@ -120,6 +122,10 @@ export const SEED_TOKEN = '{{seed}}';
 /**
  * A seed and the request that depends on it, issued as one pair.
  *
+ * The referer travels with the request rather than being fixed in the transport: the provider's
+ * API answers `403` to anything but its current site host (`src/site.ts` discovers which), so a
+ * transport that sent a constant would work until the provider's next move.
+ *
  * The upstream binds a seed to the client that asked for it. Measured against the live
  * API: seed-from-relay + sources-from-host and seed-from-host + sources-from-relay both
  * answer `401 STREAMCRYPTO_SEED_INVALID`, while host + host answers 200, with identical
@@ -153,28 +159,49 @@ export interface UpstreamTransport {
   seeded(request: SeededRequest): Promise<SeededResponse>;
 }
 
-/** Talk to `api.wecollege.net` directly from this isolate. */
-export function directTransport(fetchImpl: FetchLike): UpstreamTransport {
-  const plain = async (url: string, timeoutMs: number): Promise<UpstreamResponse> => {
+/**
+ * Talk to `api.wecollege.net` directly from this isolate.
+ *
+ * `site` pins the referer (an operator's `UPSTREAM_SITE`); without it the provider's current host
+ * is discovered and cached by `src/site.ts`.
+ */
+export function directTransport(fetchImpl: FetchLike, site?: string): UpstreamTransport {
+  const referer = (): Promise<string> =>
+    siteReferer(site ? { fetchImpl, override: site } : { fetchImpl });
+
+  const plain = async (
+    url: string,
+    timeoutMs: number,
+    host: string,
+  ): Promise<UpstreamResponse> => {
     const response = await fetchImpl(url, {
-      headers: { accept: 'application/json, text/plain, */*' },
+      // Both are load-bearing: `accept` is what the API answers JSON for, and the referer is what
+      // Cloudflare in front of it demands — no referer, or the wrong host, is `403`.
+      headers: { accept: 'application/json, text/plain, */*', referer: host },
       signal: AbortSignal.timeout(timeoutMs),
     });
     return { status: response.status, body: await response.text() };
   };
 
   return {
-    get: plain,
+    async get(url: string, timeoutMs: number): Promise<UpstreamResponse> {
+      return plain(url, timeoutMs, await referer());
+    },
 
     async seeded({ seedUrl, urlTemplate, timeoutMs }: SeededRequest): Promise<SeededResponse> {
-      const fetchSeed = () => fetchSeedOnce(seedUrl, plain, timeoutMs);
+      let host = await referer();
+      const fetchSeed = () =>
+        fetchSeedOnce(seedUrl, (url, timeout) => plain(url, timeout, host), timeoutMs);
       let seed = cachedSeed(seedUrl) ?? (await fetchSeed());
-      let response = await plain(urlTemplate.replaceAll(SEED_TOKEN, seed), timeoutMs);
-      // 401/403 is a stale seed, not a missing stream: refresh and try exactly once.
+      let response = await plain(urlTemplate.replaceAll(SEED_TOKEN, seed), timeoutMs, host);
+      // 401/403 is a stale seed *or* a host the provider has moved away from: refresh both and try
+      // exactly once. This is what makes a domain change self-correcting instead of an outage.
       if (response.status === 401 || response.status === 403) {
+        clearSiteCache();
+        host = await referer();
         seedCache.delete(seedUrl);
         seed = await fetchSeed();
-        response = await plain(urlTemplate.replaceAll(SEED_TOKEN, seed), timeoutMs);
+        response = await plain(urlTemplate.replaceAll(SEED_TOKEN, seed), timeoutMs, host);
       }
       return { ...response, seed };
     },
@@ -184,18 +211,29 @@ export function directTransport(fetchImpl: FetchLike): UpstreamTransport {
 /**
  * Delegate the upstream HTTP call to a relay that answers `POST { url }` with
  * `{ status, body }`. A shared secret keeps the relay from being an open proxy.
+ *
+ * The referer is resolved here and sent with the request, and the relay echoes back the one it
+ * actually used — its egress can reach the provider's site even when this Worker's cannot, so its
+ * answer is the better evidence and is what the player is then told to send to the CDN.
  */
 export function relayTransport(
   relayUrl: string,
   secret: string | undefined,
   fetchImpl: FetchLike,
+  site?: string,
 ): UpstreamTransport {
+  // Deliberately not a discovery on this egress: the relay can reach the provider's site and
+  // discovers it there, so the Worker sends what it already knows (a pinned host, or the last one
+  // the relay reported) and lets the relay correct it. Discovering from Cloudflare here would spend
+  // two seed timeouts on every cold isolate before the playback request was even sent.
+  const referer = async (): Promise<string> => normalize(site) || currentSite();
+
   // A transport never throws: an unreachable or misbehaving relay becomes status 0,
   // which the caller already treats as "retry another mirror".
   const post = async (
     body: Record<string, unknown>,
     timeoutMs: number,
-  ): Promise<{ status: number; body: string; seed: string }> => {
+  ): Promise<{ status: number; body: string; seed: string; referer: string }> => {
     try {
       const response = await fetchImpl(relayUrl, {
         method: 'POST',
@@ -208,39 +246,55 @@ export function relayTransport(
         // The relay has its own upstream round trip (or two) to finish first.
         signal: AbortSignal.timeout(timeoutMs + 5000),
       });
-      if (!response.ok) return { status: response.status, body: '', seed: '' };
-      const payload = (await response.json()) as { status?: number; body?: string; seed?: string };
+      if (!response.ok) return { status: response.status, body: '', seed: '', referer: '' };
+      const payload = (await response.json()) as {
+        status?: number;
+        body?: string;
+        seed?: string;
+        referer?: string;
+      };
+      if (typeof payload.referer === 'string' && payload.referer) rememberSite(payload.referer);
       return {
         status: typeof payload.status === 'number' ? payload.status : 0,
         body: typeof payload.body === 'string' ? payload.body : '',
         seed: typeof payload.seed === 'string' ? payload.seed : '',
+        referer: typeof payload.referer === 'string' ? payload.referer : '',
       };
     } catch {
-      return { status: 0, body: '', seed: '' };
+      return { status: 0, body: '', seed: '', referer: '' };
     }
   };
 
   return {
     async get(url: string, timeoutMs: number): Promise<UpstreamResponse> {
-      const { status, body } = await post({ url }, timeoutMs);
+      const { status, body } = await post({ url, referer: await referer() }, timeoutMs);
       return { status, body };
     },
 
     /** One relay invocation fetches the seed *and* the URL built from it. */
     async seeded({ seedUrl, urlTemplate, timeoutMs }: SeededRequest): Promise<SeededResponse> {
-      return post({ seedUrl, url: urlTemplate }, timeoutMs);
+      let host = await referer();
+      let result = await post({ seedUrl, url: urlTemplate, referer: host }, timeoutMs);
+      if (result.status === 401 || result.status === 403) {
+        // Either the seed went stale or the provider moved host: clear both and try once more.
+        clearSiteCache();
+        host = await referer();
+        result = await post({ seedUrl, url: urlTemplate, referer: host }, timeoutMs);
+      }
+      const { status, body, seed } = result;
+      return { status, body, seed };
     },
   };
 }
 
 /** Pick the relay when configured, otherwise go direct. */
 export function resolveTransport(
-  env: { UPSTREAM_RELAY_URL?: string; UPSTREAM_RELAY_SECRET?: string },
+  env: { UPSTREAM_RELAY_URL?: string; UPSTREAM_RELAY_SECRET?: string; UPSTREAM_SITE?: string },
   fetchImpl: FetchLike,
 ): UpstreamTransport {
   const relay = env.UPSTREAM_RELAY_URL?.trim();
-  if (!relay) return directTransport(fetchImpl);
-  return relayTransport(relay, env.UPSTREAM_RELAY_SECRET?.trim(), fetchImpl);
+  if (!relay) return directTransport(fetchImpl, env.UPSTREAM_SITE);
+  return relayTransport(relay, env.UPSTREAM_RELAY_SECRET?.trim(), fetchImpl, env.UPSTREAM_SITE);
 }
 
 /** Per-isolate seed cache, mirroring the site's 5s-early expiry behaviour. */

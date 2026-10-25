@@ -1,6 +1,24 @@
 # SNAS testing record
 
-## Current 0.0.5 verification — 2026-10-16
+## Current 0.0.6 verification — 2026-10-25
+
+Playback was down because the provider's API began answering `403` to every request that did not
+carry a `Referer` from its current site host; the backend sent none. The repair, the host discovery
+that keeps it working when the provider moves, and the evidence are in
+[the 0.0.6 release record](docs/RELEASE_0.0.6.md) and [docs/QA_0.0.6.md](docs/QA_0.0.6.md).
+
+| Check | Result | Evidence |
+|---|---|---|
+| `npm --prefix worker test` | **62 passed, 0 failed** | 10 new: host discovery from a redirect and from a canonical link, the pinned override, the cache, the negative cache, the referer on both transport calls |
+| `npm --prefix worker run typecheck` | **clean** | |
+| Live `/v1/watch`, movie and TV | **PASS** | `200` with `2160p, 1080p, 720p, 480p`, a master playlist and `headers: {"referer":"https://www.movy.sx/"}` — after having been `502 seed request failed (HTTP 403)` for all six mirrors |
+| `npm run test:unit` | **79 passed, 0 failed** | 6 new: the `5xx`-is-an-outage boundary, and that a `4xx`, an empty list or a network failure is not one |
+| `npm run test:player` | **25 passed, 0 failed** | 1 new: a `502` shows the service-outage copy instead of "this title couldn't play" |
+| `npm run typecheck` / `npm run lint` | **clean / 0 errors** | 52 pre-existing warnings |
+| Device journey, 0.0.6 | **13 passed, 0 failed** | launch, every screen, live search, native playback (decoder lines + clock `0:01 → 0:15`), playback exit, resources |
+| Physical Fire TV | **NOT RUN** | no device attached |
+
+## 0.0.5 verification — 2026-10-16
 
 See [the 0.0.5 release record](docs/RELEASE_0.0.5.md) and, for the playback investigation behind it,
 [docs/FIRETV_STICK_PLAYBACK.md](docs/FIRETV_STICK_PLAYBACK.md).

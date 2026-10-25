@@ -22,6 +22,7 @@ import {
   type TitleRef,
 } from '../src/movy.ts';
 import { groupSubtitles, searchSubtitles, srtToVtt } from '../src/subtitles.ts';
+import { siteReferer } from '../src/site.ts';
 
 // Run from the worker directory (`npm run verify:live`), beside the test fixture.
 const FIXTURE_PATH = join(process.cwd(), 'test', 'fixtures', 'streamcrypto.json');
@@ -58,8 +59,11 @@ async function capture(providerSlug: string): Promise<Fixture> {
     try {
       const seed = await getSeed(TEST_TITLE.tmdbId);
       const url = buildSourcesUrl(provider, params, seed);
+      // The host the provider is serving from today, discovered rather than assumed.
+      const referer = await siteReferer();
+      console.log(`  referer ${referer}`);
       const response = await fetch(url, {
-        headers: { accept: 'application/json, text/plain, */*' },
+        headers: { accept: 'application/json, text/plain, */*', referer },
         signal: AbortSignal.timeout(15000),
       });
       if (!response.ok) {

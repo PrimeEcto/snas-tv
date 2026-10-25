@@ -138,6 +138,24 @@ Every response that carries sources therefore carries the headers to send with t
 `/v1/watch` and `/v1/sources`. The player attaches them to the master playlist, to every
 variant playlist and to every segment request.
 
+### The referer follows the provider's host
+
+The host in that header is the provider's *current* one, and it is discovered rather than written
+down, because the provider moves (`movy.bz` → `movy.sx`). Measured on 2026-10-25: the API
+(`api.wecollege.net/seed`) answers `403 Attention Required!` to a request with no `Referer`, with a
+browser `User-Agent` alone, with the old host `https://www.movy.bz/`, or with any unrelated host —
+and `200` only for `https://www.movy.sx/` or `https://movy.sx/`. Every mirror failed at the seed
+until that header was restored.
+
+`worker/src/site.ts` resolves the host: the seed domains `movy.sx` and `movy.bz` are asked where
+they point (`movy.bz` answers `301 https://www.movy.sx/`), the page's own `canonical`/`og:url` is
+read as well, and the answer is cached for 30 minutes. A `401`/`403` from the API clears that cache
+and the request is retried once with the re-resolved host, so a move corrects itself on the next
+playback. A failed discovery is remembered for a minute so an unreachable site does not cost two
+timeouts per request. `UPSTREAM_SITE` pins the host and skips discovery entirely.
+
+The same resolved host is what the player is told to send to the CDN, so the two cannot disagree.
+
 ## Releases and the update check
 
 The repository is private, so the device cannot read GitHub and must not carry a token. The
@@ -189,16 +207,23 @@ dashboard. None of them belong in the repository, and `CloudflareCredentials/` a
 | `ALLOWED_ORIGINS` | CORS allow-list; defaults to `*` because the API is read-only | yes |
 | `UPSTREAM_RELAY_URL` | The `movy-relay` function's URL. Without it the Worker fetches upstream directly and gets HTTP 429 | yes, but required in practice |
 | `UPSTREAM_RELAY_SECRET` | Shared secret sent as `x-relay-secret`; must equal the function's `RELAY_SECRET` | yes, but required in practice |
+| `UPSTREAM_SITE` | Pins the provider's site host (the `Referer` its API and CDN require), e.g. `https://www.movy.sx/`. Left unset, it is discovered from the seed domains; set it when the provider moves somewhere its old domains no longer point to | no |
 
-The relay speaks two request shapes, both with an `x-relay-secret` header. A plain fetch is
-`POST {"url":"..."}`, answering `{"status":<upstream status>,"body":"<raw upstream body>"}`.
-The seeded fetch is the one the Worker uses: `POST {"seedUrl":"...","url":"...{{seed}}..."}`
-makes the relay request the seed, substitute it into the URL and fetch that too, answering
-`{"status":...,"body":...,"seed":"<seed used>"}` — or
-`{"seedStatus":<status>,"status":<status>,"body":"","seed":""}` when the seed request
-itself failed, so a rate limit on the seed is never reported as a mirror failure. A `401` or
-`403` on the sources request is treated as a stale seed: the relay refreshes it and retries
-once. Both requests happen inside one invocation because the upstream binds a seed to the
+The relay speaks two request shapes, both with an `x-relay-secret` header, and both carry the
+`referer` the Worker resolved: the API answers `403` to any request without one from the current
+site host, and the relay's own egress is the fallback if none is supplied. A plain fetch is
+`POST {"url":"...","referer":"..."}`, answering
+`{"status":<upstream status>,"body":"<raw upstream body>","referer":"<host used>"}`.
+The seeded fetch is the one the Worker uses:
+`POST {"seedUrl":"...","url":"...{{seed}}...","referer":"..."}` makes the relay request the
+seed, substitute it into the URL and fetch that too, answering
+`{"status":...,"body":...,"seed":"<seed used>","referer":"<host used>"}` — or
+`{"seedStatus":<status>,"status":<status>,"body":"","seed":"","referer":"..."}` when the seed
+request itself failed, so a rate limit on the seed is never reported as a mirror failure. A `401`
+or `403` on the sources request is treated as a stale seed *or* a host the provider has moved away
+from: the relay clears both and retries once. The host it echoes back is the one the Worker then
+hands the player for the CDN. Both requests happen inside one invocation because the upstream
+binds a seed to the
 client that asked for it (see below).
 
 The relay allow-lists three upstream origins — `api.wecollege.net`, `trailers.wecollege.net`

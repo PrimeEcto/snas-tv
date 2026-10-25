@@ -18,6 +18,7 @@
 import { DEFAULT_PROVIDER_ORDER, PROVIDERS, StreamSourceError, clearSeedCache, fetchSourcesWithFailover, qualityRank, resolveTransport, type FetchLike, type StreamPayload, type TitleRef, type VideoSource } from './movy.ts';
 import { canServeAsVtt, groupSubtitles, searchSubtitles, srtToVtt, type SubtitleGroup, type SubtitleRecord } from './subtitles.ts';
 import { cacheKey, createCache, type Cache } from './cache.ts';
+import { siteReferer } from './site.ts';
 import { checkForUpdate, downloadReleaseAsset, fetchLatestRelease, type ReleaseEnv } from './release.ts';
 
 export interface Env extends ReleaseEnv {
@@ -37,6 +38,11 @@ export interface Env extends ReleaseEnv {
    */
   UPSTREAM_RELAY_URL?: string;
   UPSTREAM_RELAY_SECRET?: string;
+  /**
+   * Pins the provider's site host, which is the `Referer` its API and CDN require. Left unset,
+   * `src/site.ts` discovers it from the seed domains and follows it when the provider moves.
+   */
+  UPSTREAM_SITE?: string;
 }
 
 export interface HandlerDeps {
@@ -55,11 +61,15 @@ const RELEASE_TTL_SECONDS = 300;
 
 /**
  * The stream CDN answers `403` to a request that carries no `Referer` from the site and
- * `200 application/vnd.apple.mpegurl` with one, so a source URL on its own is not
- * playable. Returned once beside the sources instead of repeated on every ladder rung.
- * Measured against the live CDN; the value does not depend on the User-Agent.
+ * `200 application/vnd.apple.mpegurl` with one, so a source URL on its own is not playable.
+ * Returned once beside the sources instead of repeated on every ladder rung.
+ *
+ * The host is the one discovered for the API (`src/site.ts`), not a constant: the provider moves,
+ * and the CDN follows the site. Measured against the live CDN; the value does not depend on the
+ * User-Agent, only on the host. A source that is one host out of date is still `403`, so this is
+ * the same value the API accepted a moment earlier in the same request.
  */
-const PLAYER_HEADERS: Record<string, string> = { referer: 'https://www.movy.sx/' };
+const playerHeaders = (referer: string): Record<string, string> => ({ referer });
 
 const json = (body: unknown, status = 200, extraHeaders: Record<string, string> = {}): Response =>
   new Response(JSON.stringify(body), {
@@ -269,13 +279,13 @@ async function loadSubtitleRecords(
   return { records, cached: false };
 }
 
-function sourcesPayload(result: SourcesResult): Record<string, unknown> {
+function sourcesPayload(result: SourcesResult, referer: string): Record<string, unknown> {
   return {
     provider: result.provider,
     note: result.note,
     sources: result.sources,
     // The player must send these with every request for the URLs above.
-    headers: { ...PLAYER_HEADERS },
+    headers: playerHeaders(referer),
     ...(result.thumbnail ? { thumbnail: result.thumbnail } : {}),
     ...(result.playlist ? { playlist: result.playlist } : {}),
     attempts: result.attempts,
@@ -356,8 +366,15 @@ export function createHandler(env: Env, deps: HandlerDeps = {}) {
           throw error;
         }
 
+        // Whatever host the transport actually reached the provider on — discovered, or echoed
+        // back by the relay — is what the player must send to the CDN beside it.
+        const site = await siteReferer({
+          fetchImpl,
+          ...(env.UPSTREAM_SITE ? { override: env.UPSTREAM_SITE } : {}),
+        });
+
         if (path === '/v1/sources') {
-          return withCors(json(sourcesPayload(result), 200, { 'cache-control': `public, max-age=${SOURCES_TTL_SECONDS}` }), env);
+          return withCors(json(sourcesPayload(result, site), 200, { 'cache-control': `public, max-age=${SOURCES_TTL_SECONDS}` }), env);
         }
 
         // /v1/watch: sources plus the subtitle menu in one round trip. A subtitle
@@ -382,7 +399,7 @@ export function createHandler(env: Env, deps: HandlerDeps = {}) {
         return withCors(
           json(
             {
-              ...sourcesPayload(result),
+              ...sourcesPayload(result, site),
               subtitleGroups: groups,
               subtitleCount: groups.reduce((total, group) => total + group.subtitles.length, 0),
               ...(subtitleError ? { subtitleError } : {}),

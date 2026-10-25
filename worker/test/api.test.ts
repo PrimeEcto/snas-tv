@@ -43,7 +43,10 @@ const upstream: FetchLike = async (input) => {
   throw new Error(`unexpected upstream request: ${url}`);
 };
 
-const handler = createHandler({}, { fetchImpl: upstream });
+// The provider's site host is pinned here: discovery is covered by site.test.ts, and these tests are
+// about what the handler answers, not about where the site currently lives.
+const SITE = 'https://www.movy.sx/';
+const handler = createHandler({ UPSTREAM_SITE: SITE }, { fetchImpl: upstream });
 const get = (path: string) => handler(new Request(`https://snas-movy.example.workers.dev${path}`));
 
 test('the service root advertises its endpoints', async () => {
@@ -163,7 +166,10 @@ test('a title resolves through the catalogue proxy, which is the only holder of 
     );
   };
   // A trailing slash on the configured URL must not produce a double slash.
-  const resolving = createHandler({ TMDB_PROXY_URL: 'https://proxy.example/tmdb/' }, { fetchImpl: proxied });
+  const resolving = createHandler(
+    { TMDB_PROXY_URL: 'https://proxy.example/tmdb/', UPSTREAM_SITE: SITE },
+    { fetchImpl: proxied },
+  );
   const response = await resolving(new Request('https://snas-movy.example.workers.dev/v1/sources?tmdbId=969681&type=movie'));
   assert.equal(response.status, 200);
 

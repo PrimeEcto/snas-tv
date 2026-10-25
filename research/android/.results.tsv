@@ -1,13 +1,13 @@
-launch	PASS	first paint: SNAS|Home|Movies|Series|Search|My List|About|LIVE CATALOG · installed:     primaryCpuAbi=x86_64     versionCode=1 minSdk=24 targetSdk=35     versionName=0.0.1 	launch.png, launch.xml
-Home	PASS	live catalogue badge present (backend reachable from the device) · hero controls present · visible: SNAS|Home|Movies|Series|Search|My List|About|LIVE CATALOG	home.png, home.xml
-Movies	PASS	heading and filters present (Genre / Sort) · visible: SNAS|Home|Movies|Series|Search|My List|About|LIVE CATALOG	browse-movies.png, browse-movies.xml
-Series	PASS	heading and filters present (Genre / Sort) · visible: SNAS|Home|Movies|Series|Search|My List|About|LIVE CATALOG	browse-series.png, browse-series.xml
-Search	PASS	one letter typed on the on-screen keyboard · query ran against the backend: 20 results for “A” · visible: SNAS|Home|Movies|Series|Search|My List|About|LIVE CATALOG	search.png, search.xml
-My List (empty)	PASS	empty state on a fresh install · counts: My List (0) My List (0) Continue watching (0) Continue watching (0)	my-list-empty.png, my-list-empty.xml
-Details + save	PASS	longest text block 374 chars (synopsis) · Play control present · save toggled on the detail page: Add to My List → Remove from My List	details.png, details.xml, details-saved.xml
-My List (saved)	PASS	saved title listed: My List (1) My List (1) Continue watching (0) Continue watching (0) · visible: SNAS|Home|Movies|Series|Search|My List|About|LIVE CATALOG	my-list.png, my-list.xml
-Relaunch persistence	PASS	the collection survived a relaunch: My List (1) My List (1) Continue watching (0) Continue watching (0)	my-list-relaunch.png, my-list-relaunch.xml
-About	PASS	TMDB attribution present · running on the live catalog · visible: SNAS|Home|Movies|Series|Search|My List|About|LIVE CATALOG	about.png, about.xml
-Playback	PASS	clock 0:03 -> 0:16 · decoder/HLS evidence in logcat (8 lines)	playback.png, playback-later.png, playback-later.xml, playback-logcat.txt
-Playback exit	PASS	exited the player back to the hero on Home	playback-exit.xml
-Guest resources	PASS	 TOTAL PSS: 282459 TOTAL RSS: 403244 TOTAL SWAP PSS: 543 ·     primaryCpuAbi=x86_64     versionCode=1 minSdk=24 targetSdk=35     versionName=0.0.1 	meminfo.txt, cpuinfo.txt, top.txt, package.txt
+launch	PASS	first paint: SNAS|Home|Movies|Series|My List|Search|Settings|Clayface · installed:     primaryCpuAbi=x86_64     versionCode=6 minSdk=24 targetSdk=35     versionName=0.0.6 	launch.png, launch.xml
+Home	PASS	visible: SNAS|Home|Movies|Series|My List|Search|Settings|Clayface	home.png, home.xml
+Movies	PASS	heading and filters present (Genre / Sort) · visible: SNAS|Home|Movies|Series|My List|Search|Settings|Genre, All genres	browse-movies.png, browse-movies.xml
+Series	PASS	heading and filters present (Genre / Sort) · visible: SNAS|Home|Movies|Series|My List|Search|Settings|Genre, All genres	browse-series.png, browse-series.xml
+Search	PASS	one letter typed on the on-screen keyboard · query ran against the backend: 20 titles shown for “A” · visible: SNAS|Home|Movies|Series|My List|Search|Settings|Movies and series from TMDB	search.png, search.xml
+My List (empty)	PASS	empty state on a fresh install · counts: 	my-list-empty.png, my-list-empty.xml
+Details + save	PASS	longest text block 413 chars (synopsis) · Play control present · save toggled on the detail page: Add to My List → Remove from My List	details.png, details.xml, details-saved.xml
+My List (saved)	PASS	saved title listed:  · visible: SNAS|Home|Movies|Series|My List|Search|Settings|Saved, 1	my-list.png, my-list.xml
+Relaunch persistence	PASS	the collection survived a relaunch: 	my-list-relaunch.png, my-list-relaunch.xml
+About	PASS	TMDB attribution present · visible: SNAS|Home|Movies|Series|My List|Search|Settings|SNAS TV 0.0.6	about.png, about.xml
+Playback	PASS	app-process decoder evidence (199 lines) · native clock 0:01 -> 0:15; paused labels Play/Play	playback.png, playback.xml, playback-chrome.xml, playback-resumed.png, playback-later.png, playback-later.xml, playback-logcat.txt
+Guest resources	PASS	 TOTAL PSS: 292208 TOTAL RSS: 415912 TOTAL SWAP PSS: 294 ·     primaryCpuAbi=x86_64     versionCode=6 minSdk=24 targetSdk=35     versionName=0.0.6 	meminfo.txt, cpuinfo.txt, top.txt, package.txt
+Playback exit	PASS	Back exited the player to the hero on Home	playback-exit.xml

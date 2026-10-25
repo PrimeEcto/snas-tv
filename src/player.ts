@@ -130,6 +130,25 @@ export function subtitleUrl(id: string, tmdbId: number, mediaType: 'movie' | 'tv
 }
 
 /**
+ * The backend answered, and said that it — not this title — is the problem.
+ *
+ * Every title fails at once when the source service is down, and a viewer who is told "this title
+ * couldn't play" goes looking for a different title instead of coming back. The distinction is the
+ * status: a `5xx` is the service's own failure, a `4xx` or an empty source list is this title's.
+ */
+export class SourceUnavailableError extends Error {
+  constructor(readonly status: number) {
+    super('The source service is unavailable right now.');
+    this.name = 'SourceUnavailableError';
+  }
+}
+
+/** Whether a watch response means the source service is down rather than the title unplayable. */
+export function sourceUnavailable(status: number): boolean {
+  return Number.isFinite(status) && status >= 500;
+}
+
+/**
  * The real HLS ladder behind the `/v1/watch` sources, read from the provider's master playlist.
  *
  * The backend labels its renditions `2160p`/`1080p`/`720p`/`480p`, and those labels are not the
@@ -196,6 +215,9 @@ export async function loadWatch(
       headers: {Accept: 'application/json'},
       signal: controller.signal,
     });
+    // A 5xx is the backend's own failure and is reported as such; anything else is this title's and
+    // is left to the caller's "no playable source" path.
+    if (sourceUnavailable(response.status)) throw new SourceUnavailableError(response.status);
     if (!response.ok) return null;
     const body = (await response.json()) as Partial<WatchResult> | null;
     if (!body || typeof body !== 'object') return null;
@@ -212,7 +234,10 @@ export async function loadWatch(
       subtitleCount: typeof body.subtitleCount === 'number' ? body.subtitleCount : 0,
       ...(typeof body.cached === 'boolean' ? {cached: body.cached} : {}),
     };
-  } catch {
+  } catch (error) {
+    // A service failure is the one failure the viewer can act on, so it must not be flattened into
+    // the same null as an unplayable title; everything else (offline, timeout, bad JSON) stays one.
+    if (error instanceof SourceUnavailableError) throw error;
     return null;
   } finally {
     clearTimeout(timer);

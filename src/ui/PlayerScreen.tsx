@@ -19,6 +19,7 @@ import {useTVEventHandler} from 'snas-tv';
 import {PlayerSurface, supportsPlayback} from 'snas-player';
 import {playbackPhase} from '../state/playback-phase';
 import {
+  SourceUnavailableError,
   loadRenditions,
   loadWatch,
   subtitleUrl,
@@ -108,6 +109,9 @@ export function PlayerScreen({
   // the platform surface. `live` flips once a real media element reports a clock of its own.
   const [media, setMedia] = useState<WatchResult | null>(null);
   const [streamError, setStreamError] = useState('');
+  // True when the failure was the source service's, not this title's: the recovery copy has to say
+  // which, or a viewer goes looking for a different title that "works" while every one of them fails.
+  const [outage, setOutage] = useState(false);
   const [quality, setQuality] = useState('');
   // The provider's real ladder for this title, and the policy this device is held to.
   const [renditions, setRenditions] = useState<Rendition[]>([]);
@@ -172,6 +176,7 @@ export function PlayerScreen({
     setSlow(false);
     setMedia(null);
     setStreamError('');
+    setOutage(false);
     setLive(false);
     setQuality('');
     setSubtitleId('');
@@ -243,8 +248,21 @@ export function PlayerScreen({
           ? wanted
           : '',
       );
-    })().catch(() => {
-      if (alive) setStreamError('The stream could not be reached.');
+    })().catch((error: unknown) => {
+      if (!alive) return;
+      // The source service being down is not this title's fault, and saying so sends the viewer back
+      // to the same title in a minute instead of hunting for one that "works".
+      if (error instanceof SourceUnavailableError) {
+        playbackLog('playback:source-unavailable', {
+          title: `${titleKind}:${titleId}`,
+          status: error.status,
+          device: deviceSummary(deviceRef.current),
+        });
+        setOutage(true);
+        setStreamError('The source service is unavailable right now. Try again in a moment.');
+        return;
+      }
+      setStreamError('The stream could not be reached.');
     });
     return () => {
       alive = false;
@@ -351,6 +369,7 @@ export function PlayerScreen({
     setPreview(false);
     setSlow(false);
     setStreamError('');
+    setOutage(false);
     setLive(false);
     setRetry((value) => value + 1);
   };
@@ -775,7 +794,9 @@ export function PlayerScreen({
             </View>
             <Text style={styles.recoveryTitle}>Playback unavailable</Text>
             <Text testID="player-error" style={styles.recoveryCopy}>
-              This title couldn’t play. Try again to reconnect.
+              {outage
+                ? 'The source service is unavailable right now. Try again in a moment.'
+                : 'This title couldn’t play. Try again to reconnect.'}
             </Text>
             <View style={styles.recoveryActions}>
               <Button
